@@ -26,9 +26,9 @@ ___
 ### Versions
 
 ##### 0.0.0 - подготовительная
-- *создать webpack.config (dev, prod)*
-    - dev: ?
-    - prod:  ?
+- **создать webpack.config (dev, prod)**
+    - dev: dev-server, source-maps
+    - prod: minify, optimize assets
     
     Зависимости:
     
@@ -38,7 +38,7 @@ ___
     - sass-loader
     - babel
     
-- *Dockerfile*
+- **Dockerfile**
 
   Build приложения в определённую папку
 
