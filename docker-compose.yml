@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  client:
+    build: ./
+    container_name: valoplaneta_hr_front
+    command: npm run build
+    volumes:
+      - .:/app
+#      - destination_path/build/:/app

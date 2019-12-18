@@ -6,7 +6,27 @@
       "jsx": true
     }
   },
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "parser": "babel-eslint",
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["react", "jsx-a11y", "import"]
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier", "prettier/react"],
+  "plugins": ["react", "prettier"],
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "detect"
+    },
+    "propWrapperFunctions": [
+      "forbidExtraProps",
+      {"property": "freeze", "object": "Object"},
+      {"property": "myFavoriteWrapper"}
+    ],
+    "linkComponents": [
+      "Hyperlink",
+      {"name": "Link", "linkAttribute": "to"}
+    ]
+  }
 }
