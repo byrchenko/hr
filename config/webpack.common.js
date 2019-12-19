@@ -25,7 +25,7 @@ module.exports = {
 
             /* Image loader */
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|jpg|gif)$/,
                 use: ['file-loader'],
             },
 
@@ -45,6 +45,25 @@ module.exports = {
                         presets: ['@babel/preset-react'],
                     },
                 },
+            },
+
+            /* SVG loader */
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ['@babel/preset-env', '@babel/preset-react'],
+                        },
+                    },
+                    {
+                        loader: "react-svg-loader",
+                        options: {
+                            jsx: true // true outputs JSX tags
+                        }
+                    }
+                ]
             },
         ],
     },
