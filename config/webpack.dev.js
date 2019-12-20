@@ -15,20 +15,17 @@ module.exports = merge(common, {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: true,
-            },
-          },
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
           {
             loader: 'css-loader',
             options: {
-              modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
-            },
+              modules: true,
+              sourceMap: true
+            }
           },
+          // Compiles Sass to CSS
           'sass-loader',
         ],
       },
