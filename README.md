@@ -79,6 +79,7 @@ Build приложения в определённую папку
         
     - **webpack.prod.test** - for testing before production   
         - bundle-analyzer  
+        
         *Сроки:* 16 часов
     
 2. Создание 2 Dockerfile и docker-compose: 
@@ -86,6 +87,7 @@ Build приложения в определённую папку
     - **Dockerfile_dev** - запуск в development mode (webpack.dev)
     - **Dockerfile** - build приложения
     - **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
+    
     *Сроки:* 4 часа
 
 3. Развёртывание b2b (Валера)  
@@ -102,6 +104,7 @@ Build приложения в определённую папку
 
     - ConnectedRouter
     - GSAP  
+    
     *Сроки:* 12 часов
 
 ##### 0.x.0 - создание + тестирование  модели данных (Redux)
