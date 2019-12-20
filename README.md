@@ -61,48 +61,48 @@ Build приложения в определённую папку
    
 ##### 0.1.0 - интеграция
 
-Cоздание 4-х webpack конфигов:
+1. Cоздание 4-х webpack конфигов:
 
-- **webpack.common** 
-    - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
-    react-svg-loader(svg), sass-loader(scss, sass); <<< каждый loader делать отдельной сущностью 
-    - подключение плагинов:
-        - CleanWebpackPlugin - очистка build директории
-        - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
-- **webpack.dev** - sass, file, svg loaders(from webpack.common), dev-server
-- **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);   
+    - **webpack.common** 
+        - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
+        react-svg-loader(svg), sass-loader(scss, sass); <<< каждый loader делать отдельным обьектом 
+        - подключение плагинов:
+            - CleanWebpackPlugin - очистка build директории
+            - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
+    - **webpack.dev** - sass, file, svg loaders(from webpack.common), dev-server
+    - **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);   
+        
+        Плагины: 
+        
+        - UglifyJsPlugin - js minification (destination "build/assets/js")
+        - MiniCssExtractPlugin - css minification (destination "build/assets/css")
+        
+    - **webpack.prod.test** - for testing before production   
+        - bundle-analyzer  
+        *Сроки:* 16 часов
     
-    Плагины: 
-    
-    - UglifyJsPlugin - js minification (destination "build/assets/js")
-    - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-    
-- **webpack.prod.test** - for testing before production   
-    - bundle-analyzer  
-    *Сроки:* 16 часов
-    
-Создание 2 Dockerfile и docker-compose: 
+2. Создание 2 Dockerfile и docker-compose: 
 
-- **Dockerfile_dev** - запуск в development mode (webpack.dev)
-- **Dockerfile** - build приложения
-- **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
-*Сроки:* 4 часа
+    - **Dockerfile_dev** - запуск в development mode (webpack.dev)
+    - **Dockerfile** - build приложения
+    - **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
+    *Сроки:* 4 часа
 
-Развёртывание b2b (Валера)  
-Cтруктура: 
- 
-- **/app** - front  
-- **/api** - api  
-- **/bitrix** - битрикс  
-- **docker-compose.yml** - запуск полного приложения  
+3. Развёртывание b2b (Валера)  
+    Cтруктура: 
+     
+    - **/app** - front  
+    - **/api** - api  
+    - **/bitrix** - битрикс  
+    - **docker-compose.yml** - запуск полного приложения  
     
 *Сроки:* 8 часов
 
-Освоение технологий:
+4. Освоение технологий:
 
-- ConnectedRouter
-- GSAP  
-*Сроки:* 12 часов
+    - ConnectedRouter
+    - GSAP  
+    *Сроки:* 12 часов
 
 ##### 0.x.0 - создание + тестирование  модели данных (Redux)
 - ApiInterface
