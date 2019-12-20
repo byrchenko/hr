@@ -17,12 +17,6 @@ module.exports = {
 
     module: {
         rules: [
-            /* Style loader */
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
-
             /* Image loader */
             {
                 test: /\.(png|jpg|gif)$/,
@@ -39,24 +33,14 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-react'],
-                    },
-                },
+                use: ["babel-loader"]
             },
 
             /* SVG loader */
             {
                 test: /\.svg$/,
                 use: [
-                    {
-                        loader: "babel-loader",
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react'],
-                        },
-                    },
+                    "babel-loader",
                     {
                         loader: "react-svg-loader",
                         options: {

@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import css from './Test.scss';
-import Clock from './_svg/Clock.svg';
+import React from "react";
+import PropTypes from "prop-types";
+import css from "./Test.scss";
+import Clock from "./_svg/Clock.svg";
 
 const Test = () => {
-  return (
-    <div className={css.index}>
-      {'Test'}
+	return (
+		<div className={css.index}>
+			{"Test"}
 
-      <Clock />
-    </div>
-  );
+			<Clock />
+		</div>
+	);
 };
 
 Test.propTypes = {};

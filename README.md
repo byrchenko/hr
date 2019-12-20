@@ -20,8 +20,23 @@ ___
 - Reselect + re-reselect (selectors for Redux)
 - ConnectedRouter
 - GSAP (animation)
-- Jest (testing)
+- Jest + Enzyme (testing) 
 - Docker (deployment)
+
+### Structure
+
+- **src/**   
+    Папка с исходым кодом
+- **config/**   
+    Глобальные конфиги:
+    - *webpack.common* - основная конфигурация webpack
+    - *webpack.dev* - конфиг для  development'a
+    - *webpack.prod* - конфиг для production'a
+- **build/**   
+    Build приложения  
+    - *static/* - assets
+    - index.html
+  
 
 ### Versions
 
