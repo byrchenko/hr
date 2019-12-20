@@ -35,7 +35,7 @@ ___
 - **build/**   
     Build приложения  
     - *static/* - assets
-    - index.html
+    - *index.html*
   
 
 ### Versions
