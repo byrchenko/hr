@@ -79,6 +79,7 @@ Cоздание 4-х webpack конфигов:
     *Сроки:* 16 часов
     
 Создание 2 Dockerfile и docker-compose: 
+
 - Dockerfile_dev - запуск в development mode (webpack.dev)
 - Dockerfile - build приложения
 - docker-compose - проброс папок в контейнеры, запуск контейнеров  
