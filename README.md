@@ -76,6 +76,7 @@ Cоздание 4-х webpack конфигов:
     
     - UglifyJsPlugin - js minification (destination "build/assets/js")
     - MiniCssExtractPlugin - css minification (destination "build/assets/css")
+    
 - **webpack.prod.test** - for testing before production   
     - bundle-analyzer  
     *Сроки:* 16 часов
@@ -89,11 +90,11 @@ Cоздание 4-х webpack конфигов:
 
 Развёртывание b2b (Валера)
 - структура:   
-**/app** - front  
-**/api** - api  
-**/bitrix** - битрикс  
-**docker-compose.yml** - запуск полного приложения
-*Сроки:* 8 часов
+    **/app** - front  
+    **/api** - api  
+    **/bitrix** - битрикс  
+    **docker-compose.yml** - запуск полного приложения
+    *Сроки:* 8 часов
 
 Освоение технологий:
 - ConnectedRouter
