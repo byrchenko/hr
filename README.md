@@ -42,6 +42,7 @@ ___
 
 ##### 0.0.0 - подготовительная
 Выбор компонентов сборки, обдумывание deployment'a
+
 - **webpack.config (dev, prod)**
     - dev: dev-server, source-maps
     - prod: minify, optimize assets
@@ -80,9 +81,9 @@ Cоздание 4-х webpack конфигов:
     
 Создание 2 Dockerfile и docker-compose: 
 
-- Dockerfile_dev - запуск в development mode (webpack.dev)
-- Dockerfile - build приложения
-- docker-compose - проброс папок в контейнеры, запуск контейнеров  
+- **Dockerfile_dev** - запуск в development mode (webpack.dev)
+- **Dockerfile** - build приложения
+- **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
 *Сроки:* 4 часа
 
 Развёртывание b2b (Валера)
