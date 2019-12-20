@@ -73,6 +73,7 @@ Cоздание 4-х webpack конфигов:
 - **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);   
     
     Плагины: 
+    
     - UglifyJsPlugin - js minification (destination "build/assets/js")
     - MiniCssExtractPlugin - css minification (destination "build/assets/css")
 - **webpack.prod.test** - for testing before production   
