@@ -61,7 +61,7 @@ Build приложения в определённую папку
    
 ##### 0.1.0 - интеграция
 
-1. Cоздание 4-х webpack конфигов:
+1. Cоздание 3-х webpack конфигов и конфиг loader'ов и plugin'ов:
 
     - **loaders** 
         - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
