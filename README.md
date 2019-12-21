@@ -63,20 +63,16 @@ Build приложения в определённую папку
 
 1. Cоздание 4-х webpack конфигов:
 
-    - **webpack.common** 
+    - **loaders** 
         - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
         react-svg-loader(svg), sass-loader(scss, sass); <<< каждый loader делать отдельным обьектом 
-        - подключение плагинов:
-            - CleanWebpackPlugin - очистка build директории
-            - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
-    - **webpack.dev** - sass, file, svg loaders(from webpack.common), dev-server
-    - **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);   
-        
-        Плагины: 
-        
+    - **plugins**:
+        - CleanWebpackPlugin - очистка build директории
+        - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
         - UglifyJsPlugin - js minification (destination "build/assets/js")
         - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-        
+    - **webpack.dev** - sass, file, svg loaders(from webpack.common), dev-server
+    - **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);
     - **webpack.prod.test** - for testing before production   
         - bundle-analyzer  
         
