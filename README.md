@@ -71,8 +71,8 @@ Build приложения в определённую папку
         - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
         - UglifyJsPlugin - js minification (destination "build/assets/js")
         - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-    - **webpack.dev** - sass, file, svg loaders(from webpack.common), dev-server
-    - **webpack.prod** - file, svg loaders (from webpack.common) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);
+    - **webpack.dev** - loaders (loaders.js), dev-server
+    - **webpack.prod** - loaders (loaders.js) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);
     - **webpack.prod.test** - for testing before production   
         - bundle-analyzer  
         
