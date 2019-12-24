@@ -125,3 +125,10 @@ Cоздание router'a
 ##### 0.x.0 - Тестирование
 
 Тестирование    
+
+### Team
+___
+
+[![Dmitry Byrchenko](https://avatars2.githubusercontent.com/u/15804241?s=460&v=4)](https://github.com/byrchenko)
+
+[Dmitry Byrchenko](https://github.com/byrchenko)
