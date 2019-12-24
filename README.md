@@ -7,7 +7,7 @@ ___
 
 ### Table of contents
 * [Stack](#stack)
-* [Structture](#structure)
+* [Structture](#Structure)
 * [Versions](#versions)
     * [0.0.0](#0.0.0)
     * [0.1.0](#0.1.0)
