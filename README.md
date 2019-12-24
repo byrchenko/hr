@@ -8,15 +8,16 @@ HR module for Bitrix24 Veloplaneta
 ___ 
 
 ### Table of contents
+___
 * [Stack](#markdown-header-stack)
-* [Structture](#markdown-header-structure)
+* [Structure](#markdown-header-structure)
 * [Versions](#markdown-header-versions)
     * [0.0.0](#markdown-header-000)
     * [0.1.0](#markdown-header-010)
 
 
 ### Stack
-
+___
 - React
 - Redux (state container)
 - Redux-Thunk
@@ -27,7 +28,7 @@ ___
 - Docker (deployment)
 
 ### Structure
-
+___
 - **src/**   
     Папка с исходым кодом
 - **config/**   
@@ -42,7 +43,7 @@ ___
   
 
 ### Versions
-
+___
 ##### 0.0.0
 Выбор компонентов сборки, обдумывание deployment'a
 
