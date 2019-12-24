@@ -126,7 +126,7 @@ Cоздание router'a
 
 Тестирование    
 
-### Team
+### Developer
 ___
 
 [![Dmitry Byrchenko](https://avatars2.githubusercontent.com/u/15804241?s=144)](https://github.com/byrchenko)
