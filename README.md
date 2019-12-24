@@ -9,8 +9,8 @@ ___
 * [Stack](#markdown-header-stack)
 * [Structture](#markdown-header-structure)
 * [Versions](#markdown-header-versions)
-    * [0.0.0](#markdown-header-0.0.0)
-    * [0.1.0](#markdown-header-0.1.0)
+    * [0.0.0](#markdown-header-000)
+    * [0.1.0](#markdown-header-010)
 
 
 ### Stack
