@@ -1,52 +1,42 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const paths = require('./paths');
+const plugins = require('./plugins');
+const loaders = require('./loaders');
 
-module.exports = merge(common, {
+module.exports = {
+    entry: paths.entryProd,
+
+    output: {
+        filename: 'bundle.js',
+        path: paths.outputProd,
+    },
+
     mode: 'production',
+
     devtool: 'source-map',
+
+    resolve: {
+        extensions: ['*', '.js', '.jsx'],
+    },
+
     optimization: {
         minimizer: [
-            new UglifyJsPlugin({
-                test: /\.jsx?$/,
-                parallel: true,
-                include: /\/src/,
-            }),
+            plugins.jsMin
         ],
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: true,
-                },
-            },
-        },
     },
+
     module: {
         rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: false,
-                        },
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: {
-                                localIdentName: '[name]__[local]--[hash:base64:5]',
-                            },
-                        },
-                    },
-                    'sass-loader',
-                ],
-            },
+            loaders.babel,
+            loaders.font,
+            loaders.images,
+            loaders.svg,
+            loaders.sassMin
         ],
     },
-});
+
+    plugins: [
+        plugins.cleanBuild,
+        plugins.createHTML,
+        plugins.cssMin,
+    ],
+};

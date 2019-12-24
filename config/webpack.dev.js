@@ -1,34 +1,44 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
+const paths = require('./paths');
+const plugins = require('./plugins');
+const loaders = require('./loaders');
 
-module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'cheap-eval-source-map',
-  devServer: {
-    contentBase: './build',
-    open: true,
-    port: 3000,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true
-            }
-          },
-          // Compiles Sass to CSS
-          'sass-loader',
+const PORT = 3003;
+
+module.exports = {
+    entry: paths.entryDev,
+
+    output: {
+        filename: 'bundle.js',
+        path: paths.outputDev,
+    },
+
+    mode: 'development',
+
+    devtool: 'cheap-eval-source-map',
+
+    devServer: {
+        contentBase: path.resolve(__dirname, "../build"),
+        open: true,
+        port: PORT,
+    },
+
+    resolve: {
+        extensions: ['*', '.js', '.jsx'],
+    },
+
+    module: {
+        rules: [
+            loaders.babel,
+            loaders.font,
+            loaders.images,
+            loaders.svg,
+            loaders.sass
         ],
-      },
+    },
+
+    plugins: [
+        plugins.cleanBuild,
+        plugins.createHTML,
     ],
-  },
-});
+};

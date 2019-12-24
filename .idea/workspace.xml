@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee87a3d-7989-4247-8ab2-dedf1a555906" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/loaders.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/loaders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/paths.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/paths.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/plugins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/webpack.dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/webpack.dev.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/webpack.prod.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/webpack.prod.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_sass/_fonts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/_sass/_fonts.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,9 +24,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="React Functional Component" />
         <option value="SCSS" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -23,7 +34,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1V3iP3BrpfPHS6tfnd7e7TOxhv5" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -41,17 +54,18 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/config" />
       <recent name="$PROJECT_DIR$" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/config" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -83,6 +97,9 @@
       <workItem from="1576746664430" duration="3537000" />
       <workItem from="1576830166460" duration="13345000" />
       <workItem from="1576934853814" duration="1567000" />
+      <workItem from="1577095461274" duration="21847000" />
+      <workItem from="1577189488732" duration="847000" />
+      <workItem from="1577190770053" duration="5191000" />
     </task>
     <servers />
   </component>
@@ -90,10 +107,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2002" y="669" width="632" height="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576687489298">
+    <state x="2002" y="669" width="632" height="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577119468496">
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
-    <state x="2002" y="669" width="632" height="404" key="#com.intellij.fileTypes.FileTypeChooser/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1576687489298" />
+    <state x="2002" y="669" width="632" height="404" key="#com.intellij.fileTypes.FileTypeChooser/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1577119468496" />
     <state x="1933" y="645" width="731" height="711" key="EditFileWatcherDialog" timestamp="1576679336467">
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
@@ -102,18 +119,18 @@
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
     <state x="2087" y="622" width="424" height="491" key="FileChooserDialogImpl/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1576830388684" />
-    <state x="1793" y="499" width="1022" height="737" key="SettingsEditor" timestamp="1576836344144">
-      <screen x="1536" y="0" width="1536" height="1728" />
+    <state x="514" y="506" width="1022" height="737" key="SettingsEditor" timestamp="1577190755373">
+      <screen x="70" y="27" width="1466" height="1701" />
     </state>
-    <state x="1793" y="499" width="1022" height="737" key="SettingsEditor/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1576836344144" />
+    <state x="514" y="506" width="1022" height="737" key="SettingsEditor/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1577190755373" />
     <state x="1914" y="478" width="770" height="779" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576836193506">
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
     <state x="1914" y="478" width="770" height="779" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1576836193506" />
-    <state x="1968" y="407" key="run.anything.popup" timestamp="1576509101543">
+    <state x="1968" y="407" key="run.anything.popup" timestamp="1577115668841">
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
-    <state x="1968" y="407" key="run.anything.popup/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1576509101543" />
+    <state x="1968" y="407" key="run.anything.popup/70.27.1466.1701/1536.0.1536.1728@1536.0.1536.1728" timestamp="1577115668841" />
     <state x="1967" y="401" width="672" height="678" key="search.everywhere.popup" timestamp="1576679046459">
       <screen x="1536" y="0" width="1536" height="1728" />
     </state>
