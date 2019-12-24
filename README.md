@@ -1,4 +1,4 @@
-# ![WebApp](https://bitbucket.org/skalar_team/veloplaneta_hr_front/preview.jpg)
+# ![Veloplaneta HR](hhttps://bitbucket.org/skalar_team/veloplaneta_hr_front/src/doc/preview.jpg)
 
 # Veloplaneta HR module
 ___
