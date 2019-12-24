@@ -17,11 +17,11 @@ module.exports = {
 
     devtool: 'cheap-eval-source-map',
 
-    devServer: {
-        contentBase: path.resolve(__dirname, "../build"),
-        open: true,
-        port: PORT,
-    },
+    // devServer: {
+    //     contentBase: path.resolve(__dirname, "../build"),
+    //     open: true,
+    //     port: PORT,
+    // },
 
     resolve: {
         extensions: ['*', '.js', '.jsx'],

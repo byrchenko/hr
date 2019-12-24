@@ -43,8 +43,7 @@ module.exports = {
      * Analyze bundle
      */
     bundleAnalyzer: new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',
         generateStatsFile: true,
-        statsFilename: path.resolve(__dirname, "stats.json")
+        statsFilename: "/stats.json"
     })
 };

@@ -4,7 +4,7 @@ services:
   client:
     build: ./
     container_name: valoplaneta_hr_front
-    command: npm run build
+    command: npm run build && npm
     volumes:
       - .:/app
 #      - destination_path/build/:/app
