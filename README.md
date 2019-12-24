@@ -6,8 +6,8 @@ HR module for Bitrix24 Veloplaneta
 ___ 
 
 ### Table of contents
-* [Stack](#stack)
-* [Structture](#Structure)
+* [Stack](#header-stack)
+* [Structture](#structure)
 * [Versions](#versions)
     * [0.0.0](#0.0.0)
     * [0.1.0](#0.1.0)
