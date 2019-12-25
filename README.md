@@ -65,20 +65,20 @@ Build приложения в определённую папку
    
 ##### 0.1.0
 
-1. Cоздание 3-х webpack конфигов и конфиг loader'ов и plugin'ов:
-
-    - **loaders** 
-        - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
-        react-svg-loader(svg), sass-loader(scss, sass); <<< каждый loader делать отдельным обьектом 
-    - **plugins**:
+1. Cоздание 2-х webpack:
+        
+    - **loaders.js** 
+        - инициализация всех loader'ов для production и development.   
+        Подключение resolve-url-loader для правильного импорта шрифтов и использования url(<some picture>)
+    - **plugins.js**:
         - CleanWebpackPlugin - очистка build директории
         - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
         - UglifyJsPlugin - js minification (destination "build/assets/js")
         - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-    - **webpack.dev** - loaders (loaders.js), dev-server
-    - **webpack.prod** - loaders (loaders.js) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);
-    - **webpack.prod.test** - for testing before production   
-        - bundle-analyzer  
+        - BundleAnalyzer - анализ production bundle
+    - **path.js** - декларация путей для конфигов
+    - **webpack.dev** - подключение loader'ов и plugin'ов, настройка devServer
+    - **webpack.prod** - подключение loader'ов и plugin'ов, настройки minification
         
         *Сроки:* 16 часов
     
