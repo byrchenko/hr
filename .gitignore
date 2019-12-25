@@ -1,5 +1,7 @@
+.idea/
 build/
+server/
 node_modules/
-package-lock.json
+
 .env
-server/*
+package-lock.json
