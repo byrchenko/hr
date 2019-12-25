@@ -11,7 +11,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
             outputPath: paths.imagesBuild,
-            publicPath: paths.imagesBuild,
+            publicPath: paths.imagesPublic,
         },
     },
 
@@ -23,7 +23,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
             outputPath: paths.fontsBuild,
-            publicPath: paths.fontsBuild,
+            publicPath: paths.fontsPublic,
         },
     },
 
@@ -58,16 +58,24 @@ module.exports = {
     sass: {
         test: /\.s[ac]ss$/i,
         use: [
-            'style-loader',
+            {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    hmr: true,
+                    // publicPath: paths.cssBuild,
+                },
+            },
             {
                 loader: 'css-loader',
                 options: {
-                    modules: true,
-                    sourceMap: true
-                }
+                    sourceMap: true,
+                    modules: {
+                        localIdentName: '[name]__[local]--[hash:base64:5]',
+                    },
+                },
             },
             "resolve-url-loader",
-            'sass-loader',
+            'sass-loader'
         ],
     },
 

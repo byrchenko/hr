@@ -38,5 +38,7 @@ module.exports = {
         plugins.cleanBuild,
         plugins.createHTML,
         plugins.cssMin,
+        plugins.obfuscator,
+        plugins.bundleAnalyzer
     ],
 };

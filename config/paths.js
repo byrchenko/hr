@@ -9,6 +9,8 @@ module.exports = {
     outputDev: path.resolve(__dirname, '../build'),
     cssBuild: path.resolve(staticBuild, 'css'),
     htmlTemplate: path.resolve(__dirname, '../src/index.html'),
-    fontsBuild: '/static/fonts',
-    imagesBuild: '/static/images'
+    fontsBuild: 'static/fonts',
+    fontsPublic: '/static/fonts', // needed for resolve-url-loader
+    imagesBuild: 'static/images',
+    imagesPublic: '/static/images', // needed for resolve-url-loader
 };

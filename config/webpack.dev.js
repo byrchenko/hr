@@ -11,17 +11,16 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: paths.outputDev,
+        publicPath: "/"
     },
 
     mode: 'development',
 
-    devtool: 'cheap-eval-source-map',
+    devtool: 'inline-source-map',
 
-    // devServer: {
-    //     contentBase: path.resolve(__dirname, "../build"),
-    //     open: true,
-    //     port: PORT,
-    // },
+    devServer: {
+        contentBase: path.resolve(__dirname, "../build"),
+    },
 
     resolve: {
         extensions: ['*', '.js', '.jsx'],
@@ -40,5 +39,6 @@ module.exports = {
     plugins: [
         plugins.cleanBuild,
         plugins.createHTML,
+        plugins.cssMin,
     ],
 };

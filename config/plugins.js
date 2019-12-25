@@ -5,6 +5,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const JavaScriptObfuscator = require('webpack-obfuscator');
 
 module.exports = {
 
@@ -34,7 +35,7 @@ module.exports = {
      * Minify css
      */
     cssMin: new MiniCssExtractPlugin({
-        filename: '/static/css/[name].css',
+        filename: './static/css/[name].css',
         chunkFilename: '[id].css',
         ignoreOrder: false,
     }),
@@ -43,7 +44,28 @@ module.exports = {
      * Analyze bundle
      */
     bundleAnalyzer: new BundleAnalyzerPlugin({
-        generateStatsFile: true,
-        statsFilename: "/stats.json"
+        analyzerMode: "disabled",
+        generateStatsFile: true
+    }),
+
+    /**
+     * Makes bundle unreadable
+     */
+    obfuscator: new JavaScriptObfuscator({
+        compact: true,
+        controlFlowFlattening: false,
+        deadCodeInjection: false,
+        debugProtection: false,
+        debugProtectionInterval: false,
+        disableConsoleOutput: true,
+        identifierNamesGenerator: 'hexadecimal',
+        log: false,
+        renameGlobals: false,
+        rotateStringArray: true,
+        selfDefending: true,
+        stringArray: true,
+        stringArrayEncoding: false,
+        stringArrayThreshold: 0.75,
+        unicodeEscapeSequence: false
     })
 };
