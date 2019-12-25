@@ -1,10 +1,27 @@
 version: '3'
 
 services:
-  client:
+  development:
     build: ./
-    container_name: valoplaneta_hr_front
-    command: npm run build && npm
+    container_name: velo_hr_dev
+    command: npm run dev
     volumes:
-      - .:/app
-#      - destination_path/build/:/app
+      - ./:/client
+    ports:
+      - "33:3333"
+  production:
+    build: ./
+    container_name: velo_hr_prod
+    command: npm run dev
+    volumes:
+      - ./:/client
+      #- <path to build>:/client/build
+  analyze:
+    build: ./
+    container_name: velo_hr_analyze
+    command: npm run analyze
+    volumes:
+      - ./:/client
+      #- <path to build>:/client/build
+    ports:
+      - "35:72"
