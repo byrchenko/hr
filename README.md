@@ -67,19 +67,21 @@ Build приложения в определённую папку
 
 1. Cоздание 2-х webpack:
         
-    - **loaders.js** 
-        - инициализация всех loader'ов для production и development.   
-        Подключение resolve-url-loader для правильного импорта шрифтов и использования url(<some picture>)
-    - **plugins.js**:
-        - CleanWebpackPlugin - очистка build директории
-        - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
-        - UglifyJsPlugin - js minification (destination "build/assets/js")
-        - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-        - BundleAnalyzer - анализ production bundle
-    - **path.js** - декларация путей для конфигов
-    - **webpack.dev** - подключение loader'ов и plugin'ов, настройка devServer
-    - **webpack.prod** - подключение loader'ов и plugin'ов, настройки minification
-        
+    - **loaders.js** - configuring webpack loaders
+    - **plugins.js** - configuring webpack plugins
+    - **path.js** - webpack config paths
+    - **webpack.dev** 
+        - dev server configuration
+        - loading fonts, correct import links in scss (resolve-url-loader)
+        - loading images, svg
+        - scss compiling
+    - **webpack.prod** 
+        - bundle minification (terser plugin)
+        - code splitting (dynamic import)
+        - minification css
+        - make bundle unreadable (obfuscator)
+        - analyze bundle (bundle analyzer)
+       
         *Сроки:* 16 часов
     
 2. Создание 2 Dockerfile и docker-compose: 
