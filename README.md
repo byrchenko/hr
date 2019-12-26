@@ -84,11 +84,10 @@ Build приложения в определённую папку
        
         *Сроки:* 16 часов
     
-2. Создание 2 Dockerfile и docker-compose: 
+2. Создание Dockerfile и docker-compose: 
 
-    - **Dockerfile_dev** - запуск в development mode (webpack.dev)
     - **Dockerfile** - build приложения
-    - **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
+    - **../docker-compose** - создание контейнеров под продакшен, разработку, devserver и анализа билда  
     
     *Сроки:* 4 часа
 
