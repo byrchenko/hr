@@ -7,7 +7,7 @@ import img from "./_images/1.jpeg";
 const Test = () => {
 	return (
 		<div className={css.index}>
-			{"Test"}
+			{"Test1"}
 
 			<Clock />
 

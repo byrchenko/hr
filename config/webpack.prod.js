@@ -19,9 +19,13 @@ module.exports = {
     },
 
     optimization: {
+        minimize: true,
         minimizer: [
-            plugins.jsMin
+            plugins.terser
         ],
+        splitChunks: {
+            chunks: 'all',
+        },
     },
 
     module: {

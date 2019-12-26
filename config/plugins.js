@@ -2,19 +2,34 @@ const path = require("path");
 const paths = require('./paths');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const JavaScriptObfuscator = require('webpack-obfuscator');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 
     /**
-     * Js minify
+     * Minify js
      */
-    jsMin: new UglifyJsPlugin({
-        test: /\.jsx?$/,
-        parallel: true,
+    terser: new TerserPlugin({
+        sourceMap: false,
+        extractComments: false,
+        terserOptions: {
+            ecma: undefined,
+            warnings: false,
+            parse: {},
+            compress: {},
+            mangle: true,
+            module: false,
+            output: null,
+            toplevel: false,
+            nameCache: null,
+            ie8: false,
+            keep_classnames: undefined,
+            keep_fnames: false,
+            safari10: false,
+        }
     }),
 
     /**
