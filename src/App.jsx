@@ -1,43 +1,59 @@
 import React from "react";
 import css from "./App.scss";
-import Test from "./Test";
 
 class App extends React.Component {
 
+    /**
+     *
+     * @param props
+     */
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            component: null
+        }
+    }
+
+    /**
+     *
+     */
+    componentDidMount() {
+        import("./Test")
+            .then(component => {
+                this.setState({component: component.default})
+            });
+    }
+
 	/**
 	 *
-	 * @param props
+	 * @returns {null|*}
 	 */
-	constructor(props) {
-		super(props);
+	renderTestComponent() {
+		const {component: Component} = this.state;
 
-		this.state = {
-			component: null
+		if (!Component) {
+			/*
+			 * TODO: create Loading component
+			 * return <Loading />
+			*/
+
+			return null;
 		}
+
+		return <Component />
 	}
 
-	/**
-	 *
-	 */
-	componentDidMount() {
-		import("./Test").then(component => {
-
-			this.setState({component: component.default()})
-		})
-	}
-
-	/**
-	 *
-	 */
-	render() {
-		const {component} = this.state;
-
-		return (
-			<div className={css.index}>
-				{component}
-			</div>
-		)
-	}
+    /**
+     *
+     */
+    render() {
+        return (
+            <div className={css.index}>
+                {this.renderTestComponent()}
+            </div>
+        )
+    }
 }
 
 export default App;

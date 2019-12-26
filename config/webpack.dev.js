@@ -18,10 +18,6 @@ module.exports = {
 
     devtool: 'inline-source-map',
 
-    devServer: {
-        contentBase: path.resolve(__dirname, "../build"),
-    },
-
     resolve: {
         extensions: ['*', '.js', '.jsx'],
     },

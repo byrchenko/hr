@@ -4,20 +4,20 @@ import css from "./Test.scss";
 import Clock from "./_svg/Clock.svg";
 import img from "./_images/1.jpeg";
 
-const Test = () => {
+Test.propTypes = {};
+
+Test.defaultProps = {};
+
+function Test() {
 	return (
 		<div className={css.index}>
-			{"Test1"}
+			{"Test6"}
 
 			<Clock />
 
 			<img src={img} alt="" />
 		</div>
 	);
-};
-
-Test.propTypes = {};
-
-Test.defaultProps = {};
+}
 
 export default Test;
