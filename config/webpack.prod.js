@@ -1,6 +1,7 @@
 const paths = require('./paths');
 const plugins = require('./plugins');
 const loaders = require('./loaders');
+const {PUBLIC_PATH} = process.env;
 
 module.exports = {
     entry: paths.entryProd,
@@ -9,7 +10,7 @@ module.exports = {
         filename: 'bundle.js',
         chunkFilename: "[id].js",
         path: paths.outputProd,
-        publicPath: "./static/"
+        publicPath: PUBLIC_PATH
     },
 
     mode: 'production',

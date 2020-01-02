@@ -9,9 +9,6 @@ module.exports = {
     images: {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'file-loader',
-        options: {
-            publicPath: paths.imagesPublic,
-        },
     },
 
     /**
@@ -20,9 +17,6 @@ module.exports = {
     font: {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: 'file-loader',
-        options: {
-            publicPath: paths.fontsPublic,
-        },
     },
 
     /**
