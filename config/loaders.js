@@ -10,7 +10,6 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'file-loader',
         options: {
-            outputPath: paths.imagesBuild,
             publicPath: paths.imagesPublic,
         },
     },
@@ -22,7 +21,6 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: 'file-loader',
         options: {
-            outputPath: paths.fontsBuild,
             publicPath: paths.fontsPublic,
         },
     },
@@ -89,7 +87,6 @@ module.exports = {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
                     hmr: false,
-                    publicPath: paths.cssBuild,
                 },
             },
             {

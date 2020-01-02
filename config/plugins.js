@@ -43,14 +43,15 @@ module.exports = {
     createHTML: new HtmlWebpackPlugin({
         template: paths.htmlTemplate,
         hash: true,
-        inject: false
+        inject: false,
+        filename: "../index.html"
     }),
 
     /**
      * Minify css
      */
     cssMin: new MiniCssExtractPlugin({
-        filename: './static/css/[name].css',
+        filename: '[name].css',
         chunkFilename: '[id].css',
         ignoreOrder: false,
     }),
