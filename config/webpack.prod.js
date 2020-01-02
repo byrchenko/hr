@@ -7,8 +7,9 @@ module.exports = {
 
     output: {
         filename: 'bundle.js',
+        chunkFilename: "./[name].[ext]",
         path: paths.outputProd,
-        publicPath: "./"
+        publicPath: "./static"
     },
 
     mode: 'production',
@@ -25,7 +26,7 @@ module.exports = {
             plugins.terser
         ],
         splitChunks: {
-            chunks: 'all',
+            chunks: 'all'
         },
     },
 
