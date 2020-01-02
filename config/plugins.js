@@ -35,7 +35,9 @@ module.exports = {
     /**
      * Clean build directory
      */
-    cleanBuild: new CleanWebpackPlugin(),
+    cleanBuild: new CleanWebpackPlugin({
+        dangerouslyAllowCleanPatternsOutsideProject: ['**/*', path.join(process.cwd(), '../**/*')],
+    }),
 
     /**
      * Creates index.html for build

@@ -7,9 +7,9 @@ module.exports = {
 
     output: {
         filename: 'bundle.js',
-        chunkFilename: "./[name].[ext]",
+        chunkFilename: "[id].js",
         path: paths.outputProd,
-        publicPath: "./static"
+        publicPath: "./static/"
     },
 
     mode: 'production',

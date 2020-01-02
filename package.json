@@ -5,7 +5,7 @@
   "author": "Dmitriy Byrchenko <byrchenko.dev@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack --config ./config/webpack.dev.js --watch",
+    "dev": "webpack --config ./config/webpack.prod.js --watch",
     "build": "webpack --config ./config/webpack.prod.js",
     "analyze": "webpack --config ./config/webpack.prod.js && webpack-bundle-analyzer ./build/stats.json -h 'localhost' -p 72",
     "lint": "eslint src -c .eslintrc.json --ext js,jsx",
