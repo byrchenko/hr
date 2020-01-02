@@ -1,5 +1,6 @@
 const paths = require('./paths');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {PUBLIC_PATH} = process.env;
 
 module.exports = {
 
@@ -9,6 +10,9 @@ module.exports = {
     images: {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'file-loader',
+        options: {
+            publicPath: PUBLIC_PATH
+        }
     },
 
     /**
