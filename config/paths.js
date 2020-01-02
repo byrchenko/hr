@@ -8,6 +8,6 @@ module.exports = {
     outputProd: path.resolve(__dirname, '../build/static'),
     outputDev: path.resolve(__dirname, '../build'),
     htmlTemplate: path.resolve(__dirname, '../src/index.html'),
-    fontsPublic: './static', // needed for resolve-url-loader
-    imagesPublic: './static', // needed for resolve-url-loader
+    fontsPublic: '', // needed for resolve-url-loader
+    imagesPublic: '', // needed for resolve-url-loader
 };
