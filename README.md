@@ -112,6 +112,7 @@ Build приложения в определённую папку
 
 1. Настройка Jest, Enzyme **(8h)**
 2. Api Service - тестирование всех http-методов **(16h)**
+    - g
 3. Добавление ядра Redux (reducer, actions,middleware, selectors), тестирование **(8h)**
 4. ConnectedRouter - создать страницы и связи между ними, разбор дизайна **(8h)**
 
