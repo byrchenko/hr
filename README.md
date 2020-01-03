@@ -65,28 +65,29 @@ Build приложения в определённую папку
    
 ##### 0.1.0
 
-1. Cоздание 3-х webpack конфигов и конфиг loader'ов и plugin'ов:
-
-    - **loaders** 
-        - подключение loader'ов: file-loader(*images:* png, jpg, gif; *fonts:* woff,woff2,eot,ttf,otf),
-        react-svg-loader(svg), sass-loader(scss, sass); <<< каждый loader делать отдельным обьектом 
-    - **plugins**:
-        - CleanWebpackPlugin - очистка build директории
-        - HtmlWebpackPlugin - генерирование index.html на основе созданного шаблона (src/index.html)
-        - UglifyJsPlugin - js minification (destination "build/assets/js")
-        - MiniCssExtractPlugin - css minification (destination "build/assets/css")
-    - **webpack.dev** - loaders (loaders.js), dev-server
-    - **webpack.prod** - loaders (loaders.js) extract to *"build/static/(fonts|images)"*, splitting into chunks, js-obfuscator(not readable js);
-    - **webpack.prod.test** - for testing before production   
-        - bundle-analyzer  
+1. Cоздание 2-х webpack:
         
+    - **loaders.js** - configuring webpack loaders
+    - **plugins.js** - configuring webpack plugins
+    - **path.js** - webpack config paths
+    - **webpack.dev** 
+        - dev server configuration
+        - loading fonts, correct import links in scss (resolve-url-loader)
+        - loading images, svg
+        - scss compiling
+    - **webpack.prod** 
+        - bundle minification (terser plugin)
+        - code splitting (dynamic import)
+        - minification css
+        - make bundle unreadable (obfuscator)
+        - analyze bundle (bundle analyzer)
+       
         *Сроки:* 16 часов
     
-2. Создание 2 Dockerfile и docker-compose: 
+2. Создание Dockerfile и docker-compose: 
 
-    - **Dockerfile_dev** - запуск в development mode (webpack.dev)
     - **Dockerfile** - build приложения
-    - **docker-compose** - проброс папок в контейнеры, запуск контейнеров  
+    - **../docker-compose** - создание контейнеров под продакшен, разработку, devserver и анализа билда  
     
     *Сроки:* 4 часа
 
@@ -107,24 +108,15 @@ Build приложения в определённую папку
     
     *Сроки:* 12 часов
 
-##### 0.x.0 - создание + тестирование  модели данных (Redux)
-- ApiInterface
-- reducers
-- actions
-- selectors (reselect)
-- работа с API, тестирование
+##### 0.2.0
 
-##### 0.x.0 - Router
+1. Настройка Jest, Enzyme **(8h)**
+2. Api Service - тестирование всех http-методов **(16h)**
+3. Добавление ядра Redux (reducer, actions,middleware, selectors), тестирование **(8h)**
+4. ConnectedRouter - создать страницы и связи между ними, разбор дизайна **(8h)**
 
-Cоздание router'a
+**Использовать TDD**
 
-##### 0.x.0 - Разработка компонентов
-
-Верстка компонентов
-
-##### 0.x.0 - Тестирование
-
-Тестирование    
 
 ### Developer
 ___
