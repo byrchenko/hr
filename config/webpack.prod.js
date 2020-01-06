@@ -1,7 +1,7 @@
 const paths = require('./paths');
 const plugins = require('./plugins');
 const loaders = require('./loaders');
-const {PUBLIC_PATH} = process.env;
+const PUBLIC_PATH = process.env.PUBLIC_PATH || "/hr/static";
 
 module.exports = {
     entry: paths.entryProd,
@@ -45,7 +45,7 @@ module.exports = {
         plugins.cleanBuild,
         plugins.createHTML,
         plugins.cssMin,
-        plugins.obfuscator,
+        // plugins.obfuscator,
         plugins.bundleAnalyzer
     ],
 };

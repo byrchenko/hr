@@ -2,8 +2,7 @@ const path = require('path');
 const paths = require('./paths');
 const plugins = require('./plugins');
 const loaders = require('./loaders');
-
-const PORT = 3003;
+const PUBLIC_PATH = process.env.PUBLIC_PATH || "/hr/static";
 
 module.exports = {
     entry: paths.entryDev,
@@ -11,7 +10,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: paths.outputDev,
-        publicPath: "/"
+        publicPath: PUBLIC_PATH
     },
 
     mode: 'development',
