@@ -1,5 +1,7 @@
 import React from "react";
 import css from "./App.scss";
+import {Provider} from "react-redux";
+import store from "./_store";
 
 class App extends React.Component {
 
@@ -50,7 +52,9 @@ class App extends React.Component {
     render() {
         return (
             <div className={css.index}>
-                {this.renderTestComponent()}
+				<Provider store={store}>
+					{this.renderTestComponent()}
+				</Provider>
             </div>
         )
     }

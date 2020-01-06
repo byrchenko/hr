@@ -1,12 +1,8 @@
-import ApiInterface from "./ApiService"
+import Api from "./ApiInterfaceAbstract"
+
 
 describe("ApiService", function() {
 
-	let Api;
-
-	beforeEach(() => {
-		Api = new ApiInterface();
-	});
 
 	/**
 	 * GENERATING REQUEST BODY

@@ -1,11 +1,4 @@
-class ApiService {
-
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		this.API_URL = process.env.API_URL || 'https://portal.veloplaneta.com.ua/hr/'
-	}
+class ApiInterfaceAbstract {
 
 	/**
 	 * Creating options for POST request
@@ -155,4 +148,4 @@ class ApiService {
 	}
 }
 
-export default ApiService;
+export default ApiInterfaceAbstract;
