@@ -67,7 +67,7 @@ class Router extends React.Component {
 					<Route path="/hr/assessment" render={this.renderAssessment()}/>
 					<Route path="/hr/settings" render={this.renderSettings()}/>
 					<Route path="/hr/processing" render={this.renderProcessing()}/>
-					<Route render={() => (<div>Miss</div>)}/>
+					<Route render={() => (<div>Oops.. 404</div>)}/>
 				</Switch>
 			</ConnectedRouter>
 		);

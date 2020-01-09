@@ -1,5 +1,6 @@
 const paths = require('./paths');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PUBLIC_PATH = process.env.PUBLIC_PATH || "/hr/static";
 
 module.exports = {
 
@@ -15,7 +16,11 @@ module.exports = {
      * Font loader
      */
     font: {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+        exclude: /src\/_svg/,
+        options: {
+            publicPath: PUBLIC_PATH,
+        },
         loader: 'file-loader',
     },
 
@@ -33,6 +38,7 @@ module.exports = {
      */
     svg: {
         test: /\.svg$/,
+        exclude: /src\/_fonts/,
         use: [
             "babel-loader",
             {

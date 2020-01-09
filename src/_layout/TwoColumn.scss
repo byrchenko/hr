@@ -1,0 +1,23 @@
+.index {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #eef2f4;
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.content {
+  flex-grow: 1;
+  margin-right: 22px;
+  background-color: #fff;
+}
+
+.sidebar {
+  width: 330px;
+  background-color: #fff;
+}

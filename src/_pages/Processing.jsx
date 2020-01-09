@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Processing.scss";
+import TwoColumnLayout from "../_layout/TwoColumn";
 
 class Processing extends React.Component {
 
 	render() {
 		return (
-			<div className={css.index}>
-				{"Processing"}
-			</div>
+			<TwoColumnLayout>
+				<div className={css.index}>
+					{"Processing"}
+				</div>
+			</TwoColumnLayout>
 		);
 	}
 }

@@ -1,1 +1,3 @@
-// TODO: create tests
+describe("Actions", function() {
+	it.todo('write some tests')
+});

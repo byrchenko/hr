@@ -1,7 +1,14 @@
-import Api from "./ApiInterfaceAbstract"
-
+import ApiInterface from "./ApiInterfaceAbstract";
+import API from "./ApiInterface";
+const {API_URL} = API;
 
 describe("ApiService", function() {
+
+	let Api;
+
+	beforeAll(() => {
+		Api = new ApiInterface();
+	});
 
 
 	/**
@@ -19,7 +26,8 @@ describe("ApiService", function() {
 
 			const sample = Api._createBody(data);
 
-			expect(sample.getAll('hello')).toEqual(['world']);
+
+			expect(sample instanceof FormData).toBeTruthy();
 		});
 
 		/**
@@ -80,40 +88,6 @@ describe("ApiService", function() {
 	});
 
 	/**
-	 * GENERATING PATCH OPTIONS
-	 */
-	describe("create PATCH options", function() {
-
-		/**
-		 *
-		 */
-		it("should generate POST options", function() {
-			const body = new FormData();
-
-			body.append('hello', 'world');
-
-			const sample = Api._createPatchOptions(body);
-
-			expect(sample).toEqual({
-				method: 'PATCH',
-				credentials: 'include',
-				body
-			})
-		});
-
-		/**
-		 *
-		 */
-		it("should return error 'Body not specified or invalid type!'", function() {
-			expect(() => {
-				Api._createPatchOptions({
-					hello: 'world'
-				})
-			}).toThrow('Body not specified or invalid type!')
-		});
-	});
-
-	/**
 	 * GENERATING URL QUERY PARAMS
 	 */
 	describe("set url query params ", function() {
@@ -126,9 +100,9 @@ describe("ApiService", function() {
 				hello: 'world'
 			};
 
-			const sample = Api._createUrlWIthQueryParams(Api.API_URL, params);
+			const sample = Api._createUrlWIthQueryParams(API_URL, params);
 
-			expect(sample).toEqual(`${Api.API_URL}?hello=world`)
+			expect(sample).toEqual(`${API_URL}?hello=world`)
 		});
 
 		/**
@@ -137,9 +111,9 @@ describe("ApiService", function() {
 		it("should return base url", function() {
 			const paramsEmpty = {};
 
-			const sample = Api._createUrlWIthQueryParams(Api.API_URL, paramsEmpty);
+			const sample = Api._createUrlWIthQueryParams(API_URL, paramsEmpty);
 
-			expect(sample).toEqual(Api.API_URL)
+			expect(sample).toEqual(API_URL)
 		});
 
 		/**
@@ -149,7 +123,7 @@ describe("ApiService", function() {
 			const paramsInvalid = "some string here";
 
 			expect(() => {
-				Api._createUrlWIthQueryParams(Api.API_URL, paramsInvalid);
+				Api._createUrlWIthQueryParams(API_URL, paramsInvalid);
 			}).toThrow('Invalid params type!')
 		});
 	});
@@ -164,17 +138,14 @@ describe("ApiService", function() {
 				hello: 'world'
 			};
 
-			let sample;
-
-			Api._sendPost(Api.API_URL, data)
-				.then(result => result.text())
+			Api._sendPost(`${API_URL}postHelloWorld`, data)
+				.then(result => result.json())
 				.then(text => {
-					sample = text;
-					done();
+					expect(text).toEqual('POST HELLO WORLD');
 				})
 				.catch((err) => console.log(err));
 
-			expect(sample).toEqual('world')
+			done()
 		});
 
 		/**
@@ -182,20 +153,17 @@ describe("ApiService", function() {
 		 */
 		it("should send PATCH request", function(done) {
 			const data = {
-				hello: 'world'
+				ID: '11'
 			};
 
-			let sample;
-
-			Api._sendPatch(Api.API_URL, data)
-				.then(result => result.text())
+			Api._sendPatch(`${API_URL}patchHelloWorld`, data)
+				.then(result => result.json())
 				.then(text => {
-					sample = text;
-					done();
+					expect(text).toEqual('PATCH SUPER HELLO WORLD')
 				})
 				.catch((err) => console.log(err));
 
-			expect(sample).toEqual('world')
+			done();
 		});
 
 		/**
@@ -206,17 +174,14 @@ describe("ApiService", function() {
 				hello: 'world'
 			};
 
-			let sample;
-
-			Api._sendGet(Api.API_URL, params)
-				.then(result => result.text())
+			Api._sendGet(`${API_URL}getHelloWorld`, params)
+				.then(result => result.json())
 				.then(text => {
-					sample = text;
-					done();
+					expect(text).toEqual('GET hello world')
 				})
 				.catch((err) => console.log(err));
 
-			expect(sample).toEqual('world')
+			done();
 		});
 	})
 });

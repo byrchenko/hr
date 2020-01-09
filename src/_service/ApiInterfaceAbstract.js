@@ -8,14 +8,14 @@ class ApiInterfaceAbstract {
 	 * @private
 	 */
 	_createPostOptions(body) {
-		if(body instanceof FormData) {
+		if (body instanceof FormData) {
 			return {
-				method: 'POST',
-				credentials: 'include',
-				body
-			}
+				method: "POST",
+				credentials: "include",
+				body,
+			};
 		} else {
-			throw new Error('Body not specified or invalid type!')
+			throw new Error("Body not specified or invalid type!");
 		}
 	}
 
@@ -27,15 +27,10 @@ class ApiInterfaceAbstract {
 	 * @private
 	 */
 	_createPatchOptions(body) {
-		if(body instanceof FormData) {
-			return {
-				method: 'PATCH',
-				credentials: 'include',
-				body
-			}
-		} else {
-			throw new Error('Body not specified or invalid type!')
-		}
+		return {
+			method: "PATCH",
+			credentials: "include",
+		};
 	}
 
 	/**
@@ -46,9 +41,9 @@ class ApiInterfaceAbstract {
 	 */
 	_createGetOptions() {
 		return {
-			method: 'GET',
-			credentials: 'include',
-		}
+			method: "GET",
+			credentials: "include",
+		};
 	}
 
 	/**
@@ -59,22 +54,22 @@ class ApiInterfaceAbstract {
 	 * @private
 	 */
 	_createBody(data) {
-		if(!Object.keys(data).length) {
-			throw new Error('Data is empty!')
+		if (!Object.keys(data).length) {
+			throw new Error("Data is empty!");
 		}
 
-		if(typeof data !== 'object') {
-			throw new Error('Wrong data type!')
+		if (typeof data !== "object") {
+			throw new Error("Wrong data type!");
 		}
 
-		if(!data) {
-			return null
+		if (!data) {
+			return null;
 		}
 
 		const formData = new FormData();
 
 		for (let key in data) {
-			formData.append(key, data[key])
+			formData.append(key, data[key]);
 		}
 
 		return formData;
@@ -88,8 +83,8 @@ class ApiInterfaceAbstract {
 	 * @private
 	 */
 	_createUrlWIthQueryParams(baseUrl, params) {
-		if(typeof params !== 'object') {
-			throw new Error('Invalid params type!');
+		if (typeof params !== "object") {
+			throw new Error("Invalid params type!");
 		}
 
 		const url = new URL(baseUrl);
@@ -118,15 +113,15 @@ class ApiInterfaceAbstract {
 	/**
 	 * Sending PATCH request
 	 *
-	 * @param url
+	 * @param baseUrl
 	 * @param data
 	 * @returns {Promise<Response>}
 	 * @private
 	 */
-	_sendPatch(url, data) {
-		const body = this._createBody(data);
+	_sendPatch(baseUrl, params) {
+		const url = this._createUrlWIthQueryParams(baseUrl, params);
 
-		const options = this._createPostOptions(body);
+		const options = this._createPatchOptions();
 
 		return fetch(url, options);
 	}

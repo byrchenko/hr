@@ -14,7 +14,7 @@ class ApiInterface extends ApiInterfaceAbstract {
 		super();
 
 		this.dispatch = dispatch;
-		this.API_URL = process.env.API_URL || 'https://portal.veloplaneta.com.ua/hr/'
+		this.API_URL = 'https://portal.veloplaneta.com.ua/hr/api/'
 	}
 
 	/**

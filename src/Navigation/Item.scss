@@ -1,0 +1,14 @@
+@import "../_sass/colors";
+
+.index {
+  margin: 0 17.5px;
+
+  &.active a {
+    border-bottom: 1px solid $clr_blue;
+    color: $clr_blue;
+  }
+
+  a {
+    color: $clr_text_dark;
+  }
+}
