@@ -6,7 +6,10 @@ import {Link} from "react-router-dom";
 const Item = ({title, link, isActive}) => {
 
 	return (
-		<li className={isActive ? `${css.index} ${css.active}` : css.index}>
+		<li
+			className={isActive ? `${css.index} ${css.active}` : css.index}
+			title={title}
+		>
 			<Link to={link}>
 				{title}
 			</Link>

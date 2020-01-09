@@ -18,6 +18,9 @@
 }
 
 .sidebar {
+  display: flex;
+  position: relative;
   width: 330px;
   background-color: #fff;
+  overflow: hidden;
 }

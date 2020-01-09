@@ -6,6 +6,7 @@ import Home from "../_pages/Home";
 import Assessment from "../_pages/Assessment";
 import Settings from "../_pages/Settings";
 import Processing from "../_pages/Processing";
+import MainLayout from "../_layout/TwoColumn";
 
 class Router extends React.Component {
 
@@ -62,13 +63,15 @@ class Router extends React.Component {
 
 		return (
 			<ConnectedRouter history={history}>
-				<Switch>
-					<Route exact path="/hr" render={this.renderHome()}/>
-					<Route path="/hr/assessment" render={this.renderAssessment()}/>
-					<Route path="/hr/settings" render={this.renderSettings()}/>
-					<Route path="/hr/processing" render={this.renderProcessing()}/>
-					<Route render={() => (<div>Oops.. 404</div>)}/>
-				</Switch>
+				<MainLayout>
+					<Switch>
+						<Route exact path="/hr" render={this.renderHome()}/>
+						<Route path="/hr/assessment" render={this.renderAssessment()}/>
+						<Route path="/hr/settings" render={this.renderSettings()}/>
+						<Route path="/hr/processing" render={this.renderProcessing()}/>
+						<Route render={() => (<div>Oops.. 404</div>)}/>
+					</Switch>
+				</MainLayout>
 			</ConnectedRouter>
 		);
 	}

@@ -1,0 +1,73 @@
+@import "../_sass/colors";
+
+.index {
+  width: 100%;
+  padding: 20px 23px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 30px;
+
+  .text {
+    margin-left: 19px;
+    font-size: 20px;
+    line-height: 31px;
+    color: $clr_text_dark;
+  }
+
+  svg {
+    transform: translateY(-1px);
+  }
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  margin-bottom: 23px;
+}
+
+.picture {
+  width: 60px;
+  height: 60px;
+  margin-right: 23px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    background-color: #eee;
+  }
+}
+
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #333;
+}
+
+.info {
+
+}
+
+.title {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 400;
+  color: #999;
+  margin: 0 0 5px;
+}
+
+.descr {
+  font-size: 13px;
+  font-weight: 400;
+  color: $clr_text_dark;
+  margin: 0 0 15px;
+}

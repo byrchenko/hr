@@ -3,13 +3,16 @@ import PropTypes from "prop-types";
 import List from "./List";
 import Wrapper from "./Wrapper";
 import Item from "./Item";
+import {connect} from "react-redux";
 
 class Navigation extends React.Component {
 
 	renderItem(item) {
 		let isActive = false;
 
-		if(window.location.pathname === item.link) {
+		const {pathname} = this.props;
+
+		if(pathname === item.link) {
 			isActive = true;
 		}
 
@@ -53,4 +56,18 @@ class Navigation extends React.Component {
 	}
 }
 
-export default Navigation;
+const mapState = store => {
+	const {
+		router: {
+			location: {
+				pathname
+			}
+		}
+	} = store;
+
+	return {
+		pathname
+	}
+};
+
+export default connect(mapState)(Navigation);
