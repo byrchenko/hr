@@ -1,5 +1,5 @@
 import ApiInterfaceAbstract from "./ApiInterfaceAbstract";
-import {dispatch} from "../_store";
+import store from "../_store";
 import { fetchDataError, fetchDataLoading, fetchDataSuccess } from "../_actions";
 import { USERS_ENTITY } from "../_store/entities";
 
@@ -34,7 +34,7 @@ class ApiInterface extends ApiInterfaceAbstract {
 	}
 }
 
-const instance = new ApiInterface(dispatch);
+const instance = new ApiInterface(store.dispatch);
 
 Object.freeze(instance);
 

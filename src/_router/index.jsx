@@ -7,6 +7,10 @@ import Assessment from "../_pages/Assessment";
 import Settings from "../_pages/Settings";
 import Processing from "../_pages/Processing";
 import MainLayout from "../_layout/TwoColumn";
+import { Transition, TransitionGroup } from "react-transition-group";
+import gsap from "gsap";
+import { connect } from "react-redux";
+import { TimelineMax } from "gsap";
 
 class Router extends React.Component {
 
@@ -15,7 +19,9 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderHome() {
-		return () => <Home />
+		return () => (
+			<Home/>
+		);
 	}
 
 	/**
@@ -23,7 +29,7 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderAssessment() {
-		return () => <Assessment />
+		return () => <Assessment/>;
 	}
 
 	/**
@@ -31,7 +37,9 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderSettings() {
-		return () => <Settings />
+		return () => (
+			<Settings/>
+		);
 	}
 
 	/**
@@ -39,7 +47,7 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderProcessing() {
-		return () => <Processing />
+		return () => <Processing/>;
 	}
 
 	/**
@@ -47,7 +55,7 @@ class Router extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const {history} = this.props;
+		const { history, location, pathname } = this.props;
 
 		// const {
 		// 	user: {
@@ -61,20 +69,81 @@ class Router extends React.Component {
 		// 	)
 		// }
 
+		console.log(pathname);
+
 		return (
 			<ConnectedRouter history={history}>
 				<MainLayout>
-					<Switch>
-						<Route exact path="/hr" render={this.renderHome()}/>
-						<Route path="/hr/assessment" render={this.renderAssessment()}/>
-						<Route path="/hr/settings" render={this.renderSettings()}/>
-						<Route path="/hr/processing" render={this.renderProcessing()}/>
-						<Route render={() => (<div>Oops.. 404</div>)}/>
-					</Switch>
+					<TransitionGroup component={null}>
+						<Transition
+							key={pathname}
+							timeout={1000}
+							onEnter={node => {
+								node.style.display = "none";
+							}}
+							onEntering={node => {
+								// const tl = new TimelineMax();
+								//
+								// tl.delay(0.5);
+								//
+								// tl
+								// 	.fromTo(
+								// 		node,
+								// 		{
+								// 			display: "none",
+								// 			autoAlpha: 0,
+								// 		},
+								// 		{
+								// 			opacity: 1,
+								// 			delay: 0.5,
+								// 			duration: 0.5,
+								// 		},
+								// 	);
+							}}
+							onEntered={node => {
+								node.style.display = "block";
+							}}
+							onExiting={node => {
+								console.log(11111111);
+
+								gsap.to(
+									node,
+									.5,
+									{
+										opacity: 0,
+									},
+								);
+							}}
+						>
+							<Switch location={location}>
+								<Route exact path="/hr" render={this.renderHome()}/>
+								<Route path="/hr/assessment" render={this.renderAssessment()}/>
+								<Route path="/hr/settings" render={this.renderSettings()}/>
+								<Route path="/hr/processing" render={this.renderProcessing()}/>
+								<Route render={() => (<div>Oops.. 404</div>)}/>
+							</Switch>
+						</Transition>
+					</TransitionGroup>
 				</MainLayout>
 			</ConnectedRouter>
 		);
 	}
 }
 
-export default Router;
+const mapState = state => {
+	const {
+		router: {
+			location,
+			location: {
+				pathname,
+			},
+		},
+	} = state;
+
+	return {
+		location,
+		pathname,
+	};
+};
+
+export default connect(mapState)(Router);
