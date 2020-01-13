@@ -14,6 +14,8 @@ ___
 * [Versions](#markdown-header-versions)
     * [0.0.0](#markdown-header-000)
     * [0.1.0](#markdown-header-010)
+    * [0.2.0](#markdown-header-020)
+    * [0.3.0](#markdown-header-030)
 
 
 ### Stack
