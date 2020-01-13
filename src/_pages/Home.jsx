@@ -5,14 +5,14 @@ import Api from "../_service/ApiInterface";
 
 class Home extends React.Component {
 
-	componentDidMount() {
-		Api._sendPost("https://portal.veloplaneta.com.ua/hr/", {
-			hello: "world",
-		})
-			.then(result => result.text())
-			.then(text => console.log(text))
-			.catch(err => console.warn(err));
-	}
+	// componentDidMount() {
+	// 	Api._sendPost("https://portal.veloplaneta.com.ua/hr/", {
+	// 		hello: "world",
+	// 	})
+	// 		.then(result => result.text())
+	// 		.then(text => console.log(text))
+	// 		.catch(err => console.warn(err));
+	// }
 
 	render() {
 		return (

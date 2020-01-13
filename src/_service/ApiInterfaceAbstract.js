@@ -15,20 +15,35 @@ class ApiInterfaceAbstract {
 				body,
 			};
 		} else {
-			throw new Error("Body not specified or invalid type!");
+			return {
+				method: "POST",
+				credentials: "include",
+			};
 		}
 	}
 
 	/**
-	 * Creating options for PATCH request
+	 * Creating options for PUT request
 	 *
-	 * @param body
 	 * @returns {*}
 	 * @private
 	 */
-	_createPatchOptions(body) {
+	_createPutOptions() {
 		return {
-			method: "PATCH",
+			method: "PUT",
+			credentials: "include",
+		};
+	}
+
+	/**
+	 * Creating options for DELETE request
+	 *
+	 * @returns {*}
+	 * @private
+	 */
+	_createDeleteOptions() {
+		return {
+			method: "DELETE",
 			credentials: "include",
 		};
 	}
@@ -111,17 +126,27 @@ class ApiInterfaceAbstract {
 	}
 
 	/**
-	 * Sending PATCH request
+	 * Sending PUT request
 	 *
-	 * @param baseUrl
-	 * @param data
+	 * @param url
 	 * @returns {Promise<Response>}
 	 * @private
 	 */
-	_sendPatch(baseUrl, params) {
-		const url = this._createUrlWIthQueryParams(baseUrl, params);
+	_sendPut(url) {
+		const options = this._createPutOptions();
 
-		const options = this._createPatchOptions();
+		return fetch(url, options);
+	}
+
+	/**
+	 * Sending DELETE request
+	 *
+	 * @param url
+	 * @returns {Promise<Response>}
+	 * @private
+	 */
+	_sendDelete(url) {
+		const options = this._createDeleteOptions();
 
 		return fetch(url, options);
 	}

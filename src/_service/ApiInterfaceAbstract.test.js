@@ -1,6 +1,7 @@
 import ApiInterface from "./ApiInterfaceAbstract";
 import API from "./ApiInterface";
-const {API_URL} = API;
+
+const { API_URL } = API;
 
 describe("ApiService", function() {
 
@@ -21,7 +22,7 @@ describe("ApiService", function() {
 		 */
 		it("should create request body", function() {
 			const data = {
-				hello: 'world'
+				hello: "world",
 			};
 
 			const sample = Api._createBody(data);
@@ -37,19 +38,19 @@ describe("ApiService", function() {
 			const emptyData = {};
 
 			expect(() => {
-				Api._createBody(emptyData)
-			}).toThrow('Data is empty!')
+				Api._createBody(emptyData);
+			}).toThrow("Data is empty!");
 		});
 
 		/**
 		 *
 		 */
 		it("should return error 'Data must be only object type!'", function() {
-			const wrongData = 'some string';
+			const wrongData = "some string";
 
 			expect(() => {
-				Api._createBody(wrongData)
-			}).toThrow('Wrong data type!')
+				Api._createBody(wrongData);
+			}).toThrow("Wrong data type!");
 		});
 	});
 
@@ -64,26 +65,29 @@ describe("ApiService", function() {
 		it("should generate POST options", function() {
 			const body = new FormData();
 
-			body.append('hello', 'world');
+			body.append("hello", "world");
 
 			const sample = Api._createPostOptions(body);
 
 			expect(sample).toEqual({
-				method: 'POST',
-				credentials: 'include',
-				body
-			})
+				method: "POST",
+				credentials: "include",
+				body,
+			});
 		});
 
 		/**
 		 *
 		 */
-		it("should return error 'Body not specified or invalid type!'", function() {
-			expect(() => {
-				Api._createPostOptions({
-					hello: 'world'
-				})
-			}).toThrow('Body not specified or invalid type!')
+		it("should return options w/o body", function() {
+			const sample = Api._createPostOptions({
+				hello: "world",
+			});
+
+			expect(sample).toEqual({
+				method: 'POST',
+				credentials: "include"
+			});
 		});
 	});
 
@@ -97,12 +101,12 @@ describe("ApiService", function() {
 		 */
 		it("should generate url with query params", function() {
 			const params = {
-				hello: 'world'
+				hello: "world",
 			};
 
 			const sample = Api._createUrlWIthQueryParams(API_URL, params);
 
-			expect(sample).toEqual(`${API_URL}?hello=world`)
+			expect(sample).toEqual(`${API_URL}?hello=world`);
 		});
 
 		/**
@@ -113,7 +117,7 @@ describe("ApiService", function() {
 
 			const sample = Api._createUrlWIthQueryParams(API_URL, paramsEmpty);
 
-			expect(sample).toEqual(API_URL)
+			expect(sample).toEqual(API_URL);
 		});
 
 		/**
@@ -124,46 +128,55 @@ describe("ApiService", function() {
 
 			expect(() => {
 				Api._createUrlWIthQueryParams(API_URL, paramsInvalid);
-			}).toThrow('Invalid params type!')
+			}).toThrow("Invalid params type!");
 		});
 	});
 
-	describe('Requests', () => {
+	describe("Requests", () => {
 
 		/**
 		 *
 		 */
 		it("should send POST request", function(done) {
 			const data = {
-				hello: 'world'
+				hello: "world",
 			};
 
-			Api._sendPost(`${API_URL}postHelloWorld`, data)
+			Api._sendPost(`${API_URL}hello`, data)
 				.then(result => result.json())
 				.then(text => {
-					expect(text).toEqual('POST HELLO WORLD');
+					done();
+					expect(text).toEqual("POST HELLO WORLD");
 				})
 				.catch((err) => console.log(err));
 
-			done()
+
 		});
 
 		/**
 		 *
 		 */
-		it("should send PATCH request", function(done) {
-			const data = {
-				ID: '11'
-			};
-
-			Api._sendPatch(`${API_URL}patchHelloWorld`, data)
+		it("should send PUT request", done =>  {
+			Api._sendPut(`${API_URL}hello/11`)
 				.then(result => result.json())
 				.then(text => {
-					expect(text).toEqual('PATCH SUPER HELLO WORLD')
+					done();
+					expect(text).toEqual("PATCH SUPER HELLO WORLD");
 				})
 				.catch((err) => console.log(err));
+		});
 
-			done();
+		/**
+		 *
+		 */
+		it("should send DELETE request", function(done) {
+			Api._sendDelete(`${API_URL}hello/11`)
+				.then(result => result.json())
+				.then(text => {
+					done();
+					expect(text).toEqual("DELETE HELLO WORLD");
+				})
+				.catch((err) => console.log(err));
 		});
 
 		/**
@@ -171,17 +184,16 @@ describe("ApiService", function() {
 		 */
 		it("should send GET request", function(done) {
 			const params = {
-				hello: 'world'
+				hello: "world",
 			};
 
-			Api._sendGet(`${API_URL}getHelloWorld`, params)
+			Api._sendGet(`${API_URL}hello`, params)
 				.then(result => result.json())
 				.then(text => {
-					expect(text).toEqual('GET hello world')
+					done();
+					expect(text).toEqual("GET hello world");
 				})
 				.catch((err) => console.log(err));
-
-			done();
 		});
-	})
+	});
 });

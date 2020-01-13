@@ -6,6 +6,6 @@ describe("Home component", function() {
 	it("should render component", () => {
 		const wrapper = mount(<Home />);
 
-		console.log(wrapper.find('div').at(0).html())
+		// console.log(wrapper.find('div').at(0).html())
 	});
 });
