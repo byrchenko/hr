@@ -12,6 +12,47 @@ import gsap from "gsap";
 import { connect } from "react-redux";
 import { TimelineMax } from "gsap";
 
+/**
+ *
+ * @param node
+ */
+function onEntering(node) {
+	const parent = node.parentNode;
+	const width = parent.clientWidth;
+
+	const tl = new TimelineMax();
+
+	tl.from(
+		node,
+		0.3,
+		{
+			position: "absolute",
+			width: `${width}px`,
+			top: 0,
+			left: 0,
+			autoAlpha: 0,
+			delay: 0.2
+		}
+	);
+}
+
+/**
+ *
+ * @param node
+ */
+function onExiting(node) {
+	gsap.to(
+		node,
+		.2,
+		{
+			opacity: 0,
+		},
+	);
+}
+
+/**
+ *
+ */
 class Router extends React.Component {
 
 	/**
@@ -77,43 +118,9 @@ class Router extends React.Component {
 					<TransitionGroup component={null}>
 						<Transition
 							key={pathname}
-							timeout={1000}
-							onEnter={node => {
-								node.style.display = "none";
-							}}
-							onEntering={node => {
-								// const tl = new TimelineMax();
-								//
-								// tl.delay(0.5);
-								//
-								// tl
-								// 	.fromTo(
-								// 		node,
-								// 		{
-								// 			display: "none",
-								// 			autoAlpha: 0,
-								// 		},
-								// 		{
-								// 			opacity: 1,
-								// 			delay: 0.5,
-								// 			duration: 0.5,
-								// 		},
-								// 	);
-							}}
-							onEntered={node => {
-								node.style.display = "block";
-							}}
-							onExiting={node => {
-								console.log(11111111);
-
-								gsap.to(
-									node,
-									.5,
-									{
-										opacity: 0,
-									},
-								);
-							}}
+							timeout={600}
+							onEntering={onEntering}
+							onExiting={onExiting}
 						>
 							<Switch location={location}>
 								<Route exact path="/hr" render={this.renderHome()}/>

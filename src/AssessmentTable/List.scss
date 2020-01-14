@@ -1,0 +1,18 @@
+@import "../_sass/colors";
+
+.index {
+  display: contents;
+}
+
+.status {
+  text-align: center;
+  padding: 7px 10px 0;
+  font-size: 11px;
+  line-height: 13px;
+  color: $clr_text_dark;
+
+  &:first-child {
+    text-align: left;
+    max-width: 97px;
+  }
+}

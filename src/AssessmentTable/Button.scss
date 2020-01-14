@@ -1,0 +1,61 @@
+@import "../_sass/colors";
+
+%circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+%btn {
+  width: 70px;
+  border-radius: 2px ;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 20px;
+  padding: 2.5px;
+  transition: background-color .2s ease;
+}
+
+.complete {
+  @extend %circle;
+
+  //background-color: $clr_green;
+}
+
+.waiting {
+  @extend %circle;
+
+  background-color: $clr_yellow;
+}
+
+.estimate {
+  @extend %btn;
+
+  background-color: $clr_red;
+  font-size: 11px;
+  line-height: 15px;
+
+  &:hover {
+    background-color: darken($clr_red, 10%);
+  }
+}
+
+.meeting {
+  @extend %btn;
+
+  background-color: $clr_green;
+  font-size: 9px;
+  line-height: 10px;
+
+  &:hover {
+    background-color: darken($clr_green, 10%);
+  }
+}

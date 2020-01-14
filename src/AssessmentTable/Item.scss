@@ -1,0 +1,58 @@
+@import "../_sass/colors";
+
+.index {
+  display: contents;
+}
+
+%cell {
+  padding: 7px;
+  border-top: 1px solid #C4C4C4;
+  display: flex;
+  align-items: center;
+}
+
+.status {
+  @extend %cell;
+
+  justify-content: center;
+  text-align: center;
+}
+
+.user {
+  @extend %cell;
+}
+
+.picture {
+  margin: 0 11px 0 0;
+
+  img {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #aaa;
+  }
+}
+
+.info {
+
+}
+
+.name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+}
+
+.date {
+  font-size: 10px;
+  line-height: 15px;
+  color: #999;
+  margin: 0 0 0 10px;
+}
+
+.position {
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
+}
