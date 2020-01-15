@@ -15,39 +15,27 @@ import { TimelineMax } from "gsap";
 /**
  *
  * @param node
+ * @param appears
  */
-function onEntering(node) {
-	const parent = node.parentNode;
-	const width = parent.clientWidth;
+function onEnter(node, appears) {
+	if(!appears) {
+		nod e.style.height = "0";
+	}
 
-	const tl = new TimelineMax();
+	const tl = new TimelineMax({ paused: true });
 
-	tl.from(
-		node,
-		0.3,
-		{
-			position: "absolute",
-			width: `${width}px`,
-			top: 0,
-			left: 0,
+	tl
+		.from(node, 0, {
+			height: "0",
 			autoAlpha: 0,
-			delay: 0.2
-		}
-	);
-}
+			delay: appears ? 0 : 0.2
+		})
+		.from(node, 0.3, {
+			autoAlpha: 0,
+			ease: "power0",
+		});
 
-/**
- *
- * @param node
- */
-function onExiting(node) {
-	gsap.to(
-		node,
-		.2,
-		{
-			opacity: 0,
-		},
-	);
+	tl.play()
 }
 
 /**
@@ -96,7 +84,7 @@ class Router extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const { history, location, pathname } = this.props;
+		const { history } = this.props;
 
 		// const {
 		// 	user: {
@@ -110,27 +98,35 @@ class Router extends React.Component {
 		// 	)
 		// }
 
-		console.log(pathname);
-
 		return (
 			<ConnectedRouter history={history}>
 				<MainLayout>
-					<TransitionGroup component={null}>
-						<Transition
-							key={pathname}
-							timeout={600}
-							onEntering={onEntering}
-							onExiting={onExiting}
-						>
-							<Switch location={location}>
-								<Route exact path="/hr" render={this.renderHome()}/>
-								<Route path="/hr/assessment" render={this.renderAssessment()}/>
-								<Route path="/hr/settings" render={this.renderSettings()}/>
-								<Route path="/hr/processing" render={this.renderProcessing()}/>
-								<Route render={() => (<div>Oops.. 404</div>)}/>
-							</Switch>
-						</Transition>
-					</TransitionGroup>
+					<Route render={({location}) => {
+						const { pathname } = location;
+
+						return (
+							<TransitionGroup component={null}>
+								<Transition
+									key={pathname}
+									appear={true}
+									timeout={{
+										enter: 700,
+										exit: 0,
+									}}
+									onEnter={onEnter}
+								>
+									<Switch location={location}>
+										<Route exact path="/hr" render={this.renderHome()}/>
+										<Route path="/hr/assessment" render={this.renderAssessment()}/>
+										<Route path="/hr/settings" render={this.renderSettings()}/>
+										<Route path="/hr/processing" render={this.renderProcessing()}/>
+										<Route render={() => (<div>Oops.. 404</div>)}/>
+									</Switch>
+								</Transition>
+							</TransitionGroup>
+						);
+					}}/>
+
 				</MainLayout>
 			</ConnectedRouter>
 		);
