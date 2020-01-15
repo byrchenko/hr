@@ -8,9 +8,13 @@ import Settings from "../_pages/Settings";
 import Processing from "../_pages/Processing";
 import MainLayout from "../_layout/TwoColumn";
 import { Transition, TransitionGroup } from "react-transition-group";
-import gsap from "gsap";
 import { connect } from "react-redux";
 import { TimelineMax } from "gsap";
+import {gsap} from "gsap";
+import {CSSPlugin} from "gsap/all";
+
+
+
 
 /**
  *
@@ -18,8 +22,10 @@ import { TimelineMax } from "gsap";
  * @param appears
  */
 function onEnter(node, appears) {
+	gsap.registerPlugin(CSSPlugin);
+
 	if(!appears) {
-		nod e.style.height = "0";
+		node.style.height = "0";
 	}
 
 	const tl = new TimelineMax({ paused: true });
