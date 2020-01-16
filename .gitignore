@@ -2,6 +2,7 @@
 build/
 server/
 node_modules/
+src/_coverage
 
 .env
 package-lock.json

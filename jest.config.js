@@ -9,7 +9,11 @@ module.exports = {
 
   clearMocks: true,
 
-  coverageDirectory: "coverage",
+  collectCoverage: true,
+
+  coverageDirectory: "src/_coverage",
+
+  collectCoverageFrom: ["**/src/**/*.{js,jsx}"],
 
   setupFilesAfterEnv: ["<rootDir>src/setupTests.js"],
 
