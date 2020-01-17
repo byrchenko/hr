@@ -1,20 +1,44 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Title from "./Title";
-import Label from "./Label";
-import Wrapper from "./Wrapper";
+import css from "./index.scss";
+import text from "./locale/ru";
+import { connect } from "react-redux";
 
-class PageTitle extends React.Component {
+export const label = {
+	employee: "Сотрудник",
+	supervisor: "Руководитель",
+	hr: "Рекрутер",
+};
 
-	render() {
-		return (
-			<Wrapper>
-				<Title />
-
-				<Label title="Руководитель" />
-			</Wrapper>
-		);
+const PageTitle = ({ role }) => {
+	if (!role) {
+		return null;
 	}
-}
 
-export default PageTitle;
+	return (
+		<div className={css.index}>
+			<h2 className={css.title}>{text.title}</h2>
+
+			<div className={css.label}>{label[role]}</div>
+		</div>
+	);
+};
+
+const mapState = state => {
+	const {
+		employee: { data },
+	} = state;
+
+	if (data === null || data === undefined) {
+		return {
+			role: null,
+		};
+	}
+
+	const { role } = data;
+
+	return {
+		role,
+	};
+};
+
+export default connect(mapState)(PageTitle);
