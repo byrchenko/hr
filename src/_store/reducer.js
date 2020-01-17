@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { connectRouter } from 'connected-react-router'
 import employee from "../_reducers/employee";
+import assessmentEmployees from "../_reducers/assessmentEmployees";
 
 /**
  *
@@ -9,6 +10,7 @@ import employee from "../_reducers/employee";
 export default history => combineReducers({
 	router: connectRouter(history),
 	employee,
+	assessmentEmployees,
 });
 
 /**

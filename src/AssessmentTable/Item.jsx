@@ -1,43 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Item.scss";
+import UserTitle from "./UserTitle";
+import Status from "./Status";
+import {
+	HR_PERMISSION,
+	SUPERVISOR_PERMISSION,
+} from "../_store/roles";
 
-const Item = ({item, employeeStatus, supervisorStatus, hrStatus}) => {
+const Item = ({ item, employee, supervisor, hr }) => {
+	const {
+		employee: {
+			image,
+			name,
+			last_name: lastname,
+			position,
+			last_assessment_date: date,
+		},
+		employee_checked,
+		supervisor_checked,
+		hr_checked,
+	} = item;
 
 	return (
-		<div className={css.index}>
+		<>
 			<div className={css.user}>
 				<div className={css.picture}>
-					<img src="https://static01.nyt.com/images/2019/11/17/books/review/17Salam/Salam1-articleLarge.jpg?quality=75&auto=webp&disable=upscale" alt={`${item.name} ${item.last_name}`} />
+					<img src={image} alt={`${name} ${lastname}`} />
 				</div>
 
 				<div className={css.info}>
-					<div className={css.name}>
-						{`${item.name} ${item.last_name}`}
+					<UserTitle
+						name={name}
+						lastname={lastname}
+						date={date}
+					/>
 
-						<span className={css.date}>
-							{`(${item.last_assessment_date})`}
-						</span>
-					</div>
-
-					<div className={css.position}>
-						{item.position}
-					</div>
+					<div className={css.position}>{position}</div>
 				</div>
 			</div>
 
-			<div className={css.status}>
-				{employeeStatus(item.employee_checked)}
-			</div>
-
-			<div className={css.status}>
-				{supervisorStatus(item.supervisor_checked)}
-			</div>
-
-			<div className={css.status}>
-				{hrStatus(item.hr_checked)}
-			</div>
-		</div>
+			<Status
+				employee={employee_checked}
+				supervisor={supervisor_checked}
+				hr={hr_checked}
+			/>
+		</>
 	);
 };
 

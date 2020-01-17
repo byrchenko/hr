@@ -9,8 +9,6 @@ module.exports = {
 
   clearMocks: true,
 
-  collectCoverage: true,
-
   coverageDirectory: "src/_coverage",
 
   collectCoverageFrom: ["**/src/**/*.{js,jsx}"],
@@ -22,4 +20,14 @@ module.exports = {
   moduleNameMapper: {
     "^.+\\.(css|less|scss)$": "identity-obj-proxy"
   },
+
+  transform: {
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.svg$": "jest-svg-transformer"
+  },
+
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
 };

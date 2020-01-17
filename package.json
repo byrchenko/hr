@@ -59,6 +59,8 @@
     "form-data": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
+    "jest-svg-transformer": "^1.0.0",
+    "jest-watch-typeahead": "^0.4.2",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "prettier": "1.19.1",

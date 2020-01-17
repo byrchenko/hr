@@ -2,40 +2,40 @@ import { FETCH_ERROR, FETCH_LOADING, FETCH_SUCCESS } from "../_store/types";
 
 /**
  *
- * @param name
  * @returns {{name: *, type: *}}
+ * @param entity
  */
 
-export const fetchDataLoading = name => {
+export const fetchDataLoading = entity => {
 	return {
 		type: FETCH_LOADING,
-		name,
+		entity,
 	};
 };
 
 /**
  *
- * @param name
+ * @param entity
  * @param data
  * @returns {{data: *, name: *, type: *}}
  */
-export const fetchDataSuccess = (name, data) => {
+export const fetchDataSuccess = (entity, data) => {
 	return {
 		type: FETCH_SUCCESS,
-		name,
+		entity,
 		data,
 	};
 };
 
 /**
  *
- * @param name
  * @returns {{name: *, type: *}}
+ * @param entity
  */
-export const fetchDataError = name => {
+export const fetchDataError = entity => {
 	return {
 		type: FETCH_ERROR,
-		name,
+		entity,
 	};
 };
 

@@ -4,19 +4,16 @@ import API from "./ApiInterface";
 const { API_URL } = API;
 
 describe("ApiService", function() {
-
 	let Api;
 
 	beforeAll(() => {
 		Api = new ApiInterface();
 	});
 
-
 	/**
 	 * GENERATING REQUEST BODY
 	 */
 	describe("create request body", function() {
-
 		/**
 		 *
 		 */
@@ -26,7 +23,6 @@ describe("ApiService", function() {
 			};
 
 			const sample = Api._createBody(data);
-
 
 			expect(sample instanceof FormData).toBeTruthy();
 		});
@@ -58,7 +54,6 @@ describe("ApiService", function() {
 	 * GENERATING POST OPTIONS
 	 */
 	describe("create POST options", function() {
-
 		/**
 		 *
 		 */
@@ -85,8 +80,8 @@ describe("ApiService", function() {
 			});
 
 			expect(sample).toEqual({
-				method: 'POST',
-				credentials: "include"
+				method: "POST",
+				credentials: "include",
 			});
 		});
 	});
@@ -95,7 +90,6 @@ describe("ApiService", function() {
 	 * GENERATING URL QUERY PARAMS
 	 */
 	describe("set url query params ", function() {
-
 		/**
 		 *
 		 */
@@ -104,7 +98,10 @@ describe("ApiService", function() {
 				hello: "world",
 			};
 
-			const sample = Api._createUrlWIthQueryParams(API_URL, params);
+			const sample = Api._createUrlWIthQueryParams(
+				API_URL,
+				params,
+			);
 
 			expect(sample).toEqual(`${API_URL}?hello=world`);
 		});
@@ -115,7 +112,10 @@ describe("ApiService", function() {
 		it("should return base url", function() {
 			const paramsEmpty = {};
 
-			const sample = Api._createUrlWIthQueryParams(API_URL, paramsEmpty);
+			const sample = Api._createUrlWIthQueryParams(
+				API_URL,
+				paramsEmpty,
+			);
 
 			expect(sample).toEqual(API_URL);
 		});
@@ -133,7 +133,6 @@ describe("ApiService", function() {
 	});
 
 	describe("Requests", () => {
-
 		/**
 		 *
 		 */
@@ -148,22 +147,20 @@ describe("ApiService", function() {
 					done();
 					expect(text).toEqual("POST HELLO WORLD");
 				})
-				.catch((err) => console.log(err));
-
-
+				.catch(err => console.log(err));
 		});
 
 		/**
 		 *
 		 */
-		it("should send PUT request", done =>  {
+		it("should send PUT request", done => {
 			Api._sendPut(`${API_URL}hello/11`)
 				.then(result => result.json())
 				.then(text => {
 					done();
 					expect(text).toEqual("PATCH SUPER HELLO WORLD");
 				})
-				.catch((err) => console.log(err));
+				.catch(err => console.log(err));
 		});
 
 		/**
@@ -176,7 +173,7 @@ describe("ApiService", function() {
 					done();
 					expect(text).toEqual("DELETE HELLO WORLD");
 				})
-				.catch((err) => console.log(err));
+				.catch(err => console.log(err));
 		});
 
 		/**
@@ -193,7 +190,7 @@ describe("ApiService", function() {
 					done();
 					expect(text).toEqual("GET hello world");
 				})
-				.catch((err) => console.log(err));
+				.catch(err => console.log(err));
 		});
 	});
 });

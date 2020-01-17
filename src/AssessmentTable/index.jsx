@@ -1,119 +1,73 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Wrapper from "./Wrapper";
+import { connect } from "react-redux";
 import List from "./List";
-import Item from "./Item";
-import { EMPLOYEE_PERMISSION, HR_PERMISSION, SUPERVISOR_PERMISSION } from "../_store/roles";
-import Button from "./Button";
+import { fetchDataSuccess } from "../_actions";
+import { ASSESSMENT_TABLE_ENTITY } from "../_store/entities";
+import css from "./index.scss";
+import User from "../_svg/big_user.svg";
 
-class index extends React.Component {
-
-	/**
-	 *
-	 * @param item
-	 * @returns {*}
-	 */
-	renderItem(item) {
-		const {role = HR_PERMISSION} = this.props;
-
-		return (
-			<Item
-				item={{
-					id: 1,
-					name: "Василий",
-					last_name: "Уткин",
-					position: "Manager",
-					employee_checked: true,
-					supervisor_checked: false,
-					hr_checked: false,
-					last_assessment_date: "21.12.2018"
-				}}
-				supervisorStatus={this.renderSupervisorStatus(role)}
-				employeeStatus={this.renderEmployeeStatus(role)}
-				hrStatus={this.renderHrStatus(role)}
-				key={item.id}
-			/>
-		)
-	}
-
-	/**
-	 *
-	 * @returns {unknown[]}
-	 */
-	renderList(list) {
-		if(!list) {
-			return null;
-		}
-
-		return list.map(this.renderItem, this)
-	}
-
-	/**
-	 *
-	 * @param role
-	 * @returns {function(...[*]=)}
-	 */
-	renderSupervisorStatus(role) {
-		return isChecked => {
-			if (isChecked) {
-				return <Button type="complete" />
-			} else if (!isChecked && role === SUPERVISOR_PERMISSION) {
-				return <Button type="estimate" />
-			}
-
-			return <Button type="waiting" />
-		}
-	}
-
-	/**
-	 *
-	 * @param role
-	 * @returns {function(...[*]=)}
-	 */
-	renderEmployeeStatus(role) {
-		return isChecked => {
-			if (isChecked) {
-				return <Button type="complete" />
-			} else if (!isChecked && role === EMPLOYEE_PERMISSION) {
-				return <Button type="estimate" />
-			}
-
-			return <Button type="waiting" />
-		}
-	}
-
-	/**
-	 *
-	 * @param role
-	 * @returns {function(...[*]=)}
-	 */
-	renderHrStatus(role) {
-		return isChecked => {
-			if (isChecked) {
-				return <Button type="complete" />
-			} else if (!isChecked && role === HR_PERMISSION) {
-				return <Button type="meeting" />
-			}
-
-			return <Button type="waiting" />
-		}
-	}
-
+class AssessmentTable extends React.Component {
 	/**
 	 *
 	 * @returns {*}
 	 */
 	render() {
-		const {list = [1,2,3,4]} = this.props;
+		const { data, error, loading } = this.props;
 
-		return (
-			<Wrapper list={list}>
-				<List>
-					{this.renderList(list)}
-				</List>
-			</Wrapper>
-		);
+		if (loading) {
+			return <div className={css.loading}>Loading..</div>;
+		}
+
+		if (error) {
+			return (
+				<div className={css.error}>
+					Error! Try again later!
+				</div>
+			);
+		}
+
+		if (data === null || data === undefined) {
+			return (
+				<div className={css.empty}>
+					<User width={65} height={87} />
+
+					<h3 className={css.text}>
+						Сотрудники ожидающие проверки отсутствуют
+					</h3>
+				</div>
+			);
+		}
+
+		return <List list={data} />;
 	}
 }
 
-export default index;
+/**
+ *
+ * @param state
+ * @returns {{list: *, loading: *, error: *}}
+ */
+const mapState = state => {
+	const {
+		assessmentEmployees: { data, error, loading },
+	} = state;
+
+	return {
+		data,
+		error,
+		loading,
+	};
+};
+
+/**
+ *
+ * @param dispatch
+ */
+const mapDispatch = dispatch => {
+	return {
+		//
+	};
+};
+
+export default connect(mapState, mapDispatch)(AssessmentTable);

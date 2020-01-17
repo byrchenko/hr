@@ -1,12 +1,16 @@
 import {
 	fetchSuccessHandler,
 	fetchErrorHandler,
-	fetchLoadingHandler,
+	fetchLoadingHandler
 } from "../_store/reducer";
 
-import { FETCH_ERROR, FETCH_LOADING, FETCH_SUCCESS } from "../_store/types";
+import {
+	FETCH_ERROR,
+	FETCH_LOADING,
+	FETCH_SUCCESS,
+} from "../_store/types";
 
-import { DIVISIONS_ENTITY } from "../_store/entities";
+import {ASSESSMENT_TABLE_ENTITY} from "../_store/entities";
 
 export const initialState = {
 	data: null,
@@ -15,7 +19,9 @@ export const initialState = {
 	sync: false,
 };
 
+
 const handler = {
+
 	/**
 	 *
 	 * @param state
@@ -24,10 +30,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_SUCCESS]: (state, action) => {
-		const { entity, data } = action;
+		const {entity, data} = action;
 
-		if (entity === DIVISIONS_ENTITY) {
-			return fetchSuccessHandler(state, data);
+		if (entity === ASSESSMENT_TABLE_ENTITY) {
+			return fetchSuccessHandler(state, data)
 		}
 
 		return state;
@@ -41,10 +47,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_LOADING]: (state, action) => {
-		const { entity } = action;
+		const {entity} = action;
 
-		if (entity === DIVISIONS_ENTITY) {
-			return fetchLoadingHandler(state);
+		if (entity === ASSESSMENT_TABLE_ENTITY) {
+			return fetchLoadingHandler(state)
 		}
 
 		return state;
@@ -58,10 +64,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_ERROR]: (state, action) => {
-		const { entity } = action;
+		const {entity} = action;
 
-		if (entity === DIVISIONS_ENTITY) {
-			return fetchErrorHandler(state);
+		if (entity === ASSESSMENT_TABLE_ENTITY) {
+			return fetchErrorHandler(state)
 		}
 
 		return state;
@@ -76,7 +82,7 @@ const handler = {
 };
 
 export default (state = initialState, action) => {
-	const reducer = handler[action.type] || handler.default;
+	const reducer = handler[action.type]  || handler.default;
 
 	return reducer(state, action);
-};
+}

@@ -4,8 +4,36 @@ import css from "./TwoColumn.scss";
 import Navigation from "../Navigation";
 import PageTitle from "../PageTitle";
 import Sidebar from "../Sidebar";
+import { connect } from "react-redux";
 
-const TwoColumn = ({children}) => {
+const TwoColumn = ({ children, loading, error, data }) => {
+	/**
+	 *
+	 * @returns {*}
+	 */
+	function renderContent() {
+		if (loading) {
+			return <div>Loading..</div>;
+		}
+
+		if (error) {
+			return <div>Error.. Try again later</div>;
+		}
+
+		if (data === null || data === undefined) {
+			return <div>Oops.. Something went wrong!</div>;
+		}
+
+		return (
+			<div className={css.wrapper}>
+				<div className={css.content}>{children}</div>
+
+				<aside className={css.sidebar}>
+					<Sidebar />
+				</aside>
+			</div>
+		);
+	}
 
 	return (
 		<div className={css.index}>
@@ -13,21 +41,25 @@ const TwoColumn = ({children}) => {
 
 			<PageTitle />
 
-			<div className={css.wrapper}>
-				<div className={css.content}>
-					{children}
-				</div>
-
-				<aside className={css.sidebar}>
-					<Sidebar />
-				</aside>
-			</div>
+			{renderContent()}
 		</div>
 	);
 };
 
-TwoColumn.propTypes = {};
+/**
+ *
+ * @param state
+ */
+const mapState = state => {
+	const {
+		employee: { data, error, loading },
+	} = state;
 
-TwoColumn.defaultProps = {};
+	return {
+		data,
+		loading,
+		error,
+	};
+};
 
-export default TwoColumn;
+export default connect(mapState)(TwoColumn);

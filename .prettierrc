@@ -3,6 +3,6 @@
   "trailingComma": "all",
   "tabWidth": 4,
   "useTabs": true,
-  "printWidth": 80,
+  "printWidth": 70,
   "proseWrap": "always"
 }
