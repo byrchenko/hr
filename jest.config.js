@@ -1,33 +1,33 @@
-const fetch = require('node-fetch');
-const FormData = require('form-data');
+const fetch = require("node-fetch");
+const FormData = require("form-data");
 
 module.exports = {
-  globals: {
-    fetch,
-    FormData
-  },
+	globals: {
+		fetch,
+		FormData,
+	},
 
-  clearMocks: true,
+	clearMocks: true,
 
-  coverageDirectory: "src/_coverage",
+	coverageDirectory: "src/_coverage",
 
-  collectCoverageFrom: ["**/src/**/*.{js,jsx}"],
+	collectCoverageFrom: ["**/src/**/*.{js,jsx}"],
 
-  setupFilesAfterEnv: ["<rootDir>src/setupTests.js"],
+	setupFilesAfterEnv: ["<rootDir>src/setupTests.js"],
 
-  testEnvironment: "jsdom",
+	testEnvironment: "jsdom",
 
-  moduleNameMapper: {
-    "^.+\\.(css|less|scss)$": "identity-obj-proxy"
-  },
+	moduleNameMapper: {
+		"^.+\\.(css|less|scss)$": "identity-obj-proxy",
+	},
 
-  transform: {
-    "^.+\\.jsx?$": "babel-jest",
-    "^.+\\.svg$": "jest-svg-transformer"
-  },
+	transform: {
+		"^.+\\.jsx?$": "babel-jest",
+		"^.+\\.svg$": "jest-svg-transformer",
+	},
 
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
-  ],
+	watchPlugins: [
+		"jest-watch-typeahead/filename",
+		"jest-watch-typeahead/testname",
+	],
 };

@@ -3,16 +3,21 @@ import PropTypes from "prop-types";
 import List from "./List";
 import Wrapper from "./Wrapper";
 import Item from "./Item";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import nav from "./navigation";
 
 class Navigation extends React.Component {
-
+	/**
+	 *
+	 * @param item
+	 * @returns {*}
+	 */
 	renderItem(item) {
 		let isActive = false;
 
-		const {pathname} = this.props;
+		const { pathname } = this.props;
 
-		if(pathname === item.link) {
+		if (pathname === item.link) {
 			isActive = true;
 		}
 
@@ -23,30 +28,42 @@ class Navigation extends React.Component {
 				isActive={isActive}
 				key={item.link}
 			/>
-		)
+		);
 	}
 
+	/**
+	 *
+	 * @param list
+	 * @returns {function(): *}
+	 */
 	renderList(list) {
 		return () => {
 			return list.map(this.renderItem, this);
-		}
+		};
 	}
 
+	/**
+	 *
+	 * @param value
+	 * @returns {boolean|boolean}
+	 */
+	isValid(value) {
+		return value !== undefined && value !== null;
+	}
+
+	/**
+	 *
+	 * @returns {*}
+	 */
 	render() {
-		const list = [
-			{
-				title: 'Главная',
-				link: "/hr/"
-			},
-			{
-				title: 'Настройки',
-				link: "/hr/settings"
-			},
-			{
-				title: 'Управление процессом оценки',
-				link: "/hr/processing"
-			},
-		];
+		const { role } = this.props;
+		let list;
+
+		if (this.isValid(role)) {
+			list = nav[role];
+		} else {
+			list = nav.default;
+		}
 
 		return (
 			<Wrapper>
@@ -56,18 +73,32 @@ class Navigation extends React.Component {
 	}
 }
 
+/**
+ *
+ * @param store
+ * @returns {{role: null, pathname: *}|{role: *, pathname: *}}
+ */
 const mapState = store => {
 	const {
+		employee: { data },
 		router: {
-			location: {
-				pathname
-			}
-		}
+			location: { pathname },
+		},
 	} = store;
 
-	return {
-		pathname
+	if (data) {
+		const { role } = data;
+
+		return {
+			role,
+			pathname,
+		};
 	}
+
+	return {
+		role: null,
+		pathname,
+	};
 };
 
 export default connect(mapState)(Navigation);

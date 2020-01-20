@@ -10,11 +10,8 @@ import MainLayout from "../_layout/TwoColumn";
 import { Transition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { TimelineMax } from "gsap";
-import {gsap} from "gsap";
-import {CSSPlugin} from "gsap/all";
-
-
-
+import { gsap } from "gsap";
+import { CSSPlugin } from "gsap/all";
 
 /**
  *
@@ -24,39 +21,34 @@ import {CSSPlugin} from "gsap/all";
 function onEnter(node, appears) {
 	gsap.registerPlugin(CSSPlugin);
 
-	if(!appears) {
+	if (!appears) {
 		node.style.height = "0";
 	}
 
 	const tl = new TimelineMax({ paused: true });
 
-	tl
-		.from(node, 0, {
-			height: "0",
-			autoAlpha: 0,
-			delay: appears ? 0 : 0.2
-		})
-		.from(node, 0.3, {
-			autoAlpha: 0,
-			ease: "power0",
-		});
+	tl.from(node, 0, {
+		height: "0",
+		autoAlpha: 0,
+		delay: appears ? 0 : 0.2,
+	}).from(node, 0.3, {
+		autoAlpha: 0,
+		ease: "power0",
+	});
 
-	tl.play()
+	tl.play();
 }
 
 /**
  *
  */
 class Router extends React.Component {
-
 	/**
 	 *
 	 * @returns {function(): *}
 	 */
 	renderHome() {
-		return () => (
-			<Home/>
-		);
+		return () => <Home />;
 	}
 
 	/**
@@ -64,7 +56,7 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderAssessment() {
-		return () => <Assessment/>;
+		return () => <Assessment />;
 	}
 
 	/**
@@ -72,9 +64,7 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderSettings() {
-		return () => (
-			<Settings/>
-		);
+		return () => <Settings />;
 	}
 
 	/**
@@ -82,7 +72,7 @@ class Router extends React.Component {
 	 * @returns {function(): *}
 	 */
 	renderProcessing() {
-		return () => <Processing/>;
+		return () => <Processing />;
 	}
 
 	/**
@@ -107,32 +97,44 @@ class Router extends React.Component {
 		return (
 			<ConnectedRouter history={history}>
 				<MainLayout>
-					<Route render={({location}) => {
-						const { pathname } = location;
+					{/*<Route render={({location}) => {*/}
+					{/*	const { pathname } = location;*/}
 
-						return (
-							<TransitionGroup component={null}>
-								<Transition
-									key={pathname}
-									appear={true}
-									timeout={{
-										enter: 700,
-										exit: 0,
-									}}
-									onEnter={onEnter}
-								>
-									<Switch location={location}>
-										<Route exact path="/hr" render={this.renderHome()}/>
-										<Route path="/hr/assessment" render={this.renderAssessment()}/>
-										<Route path="/hr/settings" render={this.renderSettings()}/>
-										<Route path="/hr/processing" render={this.renderProcessing()}/>
-										<Route render={() => (<div>Oops.. 404</div>)}/>
-									</Switch>
-								</Transition>
-							</TransitionGroup>
-						);
-					}}/>
-
+					{/*	return (*/}
+					{/*		<TransitionGroup component={null}>*/}
+					{/*			<Transition*/}
+					{/*				key={pathname}*/}
+					{/*				appear={true}*/}
+					{/*				timeout={{*/}
+					{/*					enter: 700,*/}
+					{/*					exit: 0,*/}
+					{/*				}}*/}
+					{/*				onEnter={onEnter}*/}
+					{/*			>*/}
+					<Switch location={location}>
+						<Route
+							exact
+							path="/hr"
+							render={this.renderHome()}
+						/>
+						<Route
+							path="/hr/assessment"
+							render={this.renderAssessment()}
+						/>
+						<Route
+							path="/hr/settings"
+							render={this.renderSettings()}
+						/>
+						<Route
+							path="/hr/processing"
+							render={this.renderProcessing()}
+						/>
+						<Route render={() => <div>Oops.. 404</div>} />
+					</Switch>
+					{/*	</Transition>*/}
+					{/*</TransitionGroup>*/}
+					{/*	);*/}
+					{/*}}/>*/}
 				</MainLayout>
 			</ConnectedRouter>
 		);
@@ -143,9 +145,7 @@ const mapState = state => {
 	const {
 		router: {
 			location,
-			location: {
-				pathname,
-			},
+			location: { pathname },
 		},
 	} = state;
 
