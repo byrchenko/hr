@@ -45,6 +45,7 @@ ___
     
     
 ### Components description
+___
 
 ##### Роли пользователя 
 
@@ -190,7 +191,7 @@ Build приложения в определённую папку
 1. Create preloader for pages, when user is loading
 2. Create error page
 3. Create forbidden page
-4. Create tests for layout render according for fetched user data (error, loading, unknown fetched user data)
+4. Create tests for layout render according to fetched user data (error, loading, unknown fetched user data)
 5. Create test for page permissions
 
 
