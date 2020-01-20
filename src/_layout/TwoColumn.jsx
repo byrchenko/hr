@@ -13,15 +13,23 @@ const TwoColumn = ({ children, loading, error, data }) => {
 	 */
 	function renderContent() {
 		if (loading) {
-			return <div>Loading..</div>;
+			return <div className={css.loading}>Loading..</div>;
 		}
 
 		if (error) {
-			return <div>Error.. Try again later</div>;
+			return (
+				<div className={css.error}>
+					Error.. Try again later
+				</div>
+			);
 		}
 
 		if (data === null || data === undefined) {
-			return <div>Oops.. Something went wrong!</div>;
+			return (
+				<div className={css.oops}>
+					Oops.. Something went wrong!
+				</div>
+			);
 		}
 
 		return (

@@ -25,3 +25,25 @@
   background-color: #fff;
   overflow: hidden;
 }
+
+%message {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #909090;
+}
+
+.error {
+  @extend %message;
+}
+
+.loading {
+  @extend %message;
+}
+
+.oops {
+  @extend %message;
+}
