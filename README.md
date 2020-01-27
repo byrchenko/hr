@@ -98,7 +98,7 @@ ___
         - Доступ к страницам: Главная страница, Страница настроек, Страница управления процессом оценивания
 
 2. ##### GeneralTitle
-    Отображает название модуля и [роль](#кoles) пользователя
+    Отображает название модуля и [роль](#markdown-header-roles) пользователя
 
 3. ##### Sidebar
     1. Отображение данных пользователя
@@ -115,72 +115,17 @@ ___
     4. Если нет пользователей ожидающих оценевания - отображать соответствующую страницу.
     
   
-
 ### Versions
 ___
 ##### 0.0.0
-Выбор компонентов сборки, обдумывание deployment'a
-
-- **webpack.config (dev, prod)**
-    - dev: dev-server, source-maps
-    - prod: minify, optimize assets
-    
-    Зависимости:
-    
-    - eslint + prettier
-    - sass-lint ? 
-    - file-loader
-    - sass-loader
-    - babel
-    
-- **Dockerfile**   
-Build приложения в определённую папку
+Подбор компонентов сборки, обдумывание deployment'a
  
-   
 ##### 0.1.0
 
-1. Cоздание 2-х webpack:
-        
-    - **loaders.js** - configuring webpack loaders
-    - **plugins.js** - configuring webpack plugins
-    - **path.js** - webpack config paths
-    - **webpack.dev** 
-        - dev server configuration
-        - loading fonts, correct import links in scss (resolve-url-loader)
-        - loading images, svg
-        - scss compiling
-    - **webpack.prod** 
-        - bundle minification (terser plugin)
-        - code splitting (dynamic import)
-        - minification css
-        - make bundle unreadable (obfuscator)
-        - analyze bundle (bundle analyzer)
-       
-        *Сроки:* 16 часов
-    
+1. Cоздание конфигурации webpack (dev, prod).
 2. Создание Dockerfile и docker-compose: 
-
-    - **Dockerfile** - build приложения
-    - **../docker-compose** - создание контейнеров под продакшен, разработку, devserver и анализа билда  
-    
-    *Сроки:* 4 часа
-
 3. Развёртывание b2b (Валера)  
-    Cтруктура: 
-     
-    - **/app** - front  
-    - **/api** - api  
-    - **/bitrix** - битрикс  
-    - **docker-compose.yml** - запуск полного приложения  
-    
-    *Сроки:* 8 часов
-
-4. Освоение технологий:
-
-    - ConnectedRouter
-    - GSAP  
-    
-    *Сроки:* 12 часов
+4. Освоение технологий ConnectedRouter и GSAP  
 
 ##### 0.2.0
 
@@ -188,9 +133,6 @@ Build приложения в определённую папку
 2. Api Service - тестирование всех http-методов **(16h)**
 3. Добавление ядра Redux (reducer, actions, middleware, selectors), тестирование **(8h)**
 4. ConnectedRouter - создать страницы и связи между ними, разбор дизайна **(8h)**
-
-**Использовать TDD**
-
 
 ##### 0.3.0
 
