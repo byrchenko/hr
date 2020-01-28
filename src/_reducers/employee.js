@@ -1,7 +1,7 @@
 import {
 	fetchSuccessHandler,
 	fetchErrorHandler,
-	fetchLoadingHandler
+	fetchLoadingHandler,
 } from "../_store/reducer";
 
 import {
@@ -10,7 +10,7 @@ import {
 	FETCH_SUCCESS,
 } from "../_store/types";
 
-import {EMPLOYEE_ENTITY} from "../_store/entities";
+import { EMPLOYEE_ENTITY } from "../_store/entities";
 
 export const initialState = {
 	data: null,
@@ -19,9 +19,7 @@ export const initialState = {
 	sync: false,
 };
 
-
 const handler = {
-
 	/**
 	 *
 	 * @param state
@@ -30,10 +28,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_SUCCESS]: (state, action) => {
-		const {entity, data} = action;
+		const { entity, data } = action;
 
 		if (entity === EMPLOYEE_ENTITY) {
-			return fetchSuccessHandler(state, data)
+			return fetchSuccessHandler(state, data);
 		}
 
 		return state;
@@ -47,10 +45,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_LOADING]: (state, action) => {
-		const {entity} = action;
+		const { entity } = action;
 
 		if (entity === EMPLOYEE_ENTITY) {
-			return fetchLoadingHandler(state)
+			return fetchLoadingHandler(state);
 		}
 
 		return state;
@@ -64,10 +62,10 @@ const handler = {
 	 * @constructor
 	 */
 	[FETCH_ERROR]: (state, action) => {
-		const {entity} = action;
+		const { entity } = action;
 
 		if (entity === EMPLOYEE_ENTITY) {
-			return fetchErrorHandler(state)
+			return fetchErrorHandler(state);
 		}
 
 		return state;
@@ -82,7 +80,7 @@ const handler = {
 };
 
 export default (state = initialState, action) => {
-	const reducer = handler[action.type]  || handler.default;
+	const reducer = handler[action.type] || handler.default;
 
 	return reducer(state, action);
-}
+};

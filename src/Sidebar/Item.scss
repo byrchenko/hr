@@ -1,0 +1,37 @@
+@import "../_sass/colors";
+
+.header {
+  padding: 8px;
+  background-color: #EDEDED;
+  border: 1px solid #EDEDED;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: $clr_text_dark;
+}
+
+.wrapper {
+  padding: 6px 10px;
+}
+
+.employee {
+  padding: 3px 15px;
+}
+
+.name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+}
+
+.date {
+  font-size: 10px;
+  line-height: 15px;
+  color: #999;
+}
+
+.position {
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
+}

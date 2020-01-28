@@ -4,7 +4,11 @@ import {
 	fetchLoadingHandler,
 } from "../_store/reducer";
 
-import { FETCH_ERROR, FETCH_LOADING, FETCH_SUCCESS } from "../_store/types";
+import {
+	FETCH_ERROR,
+	FETCH_LOADING,
+	FETCH_SUCCESS,
+} from "../_store/types";
 
 import { DIVISIONS_ENTITY } from "../_store/entities";
 

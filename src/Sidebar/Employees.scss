@@ -1,7 +1,35 @@
+@import "../_sass/colors";
+
 .index {
   width: 100%;
   background-color: #fff;
   z-index: 100;
   padding: 15px 13px;
   box-sizing: border-box;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.closeAll {
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 13px;
+  color: $clr_red;
+  cursor: pointer;
+}
+
+.text {
+  font-size: 14px;
+  margin: 0;
+  color: $clr_text_dark;
+  margin-right: 10px;
+  font-weight: 400;
 }

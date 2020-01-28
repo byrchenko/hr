@@ -2,7 +2,7 @@ import {
 	fetchSuccessHandler,
 	fetchErrorHandler,
 	fetchLoadingHandler,
-	listById
+	listById,
 } from "../_store/reducer";
 
 import {
@@ -21,7 +21,6 @@ export const initialState = {
 };
 
 const handler = {
-
 	/**
 	 *
 	 * @param state
@@ -85,4 +84,4 @@ export default (state = initialState, action) => {
 	const reducer = handler[action.type] || handler.default;
 
 	return reducer(state, action);
-}
+};

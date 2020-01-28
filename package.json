@@ -24,6 +24,7 @@
     "connected-react-router": "^6.6.1",
     "css-loader": "^3.3.2",
     "file-loader": "^5.0.2",
+    "framer-motion": "^1.8.3",
     "gsap": "file:gsap.tgz",
     "html-webpack-plugin": "^4.0.0-beta.8",
     "mini-css-extract-plugin": "^0.8.2",

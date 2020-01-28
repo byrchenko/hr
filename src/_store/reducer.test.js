@@ -2,11 +2,10 @@ import {
 	fetchSuccessHandler,
 	fetchLoadingHandler,
 	fetchErrorHandler,
-	listById
+	listById,
 } from "./reducer";
 
 describe("Root reducer", () => {
-
 	/**
 	 *
 	 */
@@ -21,27 +20,29 @@ describe("Root reducer", () => {
 				role: "hr",
 				department: "Marketing",
 				position: "Manager",
-				last_assessment_date: "22/12/2019"
-			}
+				last_assessment_date: "22/12/2019",
+			},
 		};
 
-		const initialState ={
+		const initialState = {
 			data: null,
 			error: false,
 			loading: false,
 			sync: false,
-			additional: 'some property'
+			additional: "some property",
 		};
 
 		const sample = fetchSuccessHandler(initialState, action.data);
 
-		expect(sample).toEqual(Object.assign({
-			data: action.data,
-			loading: false,
-			error: false,
-			sync: true,
-			additional: 'some property'
-		}))
+		expect(sample).toEqual(
+			Object.assign({
+				data: action.data,
+				loading: false,
+				error: false,
+				sync: true,
+				additional: "some property",
+			}),
+		);
 	});
 
 	/**
@@ -53,23 +54,25 @@ describe("Root reducer", () => {
 			entity: "EMPLOYEE",
 		};
 
-		const initialState ={
+		const initialState = {
 			data: null,
 			error: false,
 			loading: false,
 			sync: false,
-			additional: 'some property'
+			additional: "some property",
 		};
 
 		const sample = fetchErrorHandler(initialState, action);
 
-		expect(sample).toEqual(Object.assign({
-			data: initialState.data,
-			loading: false,
-			error: true,
-			sync: false,
-			additional: 'some property'
-		}))
+		expect(sample).toEqual(
+			Object.assign({
+				data: initialState.data,
+				loading: false,
+				error: true,
+				sync: false,
+				additional: "some property",
+			}),
+		);
 	});
 
 	/**
@@ -81,23 +84,25 @@ describe("Root reducer", () => {
 			entity: "EMPLOYEE",
 		};
 
-		const initialState ={
+		const initialState = {
 			data: null,
 			error: false,
 			loading: false,
 			sync: false,
-			additional: 'some property'
+			additional: "some property",
 		};
 
 		const sample = fetchLoadingHandler(initialState, action);
 
-		expect(sample).toEqual(Object.assign({
-			data: initialState.data,
-			loading: true,
-			error: false,
-			sync: false,
-			additional: 'some property'
-		}))
+		expect(sample).toEqual(
+			Object.assign({
+				data: initialState.data,
+				loading: true,
+				error: false,
+				sync: false,
+				additional: "some property",
+			}),
+		);
 	});
 
 	/**
@@ -106,28 +111,28 @@ describe("Root reducer", () => {
 	it("should return list by id", () => {
 		const list = [
 			{
-				id: 1
+				id: 1,
 			},
 			{
-				id: 4
+				id: 4,
 			},
 			{
-				id: 3
-			}
+				id: 3,
+			},
 		];
 
 		const sample = listById(list);
 
 		expect(sample).toEqual({
 			1: {
-				id: 1
+				id: 1,
 			},
 			4: {
-				id: 4
+				id: 4,
 			},
 			3: {
-				id: 3
-			}
-		})
+				id: 3,
+			},
+		});
 	});
 });

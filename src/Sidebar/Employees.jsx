@@ -1,18 +1,94 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Employees.scss";
+import PermissionController from "../_permissions/Controller";
+import { connect } from "react-redux";
+import Item from "./Item";
+import divisions from "../_api/divisions";
+import text from "./locale/ru";
 
-const Employees = props => {
+const Employees = ({ list }) => {
+	const [expanded, setExpanded] = React.useState(0);
 
+	/**
+	 *
+	 * @param item
+	 * @param index
+	 * @param expanded
+	 * @param setExpanded
+	 * @returns {*}
+	 */
+	const renderItem = (item, index, expanded, setExpanded) => {
+		return (
+			<Item
+				key={item.id}
+				item={item}
+				index={index}
+				expanded={expanded}
+				setExpanded={setExpanded}
+				renderChild={renderItem}
+			/>
+		);
+	};
+
+	/**
+	 *
+	 * @param list
+	 */
+	const renderList = list => {
+		console.log(list);
+		if (list === null || list === undefined) {
+			return <div className={css.empty}>No items found</div>;
+		}
+
+		return list.map((el, i) =>
+			renderItem(el, i, expanded, setExpanded),
+		);
+	};
+
+	/**
+	 *
+	 */
 	return (
 		<div className={css.index}>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque culpa cupiditate debitis dicta in ipsa ipsam nisi quae quia velit. Ab aspernatur commodi cupiditate excepturi illo iusto, labore libero nulla provident quam quidem quo ratione sapiente temporibus, vel. Doloribus fugiat necessitatibus nisi quis quod, sit! Adipisci autem consequatur delectus dolorem est nemo pariatur possimus repudiandae vel. Alias aliquid architecto aspernatur cumque distinctio dolorem impedit in, nam nesciunt quasi quos reiciendis repellat reprehenderit sunt ullam, velit voluptate. Alias, amet, dicta dignissimos doloremque eligendi error fugit nisi quidem quis ratione temporibus veniam vitae. Adipisci beatae dolores laudantium omnis quas quibusdam temporibus, veritatis.
+			<div className={css.title}>
+				<h3 className={css.text}>{text.employeesTitle}</h3>
+
+				<button className={css.closeAll}>
+					{text.closeAll}
+				</button>
+			</div>
+
+			{renderList(divisions)}
 		</div>
 	);
 };
 
-Employees.propTypes = {};
+Employees.propTypes = {
+	list: PropTypes.array,
+};
 
-Employees.defaultProps = {};
+Employees.defaultProps = {
+	list: null,
+};
 
-export default Employees;
+/**
+ *
+ * @param state
+ * @returns {null|{list: *}}
+ */
+const mapState = state => {
+	const {
+		divisions: { data },
+	} = state;
+
+	if (data === null || data === undefined) {
+		return {};
+	}
+
+	return {
+		list: data,
+	};
+};
+
+export default connect(mapState)(Employees);

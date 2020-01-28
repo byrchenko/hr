@@ -3,22 +3,30 @@ import PropTypes from "prop-types";
 import css from "./User.scss";
 import ArrowLeft from "../_svg/arr-l.svg";
 import text from "./locale/ru";
+import PermissionController from "../_permissions/Controller";
+import {
+	HR_PERMISSION,
+	SUPERVISOR_PERMISSION,
+} from "../_store/roles";
 
-const User = ({showEmployees}) => {
-
+const User = ({ showEmployees }) => {
 	return (
 		<div className={css.index}>
-			<div
-				className={css.button}
-				onClick={showEmployees}
-				title={text.showEmployees}
+			<PermissionController
+				allowed={[HR_PERMISSION, SUPERVISOR_PERMISSION]}
 			>
-				<ArrowLeft />
+				<div
+					className={css.showStructure}
+					onClick={showEmployees}
+					title={text.showEmployees}
+				>
+					<ArrowLeft />
 
-				<span className={css.text}>
-					{text.showEmployees}
-				</span>
-			</div>
+					<span className={css.text}>
+						{text.showEmployees}
+					</span>
+				</div>
+			</PermissionController>
 
 			<div className={css.main}>
 				<div className={css.picture}>
@@ -30,13 +38,9 @@ const User = ({showEmployees}) => {
 				</div>
 
 				<div className={css.fullname}>
-					<h3 className={css.name}>
-						{'Firstname'}
-					</h3>
+					<h3 className={css.name}>{"Firstname"}</h3>
 
-					<h3 className={css.name}>
-						{'Lastname'}
-					</h3>
+					<h3 className={css.name}>{"Lastname"}</h3>
 				</div>
 			</div>
 
@@ -47,7 +51,9 @@ const User = ({showEmployees}) => {
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.position}</h5>
-				<h3 className={css.descr}>{"Менеджер по работе с ассортиментом"}</h3>
+				<h3 className={css.descr}>
+					{"Менеджер по работе с ассортиментом"}
+				</h3>
 			</div>
 
 			<div className={css.info}>

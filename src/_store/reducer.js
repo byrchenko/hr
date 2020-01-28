@@ -1,17 +1,20 @@
 import { combineReducers } from "redux";
-import { connectRouter } from 'connected-react-router'
+import { connectRouter } from "connected-react-router";
 import employee from "../_reducers/employee";
 import assessmentEmployees from "../_reducers/assessmentEmployees";
+import divisions from "../_reducers/divisions";
 
 /**
  *
  * @param history
  */
-export default history => combineReducers({
-	router: connectRouter(history),
-	employee,
-	assessmentEmployees,
-});
+export default history =>
+	combineReducers({
+		router: connectRouter(history),
+		employee,
+		assessmentEmployees,
+		divisions,
+	});
 
 /**
  *
@@ -24,7 +27,7 @@ export function fetchSuccessHandler(state, data) {
 		data,
 		error: false,
 		loading: false,
-		sync: true
+		sync: true,
 	});
 }
 
@@ -37,7 +40,7 @@ export function fetchLoadingHandler(state) {
 	return Object.assign({}, state, {
 		error: false,
 		loading: true,
-		sync: false
+		sync: false,
 	});
 }
 
@@ -50,7 +53,7 @@ export function fetchErrorHandler(state) {
 	return Object.assign({}, state, {
 		error: true,
 		loading: false,
-		sync: false
+		sync: false,
 	});
 }
 
