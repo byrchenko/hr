@@ -1,0 +1,48 @@
+.index {
+
+}
+
+.select {
+  position: relative;
+}
+
+.selected {
+  font-size: 13px;
+  padding: 10px 13px;
+  border: 1px solid #E2E2E2;
+  box-sizing: border-box;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  line-height: 17px;
+  margin-bottom: 8px;
+}
+
+.list {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-radius: 3px;
+  list-style: none;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  max-height: 300px;
+  overflow: auto;
+}
+
+.item {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color .1s ease;
+
+  &:hover {
+    background-color: darken(#fff, 10%);
+  }
+}

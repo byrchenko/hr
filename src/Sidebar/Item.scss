@@ -1,6 +1,8 @@
 @import "../_sass/colors";
 
 .header {
+  display: flex;
+  align-items: center;
   padding: 8px;
   background-color: #EDEDED;
   border: 1px solid #EDEDED;
@@ -31,7 +33,26 @@
 }
 
 .position {
+  display: inline-flex;
+  align-items: center;
   font-size: 12px;
   line-height: 18px;
   color: #999;
+}
+
+.section {
+  overflow: hidden;
+}
+
+.triangle {
+  margin-right: 6px;
+  transition: transform .3s ease;
+}
+
+.rotate {
+  transform: rotate(-90deg);
+}
+
+.edit {
+  margin-left: 5px;
 }

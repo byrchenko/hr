@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Item from "./Item";
 import divisions from "../_api/divisions";
 import text from "./locale/ru";
+import Modal from "../Modal";
 
 const Employees = ({ list }) => {
 	const [expanded, setExpanded] = React.useState(0);
@@ -49,14 +50,17 @@ const Employees = ({ list }) => {
 	/**
 	 *
 	 */
+	const changePosition = () => {
+		// body
+	};
+
+	/**
+	 *
+	 */
 	return (
 		<div className={css.index}>
 			<div className={css.title}>
 				<h3 className={css.text}>{text.employeesTitle}</h3>
-
-				<button className={css.closeAll}>
-					{text.closeAll}
-				</button>
 			</div>
 
 			{renderList(divisions)}

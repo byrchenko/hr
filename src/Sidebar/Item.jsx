@@ -1,6 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import css from "./Item.scss";
 import { motion, AnimatePresence } from "framer-motion";
+import Triangle from "../_svg/triangle_down.svg";
+import { HR_PERMISSION } from "../_store/roles";
+import PermissionController from "../_permissions/Controller";
+import Edit from "../_svg/edit.svg";
+import { push } from "connected-react-router";
+import { connect } from "react-redux";
 
 const Item = ({
 	item,
@@ -8,6 +15,7 @@ const Item = ({
 	expanded,
 	setExpanded,
 	renderChild,
+	push,
 }) => {
 	const [innerExpanded, setInnerExpanded] = React.useState(false);
 
@@ -30,20 +38,47 @@ const Item = ({
 
 	/**
 	 *
+	 * @param id
+	 */
+	const changePosition = id => {
+		push(`./?change_position=${id}`);
+	};
+
+	/**
+	 *
 	 * @param item
 	 * @returns {*}
 	 */
-	const renderEmployee = item => {
+	const renderEmployee = ({
+		id,
+		name,
+		last_assessment_date,
+		position,
+	}) => {
 		return (
-			<div key={item.id} className={css.employee}>
+			<div
+				key={id}
+				className={css.employee}
+				onClick={() => changePosition(id)}
+			>
 				<div className={css.name}>
-					{item.name}{" "}
+					{name}{" "}
 					<span className={css.date}>
-						({item.last_assessment_date})
+						({last_assessment_date})
 					</span>
 				</div>
 
-				<div className={css.position}>{item.position}</div>
+				<div className={css.position}>
+					{position}
+
+					<PermissionController allowed={[HR_PERMISSION]}>
+						<Edit
+							className={css.edit}
+							height={7}
+							width={7}
+						/>
+					</PermissionController>
+				</div>
 			</div>
 		);
 	};
@@ -71,6 +106,16 @@ const Item = ({
 				onClick={() => setExpanded(isOpen ? false : index)}
 				className={css.header}
 			>
+				<Triangle
+					height={4}
+					width={6}
+					className={
+						isOpen
+							? `${css.triangle} ${css.rotate}`
+							: css.triangle
+					}
+				/>
+
 				{item.title}
 			</motion.header>
 			<AnimatePresence initial={false}>
@@ -88,6 +133,7 @@ const Item = ({
 							duration: 0.8,
 							ease: [0.04, 0.62, 0.23, 0.98],
 						}}
+						className={css.section}
 					>
 						<div className={css.wrapper}>
 							{renderChildren()}
@@ -101,8 +147,16 @@ const Item = ({
 	);
 };
 
-Item.propTypes = {};
+/**
+ *
+ */
+Item.propTypes = {
+	item: PropTypes.object,
+	index: PropTypes.number,
+	expanded: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+	setExpanded: PropTypes.func,
+	renderChild: PropTypes.func,
+	push: PropTypes.func,
+};
 
-Item.defaultProps = {};
-
-export default Item;
+export default connect(null, { push })(Item);

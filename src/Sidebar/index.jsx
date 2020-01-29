@@ -14,6 +14,11 @@ import {
 	SUPERVISOR_PERMISSION,
 } from "../_store/roles";
 import PermissionController from "../_permissions/Controller";
+import Modal from "../Modal";
+import text from "./locale/ru";
+import queryString from "query-string";
+import { AnimatePresence, motion } from "framer-motion";
+import ModalContent from "./ModalContent";
 
 class Sidebar extends React.Component {
 	/**
@@ -72,6 +77,7 @@ class Sidebar extends React.Component {
 					}}
 					onEntered={node => {
 						node.style.position = "static";
+						node.style.zIndex = "0";
 					}}
 				>
 					<PermissionController
@@ -115,13 +121,48 @@ class Sidebar extends React.Component {
 
 	/**
 	 *
+	 */
+	isModal() {
+		const { search } = this.props;
+
+		const parsed = queryString.parse(search);
+
+		return Object.prototype.hasOwnProperty.call(
+			parsed,
+			"change_position",
+		);
+	}
+
+	/**
+	 *
 	 * @returns {*}
 	 */
 	render() {
 		return (
-			<TransitionGroup component={null}>
-				{this.renderUI()}
-			</TransitionGroup>
+			<>
+				<TransitionGroup component={null}>
+					{this.renderUI()}
+				</TransitionGroup>
+
+				<AnimatePresence>
+					{this.isModal() && (
+						<motion.div
+							key="modal"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+						>
+							<Modal
+								title={text.changePosition}
+								submitAction={() => {}}
+								submitText={text.changePositionBtn}
+							>
+								<ModalContent />
+							</Modal>
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</>
 		);
 	}
 }
@@ -133,6 +174,9 @@ class Sidebar extends React.Component {
  */
 const mapState = state => {
 	const {
+		router: {
+			location: { search },
+		},
 		employee: { data },
 	} = state;
 
@@ -144,6 +188,7 @@ const mapState = state => {
 
 	return {
 		role,
+		search,
 	};
 };
 

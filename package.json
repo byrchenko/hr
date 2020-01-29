@@ -30,6 +30,7 @@
     "mini-css-extract-plugin": "^0.8.2",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.10.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",

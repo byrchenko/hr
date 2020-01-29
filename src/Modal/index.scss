@@ -1,0 +1,112 @@
+@import "../_sass/colors";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background: rgba(0,0,0,.4);
+  z-index: 9999;
+}
+
+.modal {
+  max-width: 480px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background-color: $clr_dark_blue_box;
+}
+
+.title {
+  font-size: 12px;
+  line-height: 18px;
+  color: #fff;
+  margin: 0;
+  font-weight: 400;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: $clr_dark_blue_box;
+  transition: background-color .1s ease-out;
+  border-radius: 2px;
+
+  svg {
+    transition: scale3d .1s ease-out;
+  }
+
+  &:hover {
+    background-color: darken($clr_dark_blue_box, 10%);
+  }
+
+  &:active {
+    $scale_close: 0.9;
+
+    svg {
+      transform: scale3d($scale_close, $scale_close, $scale_close)
+    }
+  }
+}
+
+.content {
+  padding: 18px 23px 23px
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 23px;
+}
+
+@mixin button($color) {
+  min-width: 135px;
+  padding: 5px 20px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0 3.5px;
+  background-color: $color;
+  transition: all .1s ease-out;
+
+  $scale_hover: 0.97;
+  $scale_active: 0.9;
+
+  &:hover {
+    background-color: darken($color, 10%);
+    transform: scale3d($scale_hover, $scale_hover, $scale_hover);
+  }
+
+  &:active {
+    transform: scale3d($scale_active, $scale_active, $scale_active);
+  }
+}
+
+.submit {
+  @include button($clr_dark_blue_box);
+}
+
+.cancel {
+  @include button(#C4C4C4);
+}
