@@ -4,10 +4,11 @@ import css from "./Item.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import Triangle from "../_svg/triangle_down.svg";
 import { HR_PERMISSION } from "../_store/roles";
-import PermissionController from "../_permissions/Controller";
-import Edit from "../_svg/edit.svg";
 import { push } from "connected-react-router";
 import { connect } from "react-redux";
+import Employee from "./Employee";
+import { setChangePositionUser } from "../_actions";
+import { role } from "../_dispatchers";
 
 const Item = ({
 	item,
@@ -16,6 +17,7 @@ const Item = ({
 	setExpanded,
 	renderChild,
 	push,
+	role,
 }) => {
 	const [innerExpanded, setInnerExpanded] = React.useState(false);
 
@@ -31,8 +33,13 @@ const Item = ({
 			return null;
 		}
 
-		return children.map((el, i) =>
-			renderChild(el, i, innerExpanded, setInnerExpanded),
+		return children.map((child, index) =>
+			renderChild(
+				child,
+				index,
+				innerExpanded,
+				setInnerExpanded,
+			),
 		);
 	};
 
@@ -40,46 +47,26 @@ const Item = ({
 	 *
 	 * @param id
 	 */
-	const changePosition = id => {
+	const openModal = id => {
+		if (role !== HR_PERMISSION) {
+			return null;
+		}
+
 		push(`./?change_position=${id}`);
 	};
 
 	/**
 	 *
-	 * @param item
 	 * @returns {*}
+	 * @param employee
 	 */
-	const renderEmployee = ({
-		id,
-		name,
-		last_assessment_date,
-		position,
-	}) => {
+	const renderEmployee = employee => {
 		return (
-			<div
-				key={id}
-				className={css.employee}
-				onClick={() => changePosition(id)}
-			>
-				<div className={css.name}>
-					{name}{" "}
-					<span className={css.date}>
-						({last_assessment_date})
-					</span>
-				</div>
-
-				<div className={css.position}>
-					{position}
-
-					<PermissionController allowed={[HR_PERMISSION]}>
-						<Edit
-							className={css.edit}
-							height={7}
-							width={7}
-						/>
-					</PermissionController>
-				</div>
-			</div>
+			<Employee
+				item={employee}
+				key={employee.id}
+				openModal={openModal}
+			/>
 		);
 	};
 
@@ -96,54 +83,68 @@ const Item = ({
 		return employees.map(renderEmployee);
 	};
 
+	/**
+	 *
+	 * @returns {null|*}
+	 */
+	const accordionContent = () => {
+		if (!isOpen) {
+			return null;
+		}
+
+		return (
+			<motion.section
+				key="content"
+				initial="collapsed"
+				animate="open"
+				exit="collapsed"
+				variants={{
+					open: { opacity: 1, height: "auto" },
+					collapsed: { opacity: 0, height: 0 },
+				}}
+				transition={{
+					duration: 0.8,
+					ease: [0.04, 0.62, 0.23, 0.98],
+				}}
+				className={css.section}
+			>
+				<div className={css.wrapper}>
+					{renderChildren()}
+
+					{renderEmployees()}
+				</div>
+			</motion.section>
+		);
+	};
+
+	const headerBackground = isOpen ? "#FFF" : "#EDEDED";
+	const triangleClass = isOpen
+		? `${css.triangle} ${css.rotate}`
+		: css.triangle;
+
 	return (
-		<>
+		<div className={css.item}>
 			<motion.header
 				initial={false}
-				animate={{
-					backgroundColor: isOpen ? "#FFF" : "#EDEDED",
-				}}
 				onClick={() => setExpanded(isOpen ? false : index)}
+				animate={{
+					backgroundColor: headerBackground,
+				}}
 				className={css.header}
 			>
 				<Triangle
 					height={4}
 					width={6}
-					className={
-						isOpen
-							? `${css.triangle} ${css.rotate}`
-							: css.triangle
-					}
+					className={triangleClass}
 				/>
 
 				{item.title}
 			</motion.header>
-			<AnimatePresence initial={false}>
-				{isOpen && (
-					<motion.section
-						key="content"
-						initial="collapsed"
-						animate="open"
-						exit="collapsed"
-						variants={{
-							open: { opacity: 1, height: "auto" },
-							collapsed: { opacity: 0, height: 0 },
-						}}
-						transition={{
-							duration: 0.8,
-							ease: [0.04, 0.62, 0.23, 0.98],
-						}}
-						className={css.section}
-					>
-						<div className={css.wrapper}>
-							{renderChildren()}
 
-							{renderEmployees()}
-						</div>
-					</motion.section>
-				)}
+			<AnimatePresence initial={false}>
+				{accordionContent()}
 			</AnimatePresence>
-		</>
+		</div>
 	);
 };
 
@@ -157,6 +158,31 @@ Item.propTypes = {
 	setExpanded: PropTypes.func,
 	renderChild: PropTypes.func,
 	push: PropTypes.func,
+	changePositionUser: PropTypes.func,
+	role: PropTypes.string,
 };
 
-export default connect(null, { push })(Item);
+/**
+ *
+ * @param state
+ * @returns {{role: *}}
+ */
+const mapState = state => {
+	return {
+		role: role(state),
+	};
+};
+
+/**
+ *
+ * @param dispatch
+ */
+const mapDispatch = dispatch => {
+	return {
+		changePositionUser: user =>
+			dispatch(setChangePositionUser(user)),
+		push: args => dispatch(push(args)),
+	};
+};
+
+export default connect(mapState, mapDispatch)(Item);

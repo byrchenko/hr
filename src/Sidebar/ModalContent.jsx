@@ -4,8 +4,11 @@ import css from "./ModalContent.scss";
 import text from "./locale/ru";
 import list from "../_api/positions";
 import { AnimatePresence, motion } from "framer-motion";
+import Triangle from "../_svg/triangle_down.svg";
+import { connect } from "react-redux";
+import { setNewPosition } from "../_actions";
 
-const ModalContent = props => {
+const ModalContent = ({ setNewPosition, error }) => {
 	const listRef = React.useRef();
 
 	const [selected, setSelected] = React.useState(null);
@@ -17,6 +20,7 @@ const ModalContent = props => {
 	function selectItem(item) {
 		setSelected(item);
 		setIsOpened(false);
+		setNewPosition(item.id);
 	}
 
 	/**
@@ -106,6 +110,16 @@ const ModalContent = props => {
 		return selected.title;
 	}
 
+	function renderError() {
+		if (error) {
+			return (
+				<div className={css.error}>
+					Произошла ошибка! Попробуйте еще раз
+				</div>
+			);
+		}
+	}
+
 	/**
 	 *
 	 */
@@ -118,16 +132,37 @@ const ModalContent = props => {
 			<div className={css.select}>
 				<div className={css.selected} onClick={toggleSelect}>
 					{renderSelectedItem()}
+
+					<Triangle
+						className={css.triangle}
+						width={9}
+						height={6}
+					/>
 				</div>
 
 				<AnimatePresence>{renderList()}</AnimatePresence>
 			</div>
+
+			{renderError()}
 		</div>
 	);
 };
 
-ModalContent.propTypes = {};
+ModalContent.propTypes = {
+	setNewPosition: PropTypes.func,
+	error: PropTypes.bool,
+};
 
-ModalContent.defaultProps = {};
+/**
+ *
+ * @param dispatch
+ * @returns {{setNewPosition: (function(*=): *)}}
+ */
+const mapDispatch = dispatch => {
+	return {
+		setNewPosition: position =>
+			dispatch(setNewPosition(position)),
+	};
+};
 
-export default ModalContent;
+export default connect(null, mapDispatch)(ModalContent);

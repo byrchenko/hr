@@ -8,16 +8,40 @@ import {
 	HR_PERMISSION,
 	SUPERVISOR_PERMISSION,
 } from "../_store/roles";
+import { employee } from "../_dispatchers";
+import { connect } from "react-redux";
 
-const User = ({ showEmployees }) => {
-	return (
-		<div className={css.index}>
+/**
+ *
+ * @param changeSide
+ * @param employee
+ * @returns {*}
+ * @constructor
+ */
+const User = ({ changeSide, employee }) => {
+	const {
+		name,
+		last_name,
+		image,
+		department,
+		position,
+		last_assessment_date,
+	} = employee;
+
+	const fullName = `${name} ${last_name}`;
+
+	/**
+	 *
+	 * @returns {*}
+	 */
+	function renderButton() {
+		return (
 			<PermissionController
 				allowed={[HR_PERMISSION, SUPERVISOR_PERMISSION]}
 			>
 				<div
 					className={css.showStructure}
-					onClick={showEmployees}
+					onClick={changeSide}
 					title={text.showEmployees}
 				>
 					<ArrowLeft />
@@ -27,45 +51,67 @@ const User = ({ showEmployees }) => {
 					</span>
 				</div>
 			</PermissionController>
+		);
+	}
+
+	/**
+	 *
+	 */
+	return (
+		<div className={css.index}>
+			{renderButton()}
 
 			<div className={css.main}>
 				<div className={css.picture}>
 					<img
-						src="https://econet.ru/uploads/pictures/41043/content_tumblr_mp8ff5cucq1rqjv1uo1_1280.jpg"
-						alt={"Firstname Lastname"}
-						title={"Firstname Lastname"}
+						src={image}
+						alt={fullName}
+						title={fullName}
 					/>
 				</div>
 
 				<div className={css.fullname}>
-					<h3 className={css.name}>{"Firstname"}</h3>
+					<h3 className={css.name}>{name}</h3>
 
-					<h3 className={css.name}>{"Lastname"}</h3>
+					<h3 className={css.name}>{last_name}</h3>
 				</div>
 			</div>
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.division}</h5>
-				<h3 className={css.descr}>{"Ассортимент"}</h3>
+				<h3 className={css.descr}>{department}</h3>
 			</div>
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.position}</h5>
-				<h3 className={css.descr}>
-					{"Менеджер по работе с ассортиментом"}
-				</h3>
+				<h3 className={css.descr}>{position}</h3>
 			</div>
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.lastAssessment}</h5>
-				<h3 className={css.descr}>{"21.12.2018"}</h3>
+				<h3 className={css.descr}>{last_assessment_date}</h3>
 			</div>
 		</div>
 	);
 };
 
-User.propTypes = {};
+/**
+ *
+ */
+User.propTypes = {
+	changeSide: PropTypes.func,
+	employee: PropTypes.object,
+};
 
-User.defaultProps = {};
+/**
+ *
+ * @param state
+ * @returns {{employee: (function(*): *)}}
+ */
+const mapState = state => {
+	return {
+		employee: employee(state),
+	};
+};
 
-export default User;
+export default connect(mapState)(User);

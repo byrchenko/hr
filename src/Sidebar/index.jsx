@@ -3,11 +3,6 @@ import PropTypes from "prop-types";
 import { SHOW_USER, SHOW_EMPLOYEES } from "./config";
 import User from "./User";
 import Employees from "./Employees";
-import {
-	CSSTransition,
-	TransitionGroup,
-} from "react-transition-group";
-import { gsap } from "gsap";
 import { connect } from "react-redux";
 import {
 	HR_PERMISSION,
@@ -17,10 +12,21 @@ import PermissionController from "../_permissions/Controller";
 import Modal from "../Modal";
 import text from "./locale/ru";
 import queryString from "query-string";
-import { AnimatePresence, motion } from "framer-motion";
 import ModalContent from "./ModalContent";
+import {
+	changePosition,
+	locationSearch,
+	role,
+} from "../_dispatchers";
+import css from "./index.scss";
+import ApiInterface from "../_service/ApiInterface";
+import { AnimatePresence } from "framer-motion";
+import Appear from "../_transitions/Appear";
 
-class Sidebar extends React.Component {
+/**
+ *
+ */
+export class Sidebar extends React.Component {
 	/**
 	 *
 	 * @param props
@@ -29,16 +35,16 @@ class Sidebar extends React.Component {
 		super(props);
 
 		this.state = {
-			show: SHOW_USER,
+			side: SHOW_USER,
 		};
 	}
 
 	/**
 	 *
 	 */
-	showEmployees() {
+	changeSide() {
 		return () => {
-			this.setState({ show: SHOW_EMPLOYEES });
+			this.setState({ side: SHOW_EMPLOYEES });
 		};
 	}
 
@@ -46,77 +52,21 @@ class Sidebar extends React.Component {
 	 *
 	 * @returns {*}
 	 */
-	renderUI() {
-		const { show } = this.state;
+	renderSide() {
+		const { side } = this.state;
 		const { role } = this.props;
 
-		if (show === SHOW_EMPLOYEES) {
+		if (side === SHOW_EMPLOYEES) {
 			return (
-				<CSSTransition
-					key={"employees"}
-					timeout={350}
-					onEntering={node => {
-						gsap.fromTo(
-							node,
-							{
-								position: "absolute",
-								top: 0,
-								left: 0,
-								width: "100%",
-								height: "100%",
-								xPercent: 100,
-							},
-							{
-								top: 0,
-								left: 0,
-								xPercent: 0,
-								duration: 0.35,
-								ease: "power3",
-							},
-						);
-					}}
-					onEntered={node => {
-						node.style.position = "static";
-						node.style.zIndex = "0";
-					}}
+				<PermissionController
+					allowed={[HR_PERMISSION, SUPERVISOR_PERMISSION]}
 				>
-					<PermissionController
-						allowed={[
-							HR_PERMISSION,
-							SUPERVISOR_PERMISSION,
-						]}
-					>
-						<Employees />
-					</PermissionController>
-				</CSSTransition>
+					<Employees />
+				</PermissionController>
 			);
 		}
 
-		return (
-			<CSSTransition
-				key={"user"}
-				timeout={350}
-				onExiting={node => {
-					gsap.fromTo(
-						node,
-						{
-							backgroundColor: "#fff",
-						},
-						{
-							xPercent: -35,
-							backgroundColor: "#ccc",
-							duration: 0.35,
-							ease: "power3",
-						},
-					);
-				}}
-			>
-				<User
-					showEmployees={this.showEmployees()}
-					role={role}
-				/>
-			</CSSTransition>
-		);
+		return <User changeSide={this.changeSide()} role={role} />;
 	}
 
 	/**
@@ -135,37 +85,78 @@ class Sidebar extends React.Component {
 
 	/**
 	 *
+	 */
+	changePosition() {
+		return () => {
+			const {
+				newPosition,
+				sendNewPosition,
+				search,
+			} = this.props;
+
+			const parsed = queryString.parse(search);
+
+			sendNewPosition(newPosition, parsed.change_position);
+		};
+	}
+
+	/**
+	 *
+	 */
+	renderModal() {
+		const {
+			changePositionLoading,
+			changePositionSync,
+			changePositionError,
+		} = this.props;
+
+		if (!this.isModal()) {
+			return null;
+		}
+
+		return (
+			<Modal
+				title={text.changePosition}
+				submitAction={this.changePosition()}
+				submitText={text.changePositionBtn}
+				loading={changePositionLoading}
+				approved={changePositionSync}
+			>
+				<ModalContent error={changePositionError} />
+			</Modal>
+		);
+	}
+
+	/**
+	 *
 	 * @returns {*}
 	 */
 	render() {
 		return (
-			<>
-				<TransitionGroup component={null}>
-					{this.renderUI()}
-				</TransitionGroup>
+			<div className={css.index}>
+				{this.renderSide()}
 
 				<AnimatePresence>
-					{this.isModal() && (
-						<motion.div
-							key="modal"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-						>
-							<Modal
-								title={text.changePosition}
-								submitAction={() => {}}
-								submitText={text.changePositionBtn}
-							>
-								<ModalContent />
-							</Modal>
-						</motion.div>
-					)}
+					{this.renderModal()}
 				</AnimatePresence>
-			</>
+			</div>
 		);
 	}
 }
+
+/**
+ *
+ */
+Sidebar.propTypes = {
+	role: PropTypes.string,
+	search: PropTypes.string,
+	changePositionUser: PropTypes.string,
+	changePositionLoading: PropTypes.bool,
+	changePositionSync: PropTypes.bool,
+	changePositionError: PropTypes.bool,
+	newPosition: PropTypes.number,
+	sendNewPosition: PropTypes.func,
+};
 
 /**
  *
@@ -173,23 +164,30 @@ class Sidebar extends React.Component {
  * @returns {{role: *}}
  */
 const mapState = state => {
-	const {
-		router: {
-			location: { search },
-		},
-		employee: { data },
-	} = state;
-
-	if (data === null || data === undefined) {
-		return null;
-	}
-
-	const { role } = data;
+	const { loading, sync, error, newPosition } = changePosition(
+		state,
+	);
 
 	return {
-		role,
-		search,
+		role: role(state),
+		search: locationSearch(state),
+		changePositionLoading: loading,
+		changePositionSync: sync,
+		changePositionError: error,
+		newPosition,
 	};
 };
 
-export default connect(mapState)(Sidebar);
+/**
+ *
+ * @param dispatch
+ * @returns {{sendNewPosition: void}}
+ */
+const mapDispatch = dispatch => {
+	return {
+		sendNewPosition: (position, user) =>
+			ApiInterface.changeUserPosition(dispatch, position, user),
+	};
+};
+
+export default connect(mapState, mapDispatch)(Sidebar);

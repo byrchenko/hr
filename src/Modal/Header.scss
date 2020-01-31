@@ -1,0 +1,46 @@
+@import "../_sass/colors";
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background-color: $clr_dark_blue_box;
+}
+
+.title {
+  font-size: 12px;
+  line-height: 18px;
+  color: #fff;
+  margin: 0;
+  font-weight: 400;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: $clr_dark_blue_box;
+  transition: background-color .1s ease-out;
+  border-radius: 2px;
+
+  svg {
+    transition: scale3d .1s ease-out;
+  }
+
+  &:hover {
+    background-color: darken($clr_dark_blue_box, 10%);
+  }
+
+  &:active {
+    $scale_close: 0.9;
+
+    svg {
+      transform: scale3d($scale_close, $scale_close, $scale_close)
+    }
+  }
+}

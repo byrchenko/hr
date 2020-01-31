@@ -1,60 +1,54 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./index.scss";
-import text from "./locale/ru/text";
-import Close from "../_svg/close.svg";
-import { goBack } from "connected-react-router";
+import { push } from "connected-react-router";
 import { connect } from "react-redux";
+import { AnimatePresence } from "framer-motion";
+import Appear from "../_transitions/Appear";
+import Header from "./Header";
+import Content from "./Content";
 
-const Modal = ({
+export const Modal = ({
 	title,
 	submitText,
 	submitAction,
-	goBack,
 	children,
+	loading,
+	approved,
+	push,
 }) => {
 	/**
 	 *
 	 */
 	function closeModal() {
-		goBack();
+		if (loading) {
+			return null;
+		}
+
+		push("./");
+	}
+
+	if (approved) {
+		push("./");
 	}
 
 	return (
-		<div className={css.overlay}>
-			<div className={css.modal}>
-				<div className={css.header}>
-					<h3 className={css.title}>{title}</h3>
+		<Appear keyValue="modal">
+			<div className={css.overlay}>
+				<div className={css.modal}>
+					<Header title={title} close={closeModal} />
 
-					<button
-						className={css.close}
-						onClick={closeModal}
-					>
-						<Close height={9} width={9} />
-					</button>
-				</div>
-
-				<div className={css.content}>
-					{children}
-
-					<div className={css.buttons}>
-						<button
-							className={css.submit}
-							onClick={submitAction}
-						>
-							{submitText}
-						</button>
-
-						<button
-							className={css.cancel}
-							onClick={closeModal}
-						>
-							{text.close}
-						</button>
-					</div>
+					<Content
+						content={children}
+						submitText={submitText}
+						handleSubmit={submitAction}
+						closeModal={closeModal}
+						loading={loading}
+						approved={approved}
+					/>
 				</div>
 			</div>
-		</div>
+		</Appear>
 	);
 };
 
@@ -66,6 +60,9 @@ Modal.propTypes = {
 	submitText: PropTypes.string,
 	submitAction: PropTypes.func,
 	goBack: PropTypes.func,
+	loading: PropTypes.bool,
+	isOn: PropTypes.bool,
+	approved: PropTypes.bool,
 };
 
 /**
@@ -74,6 +71,8 @@ Modal.propTypes = {
 Modal.defaultProps = {
 	title: "Modal title",
 	submitText: "Submit",
+	loading: false,
+	approved: true,
 };
 
-export default connect(null, { goBack })(Modal);
+export default connect(null, { push })(Modal);

@@ -1,0 +1,65 @@
+@import "../_sass/colors";
+
+.content {
+  padding: 18px 23px 23px;
+  position: relative;
+}
+
+.loading,
+.empty {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.children {
+  margin-bottom: 23px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button($color) {
+  min-width: 135px;
+  padding: 5px 20px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0 3.5px;
+  background-color: $color;
+  transition: all .1s ease-out;
+
+  $scale_hover: 0.97;
+  $scale_active: 0.9;
+
+  &:hover {
+    background-color: darken($color, 10%);
+    transform: scale3d($scale_hover, $scale_hover, $scale_hover);
+  }
+
+  &:active {
+    transform: scale3d($scale_active, $scale_active, $scale_active);
+  }
+}
+
+.submit {
+  @include button($clr_dark_blue_box);
+}
+
+.cancel {
+  @include button(#C4C4C4);
+}

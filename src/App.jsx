@@ -8,8 +8,14 @@ import {
 	fetchDataLoading,
 	fetchDataSuccess,
 } from "./_actions";
-import { EMPLOYEE_ENTITY } from "./_store/entities";
-import { employee, hr } from "./_api/employee";
+import {
+	ASSESSMENT_TABLE_ENTITY,
+	DIVISIONS_ENTITY,
+	EMPLOYEE_ENTITY,
+} from "./_store/entities";
+import { employee, hr, supervisor } from "./_api/employee";
+import divisions from "./_api/divisions";
+import assessmentEmployeesList from "./_api/assessmentEmployeesList";
 
 const store = createStore({});
 
@@ -19,6 +25,13 @@ class App extends React.Component {
 	 */
 	componentDidMount() {
 		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
+		store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
+		store.dispatch(
+			fetchDataSuccess(
+				ASSESSMENT_TABLE_ENTITY,
+				assessmentEmployeesList,
+			),
+		);
 	}
 
 	/**

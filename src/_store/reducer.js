@@ -3,6 +3,7 @@ import { connectRouter } from "connected-react-router";
 import employee from "../_reducers/employee";
 import assessmentEmployees from "../_reducers/assessmentEmployees";
 import divisions from "../_reducers/divisions";
+import changePosition from "../_reducers/changePosition";
 
 /**
  *
@@ -14,6 +15,7 @@ export default history =>
 		employee,
 		assessmentEmployees,
 		divisions,
+		changePosition,
 	});
 
 /**

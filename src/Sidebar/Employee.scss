@@ -1,0 +1,28 @@
+.employee {
+  padding: 3px 15px;
+  cursor: pointer;
+}
+
+.name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+}
+
+.date {
+  font-size: 10px;
+  line-height: 15px;
+  color: #999;
+}
+
+.position {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
+}
+
+.edit {
+  margin-left: 5px;
+}
