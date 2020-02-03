@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { SHOW_USER, SHOW_EMPLOYEES } from "./config";
+import { connect } from "react-redux";
+import { role } from "../_dispatchers";
 import User from "./User";
 import Employees from "./Employees";
-import { connect } from "react-redux";
+import PermissionController from "../_permissions/Controller";
+import css from "./index.scss";
+
 import {
 	HR_PERMISSION,
 	SUPERVISOR_PERMISSION,
 } from "../_store/roles";
-import PermissionController from "../_permissions/Controller";
-import { role } from "../_dispatchers";
-import css from "./index.scss";
 
 /**
  *
@@ -43,7 +44,6 @@ export class Sidebar extends React.Component {
 	 */
 	renderSide() {
 		const { side } = this.state;
-		const { role } = this.props;
 
 		if (side === SHOW_EMPLOYEES) {
 			return (
@@ -55,7 +55,7 @@ export class Sidebar extends React.Component {
 			);
 		}
 
-		return <User changeSide={this.changeSide()} role={role} />;
+		return <User changeSide={this.changeSide()} />;
 	}
 
 	/**

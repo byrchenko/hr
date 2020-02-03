@@ -4,12 +4,13 @@ import css from "./User.scss";
 import ArrowLeft from "../_svg/arr-l.svg";
 import text from "./locale/ru";
 import PermissionController from "../_permissions/Controller";
+import { employee } from "../_dispatchers";
+import { connect } from "react-redux";
+
 import {
 	HR_PERMISSION,
 	SUPERVISOR_PERMISSION,
 } from "../_store/roles";
-import { employee } from "../_dispatchers";
-import { connect } from "react-redux";
 
 /**
  *
