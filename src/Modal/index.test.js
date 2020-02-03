@@ -9,6 +9,8 @@ import { fetchDataSuccess } from "../_actions";
 import { EMPLOYEE_ENTITY } from "../_store/entities";
 import { employee } from "../_api/employee";
 import configureStore from "redux-mock-store";
+import { CHANGE_POSITION_POPUP } from "../Popuper/popups";
+import { CLOSE_POPUP } from "../_store/types";
 
 /**
  *
@@ -68,39 +70,15 @@ describe("Modal", () => {
 	/**
 	 *
 	 */
-	it("should show success", () => {
-		const wrapper = mount(
-			<Provider store={store}>
-				<Modal
-					isOn={true}
-					title={"Title of the modal"}
-					submitText={"Confirm"}
-					loading={false}
-					approved={true}
-				>
-					<div className="content">Content</div>
-				</Modal>
-			</Provider>,
-		);
-
-		expect(wrapper.find(".empty").length).toBe(1);
-	});
-
-	/**
-	 *
-	 */
 	it("should run function on submit", () => {
 		const log = jest.fn();
 
 		const wrapper = mount(
 			<Provider store={store}>
 				<Modal
-					isOn={true}
 					title={"Title of the modal"}
-					submitText={"Confirm"}
-					submitAction={log}
+					onSubmit={log}
 					loading={false}
-					approved={false}
 				>
 					<div className="content">Content</div>
 				</Modal>
@@ -125,11 +103,9 @@ describe("Modal", () => {
 		const wrapper = mount(
 			<Provider store={newStore}>
 				<Modal
-					isOn={true}
 					title={"Title of the modal"}
-					submitText={"Confirm"}
 					loading={false}
-					approved={false}
+					type={CHANGE_POSITION_POPUP}
 				>
 					<div className="content">Content</div>
 				</Modal>
@@ -143,7 +119,10 @@ describe("Modal", () => {
 		const actions = newStore.getActions();
 
 		const pushAction = actions.find(item => {
-			return item.payload.args.includes("./");
+			return (
+				item.payload === CHANGE_POSITION_POPUP &&
+				item.type === CLOSE_POPUP
+			);
 		});
 
 		expect(pushAction !== undefined).toBeTruthy();

@@ -42,6 +42,6 @@ describe("", () => {
 
 		header.simulate("click");
 
-		expect(item.exists(Employee)).toEqual(3);
+		expect(item.contains(Employee)).toBeTruthy();
 	});
 });

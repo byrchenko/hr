@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { mount } from "enzyme";
 import SidebarConnect from "./index";
-import Employee from "./Employee";
+import { Employee } from "./Employee";
 import { applyMiddleware, createStore } from "redux";
 import reducers from "../_store/reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -21,6 +21,7 @@ import { SHOW_EMPLOYEES } from "./config";
 import { Sidebar } from ".";
 import Modal from "../Modal";
 import Edit from "../_svg/edit.svg";
+import TwoColumn from "../_layout/TwoColumn";
 
 /**
  *
@@ -65,7 +66,7 @@ describe("", () => {
 		const wrapper = mount(
 			<Provider store={store}>
 				<ConnectedRouter {...props}>
-					<SidebarConnect />
+					<TwoColumn />
 				</ConnectedRouter>
 			</Provider>,
 		);
@@ -90,7 +91,7 @@ describe("", () => {
 		const wrapper = mount(
 			<Provider store={store}>
 				<ConnectedRouter {...props}>
-					<SidebarConnect />
+					<TwoColumn />
 				</ConnectedRouter>
 			</Provider>,
 		);
@@ -129,7 +130,7 @@ describe("", () => {
 	/**
 	 *
 	 */
-	it("should render edit icon (permission control)", () => {
+	it("should NOT render edit icon (permission control)", () => {
 		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, supervisor));
 		const wrapper = mount(
 			<Provider store={store}>

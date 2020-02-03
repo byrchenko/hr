@@ -5,6 +5,7 @@ import Navigation from "../Navigation";
 import PageTitle from "../PageTitle";
 import Sidebar from "../Sidebar";
 import { connect } from "react-redux";
+import Popuper from "../Popuper";
 
 const TwoColumn = ({ children, loading, error, data }) => {
 	/**
@@ -48,6 +49,8 @@ const TwoColumn = ({ children, loading, error, data }) => {
 			<Navigation />
 
 			<PageTitle />
+
+			<Popuper />
 
 			{renderContent()}
 		</div>

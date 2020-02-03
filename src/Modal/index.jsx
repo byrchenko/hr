@@ -1,54 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./index.scss";
-import { push } from "connected-react-router";
-import { connect } from "react-redux";
-import { AnimatePresence } from "framer-motion";
-import Appear from "../_transitions/Appear";
 import Header from "./Header";
 import Content from "./Content";
 
 export const Modal = ({
 	title,
-	submitText,
-	submitAction,
+	onSubmit,
 	children,
 	loading,
-	approved,
-	push,
+	type,
 }) => {
-	/**
-	 *
-	 */
-	function closeModal() {
-		if (loading) {
-			return null;
-		}
-
-		push("./");
-	}
-
-	if (approved) {
-		push("./");
-	}
-
 	return (
-		<Appear keyValue="modal">
-			<div className={css.overlay}>
-				<div className={css.modal}>
-					<Header title={title} close={closeModal} />
+		<div className={css.overlay}>
+			<div className={css.modal}>
+				<Header title={title} type={type} />
 
-					<Content
-						content={children}
-						submitText={submitText}
-						handleSubmit={submitAction}
-						closeModal={closeModal}
-						loading={loading}
-						approved={approved}
-					/>
-				</div>
+				<Content
+					type={type}
+					content={children}
+					handleSubmit={onSubmit}
+					loading={loading}
+				/>
 			</div>
-		</Appear>
+		</div>
 	);
 };
 
@@ -56,13 +31,10 @@ export const Modal = ({
  *
  */
 Modal.propTypes = {
+	type: PropTypes.string,
 	title: PropTypes.string,
-	submitText: PropTypes.string,
-	submitAction: PropTypes.func,
-	goBack: PropTypes.func,
+	onSubmit: PropTypes.func,
 	loading: PropTypes.bool,
-	isOn: PropTypes.bool,
-	approved: PropTypes.bool,
 };
 
 /**
@@ -70,9 +42,8 @@ Modal.propTypes = {
  */
 Modal.defaultProps = {
 	title: "Modal title",
-	submitText: "Submit",
 	loading: false,
 	approved: true,
 };
 
-export default connect(null, { push })(Modal);
+export default Modal;

@@ -2,61 +2,46 @@ import React from "react";
 import PropTypes from "prop-types";
 import css from "./Content.scss";
 import text from "./locale/ru/text";
+import { closePopup } from "../_actions";
+import { connect } from "react-redux";
+
+/**
+ *
+ * @returns {null|*}
+ */
+function renderPreloader(loading) {
+	if (!loading) {
+		return null;
+	}
+
+	return <div className={css.loading}>Loading...</div>;
+}
 
 /**
  *
  * @param content
  * @param handleSubmit
  * @param submitText
- * @param closeModal
  * @param loading
- * @param approved
  * @returns {*}
  * @constructor
  */
-const Content = ({
-	content,
-	handleSubmit,
-	submitText,
-	closeModal,
-	loading,
-	approved,
-}) => {
-	/**
-	 *
-	 * @returns {null|*}
-	 */
-	function renderPreloader() {
-		if (!loading) {
-			return null;
-		}
-
-		return <div className={css.loading}>Loading...</div>;
-	}
-
-	/**
-	 *
-	 */
-	function renderSubmit() {
-		if (!approved) {
-			return null;
-		}
-
-		return <div className={css.empty} />;
-	}
-
+const Content = ({ content, handleSubmit, close, loading, type }) => {
 	return (
 		<div className={css.content}>
-			{renderPreloader() || renderSubmit()}
+			{renderPreloader(loading)}
 
 			<div className={css.children}>{content}</div>
 
 			<div className={css.buttons}>
 				<button className={css.submit} onClick={handleSubmit}>
-					{submitText}
+					{text.submit}
 				</button>
 
-				<button className={css.cancel} onClick={closeModal}>
+				<button
+					className={css.cancel}
+					onClick={() => close(type)}
+				>
 					{text.close}
 				</button>
 			</div>
@@ -68,11 +53,20 @@ const Content = ({
  *
  */
 Content.propTypes = {
+	type: PropTypes.string,
 	handleSubmit: PropTypes.func,
-	submitText: PropTypes.string,
-	closeModal: PropTypes.func,
+	close: PropTypes.func,
 	loading: PropTypes.bool,
-	approved: PropTypes.bool,
 };
 
-export default Content;
+/**
+ *
+ * @type {boolean}
+ */
+const mapDispatch = dispatch => {
+	return {
+		close: type => dispatch(closePopup(type)),
+	};
+};
+
+export default connect(null, mapDispatch)(Content);

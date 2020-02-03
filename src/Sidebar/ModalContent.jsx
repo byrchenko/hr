@@ -74,28 +74,9 @@ const ModalContent = ({ setNewPosition, error }) => {
 		}
 
 		return (
-			<motion.ul
-				key="select"
-				ref={listRef}
-				className={css.list}
-				initial={{
-					opacity: 0,
-					// scale: 0.9,
-				}}
-				animate={{
-					opacity: 1,
-					// scale: 1,
-				}}
-				exit={{
-					opacity: 0,
-					// scale: 0.9,
-				}}
-				transition={{
-					duration: 0.15,
-				}}
-			>
+			<ul ref={listRef} className={css.list}>
 				{list.map(renderItem)}
-			</motion.ul>
+			</ul>
 		);
 	}
 
@@ -140,7 +121,7 @@ const ModalContent = ({ setNewPosition, error }) => {
 					/>
 				</div>
 
-				<AnimatePresence>{renderList()}</AnimatePresence>
+				{renderList()}
 			</div>
 
 			{renderError()}

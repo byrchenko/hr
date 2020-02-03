@@ -87,63 +87,44 @@ const Item = ({
 	 *
 	 * @returns {null|*}
 	 */
-	const accordionContent = () => {
+	const renderContent = () => {
 		if (!isOpen) {
 			return null;
 		}
 
 		return (
-			<motion.section
-				key="content"
-				initial="collapsed"
-				animate="open"
-				exit="collapsed"
-				variants={{
-					open: { opacity: 1, height: "auto" },
-					collapsed: { opacity: 0, height: 0 },
-				}}
-				transition={{
-					duration: 0.8,
-					ease: [0.04, 0.62, 0.23, 0.98],
-				}}
-				className={css.section}
-			>
+			<section className={css.section}>
 				<div className={css.wrapper}>
 					{renderChildren()}
 
 					{renderEmployees()}
 				</div>
-			</motion.section>
+			</section>
 		);
 	};
 
-	const headerBackground = isOpen ? "#FFF" : "#EDEDED";
-	const triangleClass = isOpen
-		? `${css.triangle} ${css.rotate}`
-		: css.triangle;
-
 	return (
 		<div className={css.item}>
-			<motion.header
-				initial={false}
+			<header
 				onClick={() => setExpanded(isOpen ? false : index)}
-				animate={{
-					backgroundColor: headerBackground,
-				}}
-				className={css.header}
+				className={
+					isOpen ? `${css.header} ${css.open}` : css.header
+				}
 			>
 				<Triangle
 					height={4}
 					width={6}
-					className={triangleClass}
+					className={
+						isOpen
+							? `${css.triangle} ${css.rotate}`
+							: css.triangle
+					}
 				/>
 
 				{item.title}
-			</motion.header>
+			</header>
 
-			<AnimatePresence initial={false}>
-				{accordionContent()}
-			</AnimatePresence>
+			{renderContent()}
 		</div>
 	);
 };

@@ -5,8 +5,14 @@ import {
 	fetchDataLoading,
 	fetchDataSuccess,
 	resetReducer,
+	setPopupComplete,
+	setPopupLoading,
 } from "../_actions";
 import { CHANGE_POSITION_ENTITY } from "../_store/entities";
+import {
+	SET_POPUP_COMPLETE,
+	SET_POPUP_LOADING,
+} from "../_store/types";
 
 class ApiInterface extends ApiInterfaceAbstract {
 	/**
@@ -26,30 +32,29 @@ class ApiInterface extends ApiInterfaceAbstract {
 	/**
 	 *
 	 * @param dispatch
-	 * @param user
+	 * @param employee
 	 * @param position
 	 */
-	changeUserPosition(dispatch, position, user) {
-		dispatch(fetchDataLoading(CHANGE_POSITION_ENTITY));
+	changeUserPosition(dispatch, employee, position) {
+		return () => {
+			dispatch(setPopupLoading());
 
-		// fetch()
-		// 	.then(result => result.json())
-		// 	.then(json => {
-		// 		this.dispatch(
-		// 			fetchDataSuccess(CHANGE_POSITION_ENTITY, json),
-		// 		);
-		// 		this.dispatch(resetReducer(CHANGE_POSITION_ENTITY));
-		// 	})
-		// 	.catch(() =>
-		// 		this.dispatch(fetchDataError(CHANGE_POSITION_ENTITY)),
-		// 	);
+			// fetch()
+			// 	.then(result => result.json())
+			// 	.then(json => {
+			// 		this.dispatch(
+			// 			fetchDataSuccess(CHANGE_POSITION_ENTITY, json),
+			// 		);
+			// 		this.dispatch(resetReducer(CHANGE_POSITION_ENTITY));
+			// 	})
+			// 	.catch(() =>
+			// 		this.dispatch(fetchDataError(CHANGE_POSITION_ENTITY)),
+			// 	);
 
-		setTimeout(() => {
-			dispatch(
-				fetchDataSuccess(CHANGE_POSITION_ENTITY, "data"),
-			);
-			dispatch(resetReducer(CHANGE_POSITION_ENTITY));
-		}, 3000);
+			setTimeout(() => {
+				dispatch(setPopupComplete());
+			}, 3000);
+		};
 	}
 }
 
