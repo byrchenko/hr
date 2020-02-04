@@ -1,4 +1,9 @@
 import {
+	ASSESSMENT_FINISH,
+	ASSESSMENT_NEXT_STEP,
+	ASSESSMENT_PREV_STEP,
+	ASSESSMENT_SET_EMPLOYEE,
+	ASSESSMENT_START,
 	CLOSE_POPUP,
 	FETCH_ERROR,
 	FETCH_LOADING,
@@ -121,5 +126,51 @@ export const setPopupLoading = () => {
 export const setPopupComplete = () => {
 	return {
 		type: SET_POPUP_COMPLETE,
+	};
+};
+
+/**
+ *
+ * @param employee
+ * @returns {{payload: *, type: string}}
+ */
+export const assessmentSetEmployee = employee => {
+	return {
+		type: ASSESSMENT_SET_EMPLOYEE,
+		payload: employee,
+	};
+};
+
+export const assessmentNextStep = () => {
+	return {
+		type: ASSESSMENT_NEXT_STEP,
+	};
+};
+
+/**
+ *
+ * @returns {{type: string}}
+ */
+export const assessmentPrevStep = () => {
+	return {
+		type: ASSESSMENT_PREV_STEP,
+	};
+};
+
+/**
+ *
+ */
+export const assessmentFinish = () => {
+	return {
+		type: ASSESSMENT_FINISH,
+	};
+};
+
+/**
+ *
+ */
+export const assessmentStart = () => {
+	return {
+		type: ASSESSMENT_START,
 	};
 };

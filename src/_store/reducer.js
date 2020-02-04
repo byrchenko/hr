@@ -4,6 +4,7 @@ import employee from "../_reducers/employee";
 import assessmentEmployees from "../_reducers/assessmentEmployees";
 import divisions from "../_reducers/divisions";
 import popups from "../_reducers/popups";
+import assessmentQuestions from "../_reducers/assessmentQuestions";
 
 /**
  *
@@ -16,6 +17,7 @@ export default history =>
 		assessmentEmployees,
 		divisions,
 		popups,
+		assessmentQuestions,
 	});
 
 /**

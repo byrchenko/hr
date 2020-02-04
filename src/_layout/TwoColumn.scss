@@ -21,7 +21,8 @@
 .sidebar {
   display: flex;
   position: relative;
-  width: 330px;
+  min-width: 330px;
+  max-width: 330px;
   background-color: #fff;
   overflow: hidden;
 }

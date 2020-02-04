@@ -132,3 +132,41 @@ export const positionDataPopup = store => {
 
 	return position;
 };
+
+/**
+ *
+ * @param state
+ */
+export const isStartedAssessment = state => {
+	const {
+		assessmentQuestions: { isStarted },
+	} = state;
+
+	return isStarted;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentData = state => {
+	const {
+		assessmentQuestions: { data },
+	} = state;
+
+	return data;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentEmployee = state => {
+	const {
+		assessmentQuestions: { employee },
+	} = state;
+
+	return employee;
+};

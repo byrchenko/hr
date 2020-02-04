@@ -4,11 +4,14 @@ import Router from "./_router";
 import createStore, { history } from "./_store";
 import "./_sass/global.scss";
 import {
+	assessmentSetEmployee,
+	assessmentStart,
 	fetchDataError,
 	fetchDataLoading,
 	fetchDataSuccess,
 } from "./_actions";
 import {
+	ASSESSMENT_QUESTIONS_ENTITY,
 	ASSESSMENT_TABLE_ENTITY,
 	DIVISIONS_ENTITY,
 	EMPLOYEE_ENTITY,
@@ -16,6 +19,7 @@ import {
 import { employee, hr, supervisor } from "./_api/employee";
 import divisions from "./_api/divisions";
 import assessmentEmployeesList from "./_api/assessmentEmployeesList";
+import block from "./_api/assessmentQuestions";
 
 const store = createStore({});
 
@@ -32,6 +36,11 @@ class App extends React.Component {
 				assessmentEmployeesList,
 			),
 		);
+		store.dispatch(assessmentStart());
+		store.dispatch(
+			fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
+		);
+		store.dispatch(assessmentSetEmployee(hr));
 	}
 
 	/**

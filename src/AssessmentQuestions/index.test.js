@@ -3,8 +3,14 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { mount } from "enzyme";
 import AssessmentQuestions from "./index";
-import { fetchDataSuccess } from "../_actions";
-import { EMPLOYEE_ENTITY } from "../_store/entities";
+import { fetchDataError, fetchDataSuccess } from "../_actions";
+import {
+	ASSESSMENT_QUESTIONS_ENTITY,
+	EMPLOYEE_ENTITY,
+} from "../_store/entities";
+import { hr } from "../_api/employee";
+import block from "../_api/assessmentQuestions";
+import Item from "./Item";
 
 /**
  *
@@ -22,30 +28,48 @@ describe("Assessment questions", () => {
 	/**
 	 *
 	 */
-	it("should show 404 for hr", () => {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY));
+	it("should show error ", () => {
+		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
+		store.dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY));
 
 		const wrapper = mount(
 			<Provider store={store}>
 				<AssessmentQuestions />
 			</Provider>,
 		);
+
+		expect(wrapper.exists(".error")).toBeTruthy();
 	});
 
 	/**
 	 *
 	 */
-	it("should show error ", () => {});
+	it("should render questions", () => {
+		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
+		store.dispatch(
+			fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
+		);
 
-	/**
-	 *
-	 */
-	it("should render questions", () => {});
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
+
+		const itemCount = wrapper.find(Item).length;
+
+		expect(itemCount).toEqual(4);
+	});
 
 	/**
 	 *
 	 */
 	it("should should validate inputs", () => {});
+
+	/**
+	 *
+	 */
+	it("should add answers to state", () => {});
 
 	/**
 	 *

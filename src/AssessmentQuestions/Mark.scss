@@ -1,0 +1,49 @@
+.index {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
+
+.radio {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #727A84;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 12.5px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E30613;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.input:checked + .radio {
+  &::after {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.number {
+  font-size: 14px;
+}
