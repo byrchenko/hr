@@ -4,6 +4,8 @@ import css from "./Item.scss";
 import marks from "./marks";
 import Mark from "./Mark";
 import text from "./locale/ru";
+import { connect } from "react-redux";
+import { addAnswer } from "../_actions";
 
 /**
  *
@@ -12,12 +14,35 @@ import text from "./locale/ru";
  * @param description
  * @param mark
  * @param comment
+ * @param addAnswer
  * @returns {*}
  * @constructor
  */
-const Item = ({ id, title, description, mark, comment }) => {
+const Item = ({
+	id,
+	title,
+	description,
+	mark,
+	comment,
+	addAnswer,
+}) => {
 	const [commentValue, setCommentValue] = React.useState(comment);
 	const [markValue, setMarkValue] = React.useState(mark);
+
+	/**
+	 *
+	 */
+	React.useEffect(() => {
+		const answer = {
+			id,
+			mark: markValue,
+			comment: commentValue,
+		};
+
+		addAnswer(answer);
+
+		// TODO: write reducer for addAnswer action
+	}, [commentValue, markValue]);
 
 	/**
 	 *
@@ -67,6 +92,18 @@ Item.propTypes = {
 	description: PropTypes.string,
 	mark: PropTypes.number,
 	comment: PropTypes.string,
+	addAnswer: PropTypes.func,
 };
 
-export default Item;
+/**
+ *
+ * @param dispatch
+ * @returns {{addAnswer: (function(*=): *)}}
+ */
+const mapDispatch = dispatch => {
+	return {
+		addAnswer: answer => dispatch(addAnswer(answer)),
+	};
+};
+
+export default connect(null, mapDispatch)(Item);

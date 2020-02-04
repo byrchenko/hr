@@ -1,4 +1,5 @@
 import {
+	ASSESSMENT_ADD_ANSWER,
 	ASSESSMENT_FINISH,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
@@ -172,5 +173,15 @@ export const assessmentFinish = () => {
 export const assessmentStart = () => {
 	return {
 		type: ASSESSMENT_START,
+	};
+};
+
+/**
+ *
+ */
+export const addAnswer = answer => {
+	return {
+		type: ASSESSMENT_ADD_ANSWER,
+		payload: answer,
 	};
 };
