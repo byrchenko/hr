@@ -5,44 +5,51 @@ import Item from "./Item";
 
 /**
  *
- * @param item
- * @returns {*}
- */
-function renderItem(item) {
-	const { id, title, description, mark, comment } = item;
-
-	return (
-		<Item
-			key={id}
-			id={id}
-			title={title}
-			description={description}
-			initialMark={mark}
-			initialComment={comment}
-		/>
-	);
-}
-
-/**
- *
- * @param list
- */
-function renderList(list) {
-	if (!list) {
-		return null;
-	}
-
-	return list.map(renderItem);
-}
-
-/**
- *
  * @param data
+ * @param answers
  * @returns {*}
  * @constructor
  */
-const List = ({ data }) => {
+const List = ({ data, errors }) => {
 	const { title, questions } = data;
+
+	/**
+	 *
+	 * @param item
+	 * @returns {*}
+	 */
+	const renderItem = item => {
+		const { id, title, description, mark, comment } = item;
+		let error = null;
+
+		if (errors) {
+			error = errors[id];
+		}
+
+		return (
+			<Item
+				key={id}
+				id={id}
+				title={title}
+				description={description}
+				initialMark={mark}
+				initialComment={comment}
+				error={error}
+			/>
+		);
+	};
+
+	/**
+	 *
+	 * @param list
+	 */
+	const renderList = list => {
+		if (!list) {
+			return null;
+		}
+
+		return list.map(renderItem);
+	};
 
 	return (
 		<div className={css.index}>
@@ -59,6 +66,7 @@ const List = ({ data }) => {
  */
 List.propTypes = {
 	data: PropTypes.object,
+	errors: PropTypes.object,
 };
 
 export default List;

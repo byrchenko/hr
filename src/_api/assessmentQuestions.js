@@ -8,7 +8,7 @@ export default {
 		buildQuestion(3),
 	],
 	position: 1,
-	isLast: false,
+	isLast: true,
 };
 
 /**
@@ -22,7 +22,7 @@ function buildQuestion(id) {
 		title: "Знание ассортимента",
 		description:
 			"Может описать позицию по предоставленному названию, указать ее применяемость и аналоги",
-		mark: 2,
+		mark: null,
 		comment: null,
 	};
 }

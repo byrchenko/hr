@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Item.scss";
-import { motion, AnimatePresence } from "framer-motion";
 import Triangle from "../_svg/triangle_down.svg";
 import { HR_PERMISSION } from "../_store/roles";
 import { push } from "connected-react-router";

@@ -234,10 +234,23 @@ export const selectAssessmentError = state => {
  * @param state
  * @returns {*}
  */
-export const selectAssessmentSync = state => {
+export const selectAssessmentValidationErrors = state => {
 	const {
-		assessmentQuestions: { sync },
+		assessmentQuestions: { validationErrors },
 	} = state;
 
-	return sync;
+	return validationErrors;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentAnswers = state => {
+	const {
+		assessmentQuestions: { answers },
+	} = state;
+
+	return answers;
 };

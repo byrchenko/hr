@@ -1,10 +1,13 @@
 import {
+	ADD_VALIDATION_ERROR,
+	ADD_VALIDATION_ERRORS,
 	ASSESSMENT_ADD_ANSWER,
 	ASSESSMENT_FINISH,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
 	ASSESSMENT_SET_EMPLOYEE,
 	ASSESSMENT_START,
+	CLEAR_VALIDATION_ERRORS,
 	CLOSE_POPUP,
 	FETCH_ERROR,
 	FETCH_LOADING,
@@ -172,5 +175,26 @@ export const addAnswer = answer => {
 	return {
 		type: ASSESSMENT_ADD_ANSWER,
 		payload: answer,
+	};
+};
+
+/**
+ *
+ * @returns {{payload: {id: *, type: *}, type: string}}
+ * @param errors
+ */
+export const addValidationErrors = errors => {
+	return {
+		type: ADD_VALIDATION_ERRORS,
+		payload: errors,
+	};
+};
+
+/**
+ *
+ */
+export const clearValidationErrors = () => {
+	return {
+		type: CLEAR_VALIDATION_ERRORS,
 	};
 };

@@ -1,0 +1,2 @@
+export const INVALID_MARK = "INVALID_MARK";
+export const INVALID_COMMENT = "INVALID_COMMENT";

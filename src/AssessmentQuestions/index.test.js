@@ -10,7 +10,8 @@ import {
 } from "../_store/entities";
 import { hr } from "../_api/employee";
 import block from "../_api/assessmentQuestions";
-import Item from "./Item";
+import ItemConnected from "./Item";
+import { Item } from "./Item";
 
 /**
  *
@@ -69,7 +70,27 @@ describe("Assessment questions", () => {
 	/**
 	 *
 	 */
-	it("should add answers to state", () => {});
+	it.only("should add answers to state", () => {
+		const wrapper = mount(
+			<Provider store={store}>
+				<ItemConnected
+					id={0}
+					title={"title"}
+					description={"description"}
+					initialMark={null}
+					initialComment={null}
+				/>
+			</Provider>,
+		);
+
+		const item = wrapper.find(Item).at(0);
+
+		const radio = item.find(".radio").at(0);
+
+		radio.simulate("click");
+
+		console.log(Item.state("markValue"));
+	});
 
 	/**
 	 *

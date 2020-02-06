@@ -6,6 +6,7 @@ import Mark from "./Mark";
 import text from "./locale/ru";
 import { connect } from "react-redux";
 import { addAnswer } from "../_actions";
+import { INVALID_COMMENT, INVALID_MARK } from "./constants";
 
 /**
  *
@@ -15,16 +16,18 @@ import { addAnswer } from "../_actions";
  * @param initialMark
  * @param initialComment
  * @param addAnswer
+ * @param error
  * @returns {*}
  * @constructor
  */
-const Item = ({
+export const Item = ({
 	id,
 	title,
 	description,
 	initialMark,
 	initialComment,
 	addAnswer,
+	error,
 }) => {
 	const [commentValue, setCommentValue] = React.useState(
 		initialComment,
@@ -66,16 +69,33 @@ const Item = ({
 		return marks.map(renderMark);
 	};
 
+	/**
+	 *
+	 * @returns {*}
+	 */
+	const invalidMarkMessage = () => {
+		if (error && error.type === INVALID_MARK) {
+			return <div className={css.error}>Выберите оценку!</div>;
+		}
+	};
+
+	const textareaClass =
+		error && error.type === INVALID_COMMENT
+			? `${css.comment} ${css.invalid}`
+			: css.comment;
+
 	return (
 		<div className={css.index}>
 			<h4 className={css.title}>{title}</h4>
 
 			<p className={css.description}>{description}</p>
 
+			{invalidMarkMessage()}
+
 			<div className={css.mark}>{renderMarks()}</div>
 
 			<textarea
-				className={css.comment}
+				className={textareaClass}
 				name=""
 				rows="4"
 				placeholder={text.comment}
@@ -96,6 +116,7 @@ Item.propTypes = {
 	initialMark: PropTypes.number,
 	initialComment: PropTypes.string,
 	addAnswer: PropTypes.func,
+	error: PropTypes.any,
 };
 
 /**

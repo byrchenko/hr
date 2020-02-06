@@ -5,12 +5,15 @@ import {
 } from "../_store/reducer";
 
 import {
+	ADD_VALIDATION_ERROR,
+	ADD_VALIDATION_ERRORS,
 	ASSESSMENT_ADD_ANSWER,
 	ASSESSMENT_FINISH,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
 	ASSESSMENT_SET_EMPLOYEE,
 	ASSESSMENT_START,
+	CLEAR_VALIDATION_ERRORS,
 	FETCH_ERROR,
 	FETCH_LOADING,
 	FETCH_SUCCESS,
@@ -24,6 +27,7 @@ export const initialState = {
 	answers: null,
 	step: 1,
 	data: null,
+	validationErrors: null,
 	loading: false,
 	error: false,
 	sync: false,
@@ -159,6 +163,28 @@ const handler = {
 	 */
 	[ASSESSMENT_FINISH]: () => {
 		return initialState;
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @param action
+	 */
+	[ADD_VALIDATION_ERRORS]: (state, action) => {
+		const { payload } = action;
+
+		return Object.assign({}, state, {
+			validationErrors: payload,
+		});
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @returns {any}
+	 */
+	[CLEAR_VALIDATION_ERRORS]: state => {
+		return Object.assign({}, state, { validationErrors: null });
 	},
 
 	/**
