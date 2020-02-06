@@ -170,3 +170,74 @@ export const selectAssessmentEmployee = state => {
 
 	return employee;
 };
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentStep = state => {
+	const {
+		assessmentQuestions: { step },
+	} = state;
+
+	return step;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentIsLastStep = state => {
+	const {
+		assessmentQuestions: { data },
+	} = state;
+
+	if (!data) {
+		return null;
+	}
+
+	const { isLast } = data;
+
+	return isLast;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentLoading = state => {
+	const {
+		assessmentQuestions: { loading },
+	} = state;
+
+	return loading;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentError = state => {
+	const {
+		assessmentQuestions: { error },
+	} = state;
+
+	return error;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
+export const selectAssessmentSync = state => {
+	const {
+		assessmentQuestions: { sync },
+	} = state;
+
+	return sync;
+};

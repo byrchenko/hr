@@ -1,0 +1,27 @@
+@mixin button($color) {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 22px;
+  transition: all .15s ease-out;
+  cursor: pointer;
+  margin-right: 8px;
+  outline: none;
+
+  &:hover {
+    $scale: 0.95;
+
+    transform: scale3d($scale,$scale,$scale);
+    background-color: darken($color, 10%);
+  }
+
+  &:active {
+    $scale: 0.9;
+
+    transform: scale3d($scale,$scale,$scale)
+  }
+}

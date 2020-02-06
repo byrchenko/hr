@@ -12,8 +12,8 @@ import { addAnswer } from "../_actions";
  * @param id
  * @param title
  * @param description
- * @param mark
- * @param comment
+ * @param initialMark
+ * @param initialComment
  * @param addAnswer
  * @returns {*}
  * @constructor
@@ -22,12 +22,14 @@ const Item = ({
 	id,
 	title,
 	description,
-	mark,
-	comment,
+	initialMark,
+	initialComment,
 	addAnswer,
 }) => {
-	const [commentValue, setCommentValue] = React.useState(comment);
-	const [markValue, setMarkValue] = React.useState(mark);
+	const [commentValue, setCommentValue] = React.useState(
+		initialComment,
+	);
+	const [markValue, setMarkValue] = React.useState(initialMark);
 
 	/**
 	 *
@@ -40,17 +42,15 @@ const Item = ({
 		};
 
 		addAnswer(answer);
-
-		// TODO: write reducer for addAnswer action
 	}, [commentValue, markValue]);
 
 	/**
 	 *
 	 */
-	const renderMark = () => {
+	const renderMark = mark => {
 		return (
 			<Mark
-				key={mark}
+				key={mark.value}
 				question={id}
 				item={mark}
 				selected={markValue}
@@ -80,18 +80,21 @@ const Item = ({
 				rows="4"
 				placeholder={text.comment}
 				onChange={e => setCommentValue(e.target.value)}
-				value={commentValue}
+				value={commentValue ? commentValue : ""}
 			/>
 		</div>
 	);
 };
 
+/**
+ *
+ */
 Item.propTypes = {
 	id: PropTypes.number,
 	title: PropTypes.string,
 	description: PropTypes.string,
-	mark: PropTypes.number,
-	comment: PropTypes.string,
+	initialMark: PropTypes.number,
+	initialComment: PropTypes.string,
 	addAnswer: PropTypes.func,
 };
 

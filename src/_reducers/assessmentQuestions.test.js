@@ -1,6 +1,7 @@
 import reducer from "./assessmentQuestions";
 import { initialState } from "./assessmentQuestions";
 import {
+	ASSESSMENT_ADD_ANSWER,
 	ASSESSMENT_FINISH,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
@@ -87,5 +88,126 @@ describe("AssessmentQuestions reducer", () => {
 		const sample = reducer(undefined, action);
 
 		expect(sample).toEqual(initialState);
+	});
+
+	/**
+	 *
+	 */
+	it("should add answer if answers is empty", () => {
+		const action = {
+			type: ASSESSMENT_ADD_ANSWER,
+			payload: {
+				id: 0,
+				mark: 2,
+				comment: null,
+			},
+		};
+
+		const state = {
+			answers: null,
+		};
+
+		const sample = reducer(state, action);
+
+		expect(sample).toEqual({
+			answers: [action.payload],
+		});
+	});
+
+	/**
+	 *
+	 */
+	it("should add answer if not exists", () => {
+		const action = {
+			type: ASSESSMENT_ADD_ANSWER,
+			payload: {
+				id: 0,
+				mark: 2,
+				comment: null,
+			},
+		};
+
+		const state = {
+			answers: [
+				{
+					id: 1,
+					mark: 2,
+					comment: null,
+				},
+				{
+					id: 2,
+					mark: 2,
+					comment: null,
+				},
+			],
+		};
+
+		const sample = reducer(state, action);
+
+		expect(sample).toEqual({
+			answers: [
+				{
+					id: 1,
+					mark: 2,
+					comment: null,
+				},
+				{
+					id: 2,
+					mark: 2,
+					comment: null,
+				},
+				{
+					id: 0,
+					mark: 2,
+					comment: null,
+				},
+			],
+		});
+	});
+
+	/**
+	 *
+	 */
+	it("should update answer if exists", () => {
+		const action = {
+			type: ASSESSMENT_ADD_ANSWER,
+			payload: {
+				id: 1,
+				mark: 4,
+				comment: "test",
+			},
+		};
+
+		const state = {
+			answers: [
+				{
+					id: 1,
+					mark: 2,
+					comment: null,
+				},
+				{
+					id: 2,
+					mark: 2,
+					comment: null,
+				},
+			],
+		};
+
+		const sample = reducer(state, action);
+
+		expect(sample).toEqual({
+			answers: [
+				{
+					id: 1,
+					mark: 4,
+					comment: "test",
+				},
+				{
+					id: 2,
+					mark: 2,
+					comment: null,
+				},
+			],
+		});
 	});
 });

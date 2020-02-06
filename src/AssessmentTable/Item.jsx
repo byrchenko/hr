@@ -41,6 +41,7 @@ const Item = ({ item, employee, supervisor, hr }) => {
 			</div>
 
 			<Status
+				user={item.employee}
 				employee={employee_checked}
 				supervisor={supervisor_checked}
 				hr={hr_checked}

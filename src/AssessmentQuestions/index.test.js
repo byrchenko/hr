@@ -90,4 +90,29 @@ describe("Assessment questions", () => {
 	 *
 	 */
 	it("should change button for last questions block", () => {});
+
+	/**
+	 *
+	 */
+	it("should switch radio buttons", () => {});
+
+	/**
+	 *
+	 */
+	it("should add comment", () => {});
+
+	/**
+	 *
+	 */
+	it("should should render only next button if step is first", () => {});
+
+	/**
+	 *
+	 */
+	it("should render prev and next buttons", () => {});
+
+	/**
+	 *
+	 */
+	it("should render prev and finish buttons", () => {});
 });

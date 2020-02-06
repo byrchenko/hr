@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Status.scss";
+import ApiInterface from "../_service/ApiInterface";
 
 import {
 	EMPLOYEE_PERMISSION,
@@ -18,6 +19,8 @@ import {
 import { connect } from "react-redux";
 import Complete from "../_svg/complete.svg";
 import Wait from "../_svg/wait.svg";
+import { role } from "../_dispatchers";
+import { assessmentStart } from "../_actions";
 
 /**
  *
@@ -34,11 +37,15 @@ const button = {
 			<Wait width={14} height={14} />
 		</div>
 	),
-	[ESTIMATE_BUTTON]: () => (
-		<div className={css.estimate}>Оценить</div>
+	[ESTIMATE_BUTTON]: startAssessment => (
+		<div className={css.estimate} onClick={startAssessment}>
+			Оценить
+		</div>
 	),
-	[MEETING_BUTTON]: () => (
-		<div className={css.meeting}>Провести встречу</div>
+	[MEETING_BUTTON]: startAssessment => (
+		<div className={css.meeting} onClick={startAssessment}>
+			Провести встречу
+		</div>
 	),
 };
 
@@ -48,10 +55,18 @@ const button = {
  * @param supervisor
  * @param hr
  * @param role
+ * @param startAssessment
+ * @param user
  * @returns {*}
  * @constructor
  */
-const Status = ({ employee, supervisor, hr, role }) => {
+const Status = ({
+	employee,
+	supervisor,
+	hr,
+	role,
+	startAssessment,
+}) => {
 	/**
 	 *
 	 * @param type
@@ -70,7 +85,7 @@ const Status = ({ employee, supervisor, hr, role }) => {
 		}
 
 		if (role === type) {
-			return handler[role]();
+			return handler[role](startAssessment);
 		}
 
 		return button[WAITING_BUTTON]();
@@ -99,21 +114,21 @@ const Status = ({ employee, supervisor, hr, role }) => {
  * @returns {{role: *}}
  */
 const mapState = state => {
-	const {
-		employee: { data },
-	} = state;
-
-	if (data === null) {
-		return {
-			role: null,
-		};
-	}
-
-	const { role } = data;
-
 	return {
-		role,
+		role: role(state),
 	};
 };
 
-export default connect(mapState)(Status);
+/**
+ *
+ */
+const mapDispatch = (dispatch, props) => {
+	const { user } = props;
+
+	return {
+		startAssessment: () =>
+			ApiInterface.assessmentStart(dispatch, user),
+	};
+};
+
+export default connect(mapState, mapDispatch)(Status);

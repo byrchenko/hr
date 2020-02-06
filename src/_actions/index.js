@@ -130,18 +130,6 @@ export const setPopupComplete = () => {
 	};
 };
 
-/**
- *
- * @param employee
- * @returns {{payload: *, type: string}}
- */
-export const assessmentSetEmployee = employee => {
-	return {
-		type: ASSESSMENT_SET_EMPLOYEE,
-		payload: employee,
-	};
-};
-
 export const assessmentNextStep = () => {
 	return {
 		type: ASSESSMENT_NEXT_STEP,
@@ -170,9 +158,10 @@ export const assessmentFinish = () => {
 /**
  *
  */
-export const assessmentStart = () => {
+export const assessmentStart = employee => {
 	return {
 		type: ASSESSMENT_START,
+		payload: employee,
 	};
 };
 

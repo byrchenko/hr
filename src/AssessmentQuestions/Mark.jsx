@@ -12,25 +12,25 @@ import css from "./Mark.scss";
  * @constructor
  */
 const Mark = ({ question, item, selected, setMark }) => {
-	const [isChecked, setIsChecked] = React.useState(
-		item === selected,
-	);
+	const { value, description } = item;
 
 	return (
-		<label
-			className={css.index}
-			onClick={() => setIsChecked(!isChecked)}
-		>
+		<label className={css.index}>
 			<input
 				className={css.input}
 				type="radio"
 				name={"mark" + question}
-				onChange={() => setMark(item)}
+				checked={value === selected}
+				onChange={() => setMark(value)}
 			/>
 
 			<div className={css.radio} />
 
-			<span className={css.number}>{item}</span>
+			<span className={css.number}>{value}</span>
+
+			<div className={css.tooltip}>
+				<span className={css.text}>{description}</span>
+			</div>
 		</label>
 	);
 };
@@ -41,7 +41,7 @@ const Mark = ({ question, item, selected, setMark }) => {
 Mark.propTypes = {
 	setMark: PropTypes.func,
 	question: PropTypes.number,
-	item: PropTypes.number,
+	item: PropTypes.object,
 	selected: PropTypes.number,
 };
 

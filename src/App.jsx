@@ -28,7 +28,7 @@ class App extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
+		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, supervisor));
 		store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
 		store.dispatch(
 			fetchDataSuccess(
@@ -36,11 +36,10 @@ class App extends React.Component {
 				assessmentEmployeesList,
 			),
 		);
-		store.dispatch(assessmentStart());
-		store.dispatch(
-			fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
-		);
-		store.dispatch(assessmentSetEmployee(hr));
+		// store.dispatch(assessmentStart(hr));
+		// store.dispatch(
+		// 	fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
+		// );
 	}
 
 	/**

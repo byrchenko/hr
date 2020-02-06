@@ -22,7 +22,7 @@ function buildQuestion(id) {
 		title: "Знание ассортимента",
 		description:
 			"Может описать позицию по предоставленному названию, указать ее применяемость и аналоги",
-		mark: null,
+		mark: 2,
 		comment: null,
 	};
 }

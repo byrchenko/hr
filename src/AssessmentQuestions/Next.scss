@@ -1,3 +1,19 @@
-.index {
+@import "../_sass/components";
+@import "../_sass/colors";
 
+.index {
+  @include button($clr_red);
+
+  border-color: $clr_red;
+  background-color: $clr_red;
+  color: #fff;
+  padding-left: 22px;
+  padding-right: 36px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
 }

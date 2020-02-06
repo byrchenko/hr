@@ -1,6 +1,9 @@
 import ApiInterfaceAbstract from "./ApiInterfaceAbstract";
 import store from "../_store";
 import {
+	assessmentNextStep,
+	assessmentPrevStep,
+	assessmentStart,
 	fetchDataError,
 	fetchDataLoading,
 	fetchDataSuccess,
@@ -8,11 +11,16 @@ import {
 	setPopupComplete,
 	setPopupLoading,
 } from "../_actions";
-import { CHANGE_POSITION_ENTITY } from "../_store/entities";
+import {
+	ASSESSMENT_QUESTIONS_ENTITY,
+	ASSESSMENT_TABLE_ENTITY,
+	CHANGE_POSITION_ENTITY,
+} from "../_store/entities";
 import {
 	SET_POPUP_COMPLETE,
 	SET_POPUP_LOADING,
 } from "../_store/types";
+import assessmentQuestions from "../_api/assessmentQuestions";
 
 class ApiInterface extends ApiInterfaceAbstract {
 	/**
@@ -56,6 +64,68 @@ class ApiInterface extends ApiInterfaceAbstract {
 			}, 3000);
 		};
 	}
+
+	/**
+	 *
+	 * @returns {function(...[*]=)}
+	 */
+	assessmentGoPrev(dispatch) {
+		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
+
+		mockFetch(assessmentQuestions).then(result => {
+			dispatch(assessmentPrevStep());
+
+			dispatch(
+				fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, result),
+			);
+		});
+	}
+
+	/**
+	 *
+	 * @returns {function(...[*]=)}
+	 */
+	assessmentGoNext(dispatch) {
+		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
+
+		mockFetch(assessmentQuestions).then(result => {
+			dispatch(assessmentNextStep());
+
+			dispatch(
+				fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, result),
+			);
+		});
+	}
+
+	/**
+	 *
+	 * @param dispatch
+	 * @param user
+	 */
+	assessmentStart(dispatch, user) {
+		dispatch(fetchDataLoading(ASSESSMENT_TABLE_ENTITY));
+
+		mockFetch(assessmentQuestions).then(result => {
+			dispatch(
+				fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, result),
+			);
+
+			dispatch(assessmentStart(user));
+		});
+	}
+}
+
+/**
+ *
+ * @param result
+ * @returns {Promise<unknown>}
+ */
+function mockFetch(result) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve(result);
+		}, 300);
+	});
 }
 
 const instance = new ApiInterface(store.dispatch);

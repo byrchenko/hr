@@ -6,18 +6,31 @@ import { fetchDataSuccess } from "../_actions";
 import { ASSESSMENT_TABLE_ENTITY } from "../_store/entities";
 import css from "./index.scss";
 import User from "../_svg/big_user.svg";
+import Preloader from "../_svg/preloader.svg";
 
 class AssessmentTable extends React.Component {
 	/**
 	 *
 	 * @returns {*}
 	 */
-	render() {
-		const { data, error, loading } = this.props;
+	renderLoading() {
+		const { loading } = this.props;
 
 		if (loading) {
-			return <div className={css.loading}>Loading..</div>;
+			return (
+				<div className={css.loading}>
+					<Preloader width={64} height={64} />
+				</div>
+			);
 		}
+	}
+
+	/**
+	 *
+	 * @returns {*}
+	 */
+	render() {
+		const { data, error, loading } = this.props;
 
 		if (error) {
 			return (
@@ -39,7 +52,13 @@ class AssessmentTable extends React.Component {
 			);
 		}
 
-		return <List list={data} />;
+		return (
+			<>
+				{this.renderLoading()}
+
+				<List list={data} />
+			</>
+		);
 	}
 }
 

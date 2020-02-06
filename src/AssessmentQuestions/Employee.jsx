@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import css from "./Employee.scss";
 
 const Employee = ({ employee }) => {
+	if (!employee) {
+		return null;
+	}
+
 	const { name, last_name, position, image } = employee;
 	const fullName = `${last_name} ${name}`;
 

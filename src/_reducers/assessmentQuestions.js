@@ -5,6 +5,7 @@ import {
 } from "../_store/reducer";
 
 import {
+	ASSESSMENT_ADD_ANSWER,
 	ASSESSMENT_FINISH,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
@@ -85,8 +86,13 @@ const handler = {
 	 * @param state
 	 * @returns {any}
 	 */
-	[ASSESSMENT_START]: state => {
-		return Object.assign({}, state, { isStarted: true });
+	[ASSESSMENT_START]: (state, action) => {
+		const { payload } = action;
+
+		return Object.assign({}, state, {
+			isStarted: true,
+			employee: payload,
+		});
 	},
 
 	/**
@@ -94,10 +100,25 @@ const handler = {
 	 * @param state
 	 * @param action
 	 */
-	[ASSESSMENT_SET_EMPLOYEE]: (state, action) => {
+	[ASSESSMENT_ADD_ANSWER]: (state, action) => {
 		const { payload } = action;
+		const { answers } = state;
 
-		return Object.assign({}, state, { employee: payload });
+		if (!answers) {
+			return Object.assign({}, state, {
+				answers: [payload],
+			});
+		}
+
+		if (!isExistById(answers, payload.id)) {
+			answers.push(payload);
+
+			return Object.assign({}, state, { answers });
+		}
+
+		return Object.assign({}, state, {
+			answers: updateItem(answers, payload),
+		});
 	},
 
 	/**
@@ -147,6 +168,36 @@ const handler = {
 	 */
 	default: state => state,
 };
+
+/**
+ *
+ * @param arr
+ * @param item
+ * @returns {*}
+ */
+function updateItem(arr, item) {
+	return arr.map(el => {
+		if (el.id === item.id) {
+			return item;
+		}
+
+		return el;
+	});
+}
+
+/**
+ *
+ * @param arr
+ * @param id
+ * @returns {boolean}
+ */
+function isExistById(arr, id) {
+	const item = arr.find(el => {
+		return el.id === id;
+	});
+
+	return item !== undefined;
+}
 
 /**
  *

@@ -17,8 +17,8 @@ function renderItem(item) {
 			id={id}
 			title={title}
 			description={description}
-			mark={mark}
-			comment={comment}
+			initialMark={mark}
+			initialComment={comment}
 		/>
 	);
 }
