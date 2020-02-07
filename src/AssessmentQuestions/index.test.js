@@ -1,17 +1,29 @@
 import React from "react";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import { mount } from "enzyme";
 import AssessmentQuestions from "./index";
-import { fetchDataError, fetchDataSuccess } from "../_actions";
+import {
+	assessmentNextStep,
+	fetchDataError,
+	fetchDataSuccess,
+} from "../_actions";
 import {
 	ASSESSMENT_QUESTIONS_ENTITY,
 	EMPLOYEE_ENTITY,
 } from "../_store/entities";
 import { hr } from "../_api/employee";
-import block from "../_api/assessmentQuestions";
+import block, {
+	completedQuestions,
+	lastCompletedQuestions,
+} from "../_api/assessmentQuestions";
 import ItemConnected from "./Item";
 import { Item } from "./Item";
+import Mark from "./Mark";
+import { initialState } from "../_reducers/assessmentQuestions";
+import createStore from "../_store";
+import Next from "./Next";
+
+import Previous from "./Previous";
 
 /**
  *
@@ -23,14 +35,19 @@ describe("Assessment questions", () => {
 	 *
 	 */
 	beforeEach(() => {
-		store = configureStore([])({});
+		store = createStore({
+			assessmentQuestions: Object.assign({}, initialState, {
+				data: block,
+			}),
+		});
+
+		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
 	});
 
 	/**
 	 *
 	 */
 	it("should show error ", () => {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
 		store.dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY));
 
 		const wrapper = mount(
@@ -46,7 +63,6 @@ describe("Assessment questions", () => {
 	 *
 	 */
 	it("should render questions", () => {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
 		store.dispatch(
 			fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
 		);
@@ -65,12 +81,35 @@ describe("Assessment questions", () => {
 	/**
 	 *
 	 */
-	it("should should validate inputs", () => {});
+	it("should should validate inputs", () => {
+		store.dispatch(
+			fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),
+		);
+
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
+
+		const buttonNext = wrapper.find(Next);
+
+		buttonNext.simulate("click");
+
+		wrapper.update();
+
+		const question = wrapper.find(Item).at(0);
+
+		expect(question.prop("error")).toEqual({
+			id: 0,
+			type: "INVALID_MARK",
+		});
+	});
 
 	/**
-	 *
+	 *s
 	 */
-	it.only("should add answers to state", () => {
+	it("should change mark", () => {
 		const wrapper = mount(
 			<Provider store={store}>
 				<ItemConnected
@@ -83,57 +122,161 @@ describe("Assessment questions", () => {
 			</Provider>,
 		);
 
-		const item = wrapper.find(Item).at(0);
+		const radio = wrapper.find(".input").at(0);
 
-		const radio = item.find(".radio").at(0);
+		radio.simulate("change");
 
-		radio.simulate("click");
+		wrapper.update();
 
-		console.log(Item.state("markValue"));
+		const mark = wrapper.find(Mark).at(0);
+
+		expect(mark.prop("selected")).toEqual(1);
 	});
 
 	/**
 	 *
 	 */
-	it("should show incompleteness error", () => {});
+	it("should go to the next step", done => {
+		store.dispatch(
+			fetchDataSuccess(
+				ASSESSMENT_QUESTIONS_ENTITY,
+				completedQuestions,
+			),
+		);
+
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
+
+		const buttonNext = wrapper.find(Next);
+
+		let counter = 1;
+
+		const unsubscribe = store.subscribe(() => {
+			let currentStep = store.getState().assessmentQuestions
+				.step;
+
+			if (counter === 3) {
+				expect(currentStep).toEqual(2);
+
+				done();
+			}
+
+			counter++;
+		});
+
+		buttonNext.simulate("click");
+	});
 
 	/**
 	 *
 	 */
-	it("should go to the next step", () => {});
+	it("should go to previous step", done => {
+		store.dispatch(
+			fetchDataSuccess(
+				ASSESSMENT_QUESTIONS_ENTITY,
+				completedQuestions,
+			),
+		);
+
+		store.dispatch(assessmentNextStep());
+
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
+
+		const buttonNext = wrapper.find(Previous);
+
+		let counter = 1;
+
+		const unsubscribe = store.subscribe(() => {
+			let currentStep = store.getState().assessmentQuestions
+				.step;
+
+			if (counter === 3) {
+				expect(currentStep).toEqual(1);
+
+				done();
+			}
+
+			counter++;
+		});
+
+		buttonNext.simulate("click");
+	});
 
 	/**
 	 *
 	 */
-	it("should go to previous step", () => {});
+	it("should change button for last questions block", () => {
+		store.dispatch(
+			fetchDataSuccess(
+				ASSESSMENT_QUESTIONS_ENTITY,
+				lastCompletedQuestions,
+			),
+		);
+
+		store.dispatch(assessmentNextStep());
+
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
+
+		const buttonNext = wrapper.find(Next);
+
+		expect(buttonNext.text()).toEqual("Завершить оценку");
+	});
 
 	/**
 	 *
 	 */
-	it("should change button for last questions block", () => {});
+	it("should add comment", () => {
+		const wrapper = mount(
+			<Provider store={store}>
+				<ItemConnected
+					id={0}
+					title={"title"}
+					description={"description"}
+					initialMark={null}
+					initialComment={null}
+				/>
+			</Provider>,
+		);
+
+		const text = wrapper.find("textarea").at(0);
+
+		text.simulate("change", { target: { value: "test" } });
+
+		wrapper.update();
+
+		const updatedText = wrapper.find("textarea").at(0);
+
+		expect(updatedText.prop("value")).toEqual("test");
+	});
 
 	/**
 	 *
 	 */
-	it("should switch radio buttons", () => {});
+	it("should render only next button if step is first", () => {
+		store.dispatch(
+			fetchDataSuccess(
+				ASSESSMENT_QUESTIONS_ENTITY,
+				completedQuestions,
+			),
+		);
 
-	/**
-	 *
-	 */
-	it("should add comment", () => {});
+		const wrapper = mount(
+			<Provider store={store}>
+				<AssessmentQuestions />
+			</Provider>,
+		);
 
-	/**
-	 *
-	 */
-	it("should should render only next button if step is first", () => {});
-
-	/**
-	 *
-	 */
-	it("should render prev and next buttons", () => {});
-
-	/**
-	 *
-	 */
-	it("should render prev and finish buttons", () => {});
+		expect(wrapper.exists(Previous)).toBeFalsy();
+	});
 });

@@ -96,7 +96,6 @@ export const Item = ({
 
 			<textarea
 				className={textareaClass}
-				name=""
 				rows="4"
 				placeholder={text.comment}
 				onChange={e => setCommentValue(e.target.value)}

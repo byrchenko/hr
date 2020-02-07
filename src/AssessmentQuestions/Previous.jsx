@@ -4,11 +4,7 @@ import css from "./Previous.scss";
 import text from "./locale/ru";
 import Arrow from "../_svg/prev.svg";
 
-const Previous = ({ isFirstStep, goPrev }) => {
-	if (isFirstStep) {
-		return null;
-	}
-
+const Previous = ({ goPrev }) => {
 	return (
 		<button type="button" className={css.index} onClick={goPrev}>
 			{text.prev}
@@ -22,7 +18,6 @@ const Previous = ({ isFirstStep, goPrev }) => {
  *
  */
 Previous.propTypes = {
-	isFirstStep: PropTypes.bool,
 	goPrev: PropTypes.func,
 };
 

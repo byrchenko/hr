@@ -61,7 +61,7 @@ class AssessmentQuestions extends React.Component {
 	 *
 	 */
 	isValidForm() {
-		return () => {
+		return cb => {
 			const { answers, addErrors, clearErrors } = this.props;
 
 			let errors = {};
@@ -100,7 +100,9 @@ class AssessmentQuestions extends React.Component {
 				clearErrors();
 			}
 
-			return valid;
+			if (valid) {
+				cb();
+			}
 		};
 	}
 
@@ -128,10 +130,7 @@ class AssessmentQuestions extends React.Component {
 
 					<List data={block} errors={errors} />
 
-					<Previous
-						isFirstStep={step === 1}
-						goPrev={goPrev}
-					/>
+					{step > 1 && <Previous goPrev={goPrev} />}
 
 					<Next
 						isLastStep={isLast}

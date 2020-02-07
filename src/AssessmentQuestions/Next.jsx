@@ -18,7 +18,11 @@ const Next = ({ isLastStep, goNext, validate }) => {
 	}
 
 	return (
-		<button type="button" className={css.index} onClick={goNext}>
+		<button
+			type="button"
+			className={css.index}
+			onClick={() => validate(goNext)}
+		>
 			{text.next}
 
 			<Arrow width={7} height={11} className={css.icon} />

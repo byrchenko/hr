@@ -11,6 +11,10 @@ import Item from "./Item";
  * @constructor
  */
 const List = ({ data, errors }) => {
+	if (!data) {
+		return <div>No data</div>;
+	}
+
 	const { title, questions } = data;
 
 	/**
