@@ -1,0 +1,16 @@
+@import "../_sass/components";
+
+$gap: 20;
+
+.title {
+  @include list_3($gap);
+}
+
+.item {
+  @include item_3($gap);
+
+  font-size: 14px;
+  line-height: 22px;
+  color: #E30613;
+  margin-bottom: 5px;
+}

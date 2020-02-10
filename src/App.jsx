@@ -28,7 +28,7 @@ class App extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, supervisor));
+		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
 		store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
 		store.dispatch(
 			fetchDataSuccess(

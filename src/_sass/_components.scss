@@ -25,3 +25,17 @@
     transform: scale3d($scale,$scale,$scale)
   }
 }
+
+@mixin list_3($gap) {
+  $half_gap: $gap / 2;
+
+  display: flex;
+  margin: 0 -#{$half_gap}px;
+}
+
+@mixin item_3($gap) {
+  $half_gap: $gap / 2;
+
+  width: 33.3333%;
+  padding: 0 #{$half_gap}px;
+}

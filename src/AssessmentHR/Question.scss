@@ -1,0 +1,58 @@
+@import "../_sass/components";
+
+.question {
+  margin-bottom: 30px;
+}
+
+.list {
+  @include list_3(20);
+}
+
+.item {
+  @include item_3(20);
+}
+
+.title {
+  font-size: 12px;
+  line-height: 18px;
+  color: #333333;
+}
+
+.index {
+  @include item_3(20)
+}
+
+.mark {
+  @include item_3(20);
+
+  margin-bottom: 10px;
+}
+
+.numb {
+  font-size: 13px;
+  line-height: 20px;
+  color: #E30613;
+}
+
+.heading {
+  font-size: 11px;
+  line-height: 17px;
+  color: #999;
+}
+
+.text {
+  font-size: 10px;
+  line-height: 15px;
+  color: #666;
+}
+
+.descr {
+  font-size: 8px;
+  line-height: 12px;
+  color: #E30613;
+}
+
+.comment {
+  @include item_3(20);
+}
+

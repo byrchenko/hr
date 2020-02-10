@@ -148,6 +148,18 @@ export const isStartedAssessment = state => {
 /**
  *
  * @param state
+ */
+export const isStartedAssessmentHr = state => {
+	const {
+		assessmentHr: { isActive },
+	} = state;
+
+	return isActive;
+};
+
+/**
+ *
+ * @param state
  * @returns {*}
  */
 export const selectAssessmentData = state => {
@@ -253,4 +265,12 @@ export const selectAssessmentAnswers = state => {
 	} = state;
 
 	return answers;
+};
+
+/**
+ *
+ * @param state
+ */
+export const selectAssessmentHrEvaluated = state => {
+	return evaluated;
 };

@@ -1,0 +1,44 @@
+.index {
+  display: flex;
+  margin: 0 -10px 10px;
+}
+
+.user {
+  width: 33.333%;
+  padding: 0 10px;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 31px;
+  color: #545454;
+  font-weight: 400;
+  margin: 0 0 20px;
+}
+
+.item {
+  display: flex;
+}
+
+.picture {
+  margin-right: 10px;
+
+  img {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+  }
+}
+
+.name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+}
+
+.position {
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
+}

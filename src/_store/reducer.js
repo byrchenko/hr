@@ -5,6 +5,7 @@ import assessmentEmployees from "../_reducers/assessmentEmployees";
 import divisions from "../_reducers/divisions";
 import popups from "../_reducers/popups";
 import assessmentQuestions from "../_reducers/assessmentQuestions";
+import assessmentHr from "../_reducers/assessmentHr";
 
 /**
  *
@@ -18,6 +19,7 @@ export default history =>
 		divisions,
 		popups,
 		assessmentQuestions,
+		assessmentHr,
 	});
 
 /**

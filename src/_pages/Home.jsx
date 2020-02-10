@@ -7,8 +7,14 @@ import {
 	HR_PERMISSION,
 	SUPERVISOR_PERMISSION,
 } from "../_store/roles";
-import { isStartedAssessment, role } from "../_dispatchers";
+import {
+	isStartedAssessment,
+	isStartedAssessmentHr,
+	role,
+} from "../_dispatchers";
 import AssessmentQuestions from "../AssessmentQuestions";
+import PermissionController from "../_permissions/Controller";
+import AssessmentHR from "../AssessmentHR";
 
 const permissions = [
 	HR_PERMISSION,
@@ -21,7 +27,11 @@ const permissions = [
  */
 class Home extends React.Component {
 	render() {
-		const { role, isStartedAssessment } = this.props;
+		const {
+			role,
+			isStartedAssessment,
+			isStartedAssessmentHr,
+		} = this.props;
 
 		if (!role || !permissions.includes(role)) {
 			return <div>Forbidden</div>;
@@ -29,6 +39,14 @@ class Home extends React.Component {
 
 		if (isStartedAssessment) {
 			return <AssessmentQuestions />;
+		}
+
+		if (isStartedAssessmentHr) {
+			return (
+				<PermissionController allowed={[HR_PERMISSION]}>
+					<AssessmentHR />
+				</PermissionController>
+			);
 		}
 
 		return <AssessmentTable />;
@@ -52,6 +70,7 @@ const mapState = state => {
 	return {
 		role: role(state),
 		isStartedAssessment: isStartedAssessment(state),
+		isStartedAssessmentHr: isStartedAssessmentHr(state),
 	};
 };
 
