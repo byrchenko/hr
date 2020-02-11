@@ -1,0 +1,74 @@
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 3px);
+  max-width: 270px;
+  padding: 15px;
+  background-color: #545C6A;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .3s ease-out;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.index {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  cursor: pointer;
+
+  &:hover {
+    .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.input {
+  position: absolute;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
+
+.radio {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #727A84;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 5px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #E30613;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.input:checked + .radio {
+  &::after {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.number {
+  font-size: 12px;
+}

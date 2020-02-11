@@ -1,7 +1,7 @@
 import { employee, hr, supervisor } from "./employee";
 
 export default {
-	blocks: [createBlock(0), createBlock(1)],
+	blocks: [createBlock(0)],
 	evaluated: employee,
 	evaluator: supervisor,
 	finalizer: hr,
@@ -15,7 +15,7 @@ export default {
 function createBlock(id) {
 	return {
 		id,
-		title: "Block " + id,
+		title: "Продажи",
 		questions: [
 			createQuestion(1),
 			createQuestion(2),
@@ -32,7 +32,7 @@ function createBlock(id) {
 function createQuestion(id) {
 	return {
 		id,
-		title: "Question " + id,
+		title: "Знание ассортимента",
 		description: "Question description",
 		hr: {
 			mark: 3,

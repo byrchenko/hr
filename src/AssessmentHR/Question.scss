@@ -16,6 +16,7 @@
   font-size: 12px;
   line-height: 18px;
   color: #333333;
+  margin-bottom: 8px;
 }
 
 .index {
@@ -54,5 +55,10 @@
 
 .comment {
   @include item_3(20);
+}
+
+.marks {
+  display: flex;
+  padding-top: 3px;
 }
 

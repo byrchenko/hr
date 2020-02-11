@@ -5,15 +5,25 @@ import css from "./Question.scss";
 class Question extends React.Component {
 	/**
 	 *
-	 * @param user
+	 * @param data
 	 * @returns {*}
 	 */
-	renderComment(user) {
+	renderComment(data) {
+		if (typeof data === "function") {
+			return (
+				<div className={css.comment}>
+					<div className={css.heading}>Комментарий</div>
+
+					{data()}
+				</div>
+			);
+		}
+
 		return (
 			<div className={css.comment}>
 				<div className={css.heading}>Комментарий</div>
 
-				<div className={css.text}>{user.comment}</div>
+				<div className={css.text}>{data.comment}</div>
 			</div>
 		);
 	}
@@ -24,6 +34,7 @@ class Question extends React.Component {
 	 */
 	renderComments() {
 		const {
+			renderComment,
 			item: { hr, employee, supervisor },
 		} = this.props;
 
@@ -33,21 +44,31 @@ class Question extends React.Component {
 
 				{this.renderComment(supervisor)}
 
-				{this.renderComment(hr)}
+				{this.renderComment(renderComment)}
 			</div>
 		);
 	}
 
 	/**
 	 *
-	 * @param user
+	 * @param data
 	 */
-	renderMark(user) {
+	renderMark(data) {
+		if (typeof data === "function") {
+			return (
+				<div className={css.mark}>
+					<div className={css.heading}>Оценка</div>
+
+					<div className={css.marks}>{data()}</div>
+				</div>
+			);
+		}
+
 		return (
 			<div className={css.mark}>
 				<div className={css.heading}>Оценка</div>
 
-				<div className={css.numb}>{user.mark}</div>
+				<div className={css.numb}>{data.mark}</div>
 
 				<div className={css.descr}>
 					уровень компетенции и результативности на
@@ -63,6 +84,8 @@ class Question extends React.Component {
 	 */
 	renderMarks() {
 		const {
+			renderMarks,
+			item,
 			item: { hr, employee, supervisor },
 		} = this.props;
 
@@ -72,7 +95,7 @@ class Question extends React.Component {
 
 				{this.renderMark(supervisor)}
 
-				{this.renderMark(hr)}
+				{this.renderMark(renderMarks(item))}
 			</div>
 		);
 	}
