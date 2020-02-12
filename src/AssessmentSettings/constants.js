@@ -1,0 +1,3 @@
+export const POSITION_TYPE = "POSITION_TYPE";
+export const BLOCK_TYPE = "BLOCK_TYPE";
+export const COMPETENCE_TYPE = "COMPETENCE_TYPE";

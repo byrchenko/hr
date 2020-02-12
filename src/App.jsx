@@ -11,7 +11,7 @@ import {
 	fetchDataSuccess,
 } from "./_actions";
 import {
-	ASSESSMENT_QUESTIONS_ENTITY,
+	ASSESSMENT_QUESTIONS_ENTITY, ASSESSMENT_SETTINGS_ENTITY,
 	ASSESSMENT_TABLE_ENTITY,
 	DIVISIONS_ENTITY,
 	EMPLOYEE_ENTITY,
@@ -20,6 +20,7 @@ import { employee, hr, supervisor } from "./_api/employee";
 import divisions from "./_api/divisions";
 import assessmentEmployeesList from "./_api/assessmentEmployeesList";
 import block from "./_api/assessmentQuestions";
+import settings from "./_api/settings";
 
 const store = createStore({});
 
@@ -36,6 +37,7 @@ class App extends React.Component {
 				assessmentEmployeesList,
 			),
 		);
+		store.dispatch(fetchDataSuccess(ASSESSMENT_SETTINGS_ENTITY, settings));
 		// store.dispatch(assessmentStart(hr));
 		// store.dispatch(
 		// 	fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),

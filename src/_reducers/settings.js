@@ -7,20 +7,22 @@ import {
 import {
 	FETCH_ERROR,
 	FETCH_LOADING,
-	FETCH_SUCCESS,
+	FETCH_SUCCESS, SETTINGS_SET_BLOCK_FILTER, SETTINGS_SET_COMPETENCE_FILTER,
 } from "../_store/types";
 
-import { ASSESSMENT_HR_DATA_ENTITY } from "../_store/entities";
+import { ASSESSMENT_SETTINGS_ENTITY } from "../_store/entities";
 
 export const initialState = {
+	blocksFilter: "all",
+	competencesFilter: 'all',
 	data: null,
 	loading: false,
 	error: false,
 	sync: false,
-	isActive: false,
 };
 
 const handler = {
+
 	/**
 	 *
 	 * @param state
@@ -31,7 +33,7 @@ const handler = {
 	[FETCH_SUCCESS]: (state, action) => {
 		const { entity, data } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === ASSESSMENT_SETTINGS_ENTITY) {
 			return fetchSuccessHandler(state, data);
 		}
 
@@ -48,7 +50,7 @@ const handler = {
 	[FETCH_LOADING]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === ASSESSMENT_SETTINGS_ENTITY) {
 			return fetchLoadingHandler(state);
 		}
 
@@ -65,11 +67,38 @@ const handler = {
 	[FETCH_ERROR]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === ASSESSMENT_SETTINGS_ENTITY) {
 			return fetchErrorHandler(state);
 		}
 
 		return state;
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @param action
+	 */
+	[SETTINGS_SET_BLOCK_FILTER]: (state, action) => {
+		const {payload} = action;
+
+		return Object.assign({}, state, {
+			blocksFilter: payload
+		})
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @param action
+	 * @returns {any}
+	 */
+	[SETTINGS_SET_COMPETENCE_FILTER]: (state, action) => {
+		const {payload} = action;
+
+		return Object.assign({}, state, {
+			competencesFilter: payload
+		})
 	},
 
 	/**

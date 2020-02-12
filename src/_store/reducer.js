@@ -6,6 +6,7 @@ import divisions from "../_reducers/divisions";
 import popups from "../_reducers/popups";
 import assessmentQuestions from "../_reducers/assessmentQuestions";
 import assessmentHr from "../_reducers/assessmentHr";
+import settings from "../_reducers/settings";
 
 /**
  *
@@ -20,6 +21,7 @@ export default history =>
 		popups,
 		assessmentQuestions,
 		assessmentHr,
+		settings
 	});
 
 /**

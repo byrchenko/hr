@@ -1,0 +1,78 @@
+@import "../_sass/components";
+
+%section {
+  background-color: #fff;
+}
+
+.position {
+  @extend %section;
+
+  width: 25%;
+}
+
+.block {
+  @extend %section;
+
+  width: 29%;
+}
+
+.competence {
+  @extend %section;
+
+  width: 42%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  padding: 0 10px;
+  background-color: #545C6A;
+
+  .title {
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+  }
+}
+
+.add {
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: transform .2s ease-out;
+
+  &:hover {
+    $scale: 1.5;
+
+    transform: scale3d($scale, $scale, $scale);
+  }
+}
+
+%button {
+  @extend %list_item;
+
+  border: none;
+  background: transparent;
+  outline: none;
+  text-align: left;
+}
+
+.all {
+  @extend %button;
+}
+
+.selected {
+  @extend %button;
+
+  background-color: #EEF2F4;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}

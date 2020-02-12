@@ -1,0 +1,76 @@
+@import "../_sass/components";
+
+%item {
+  @extend %list_item;
+
+  position: relative;
+}
+
+.index {
+  @extend %item;
+}
+
+.selected {
+  @extend %item;
+
+  background-color: #EEF2F4;
+}
+
+.title {
+  font-size: 12px;
+  line-height: 18px;
+  color: #000;
+}
+
+.options {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+}
+
+.description {
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 15px;
+  color: #666666;
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 140px;
+  background-color: #545C6A;
+  padding: 21px 14px 10px;
+  z-index: 1;
+  cursor: auto;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  color: #fff;
+  cursor: pointer;
+}
