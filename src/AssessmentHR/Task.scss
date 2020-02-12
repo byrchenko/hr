@@ -1,3 +1,44 @@
 .index {
+  display: flex;
+  margin-bottom: 5px;
+}
 
+.title {
+  border-radius: 3px;
+  border: 1px solid #C4C4C4;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #333;
+  width: 250px;
+  margin-right: 7px;
+}
+
+.date {
+  display: block;
+  width: 120px;
+  border-radius: 3px;
+  border: 1px solid #C4C4C4;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #333;
+  margin-right: 9px;
+  background-color: transparent;
+}
+
+.remove {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.calendar {
+  position: absolute;
+  top: 6px;
+  right: 20px;
 }

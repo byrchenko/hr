@@ -24,6 +24,7 @@ class index extends React.Component {
 		super(props);
 
 		this.state = {
+
 			answers: {},
 			tasks: null,
 		};
@@ -37,8 +38,8 @@ class index extends React.Component {
 	_createEmptyTask() {
 		return {
 			id: uniqid(),
-			title: null,
-			date: null,
+			title: "",
+			date: new Date(),
 		};
 	}
 
@@ -48,19 +49,21 @@ class index extends React.Component {
 	 */
 	addTask() {
 		return () => {
-			const { tasks } = this.state;
+			this.setState(prevState => {
+				const {tasks} = prevState;
 
-			const task = this._createEmptyTask();
+				const task = this._createEmptyTask();
 
-			if (tasks === null) {
-				this.setState({ tasks: [task] });
+				if (tasks === null) {
+					return {
+						tasks: [task]
+					}
+				}
 
-				return;
-			}
+				tasks.push(task);
 
-			this.setState({
-				tasks: tasks.push(task),
-			});
+				return {tasks};
+			})
 		};
 	}
 
@@ -70,26 +73,77 @@ class index extends React.Component {
 	 */
 	removeTask() {
 		return id => {
-			const { tasks } = this.state;
-
-			return tasks.filter(item => {
-				return item.id !== id;
+			this.setState(prevState => {
+				return {
+					tasks: prevState.tasks.filter(item => {
+						return item.id !== id;
+					}),
+				};
 			});
 		};
 	}
 
 	/**
 	 *
-	 * @param item
+	 * @returns {function(...[*]=)}
 	 */
-	renderTask(item) {
-		return (
-			<Task
-				item={item}
-				add={this.addTask()}
-				remove={this.removeTask()}
-			/>
-		);
+	updateTaskTitle() {
+		return (id, title) => {
+			this.setState(prevState => {
+				return {
+					tasks: prevState.tasks.map(item => {
+						if (item.id === id) {
+							item.title = title;
+
+							return item;
+						}
+
+						return item;
+					})
+				}
+			})
+		}
+	}
+
+	/**
+	 *
+	 * @returns {function(...[*]=)}
+	 */
+	updateTaskDate() {
+		return (id, date) => {
+			this.setState(prevState => {
+				return {
+					tasks: prevState.tasks.map(item => {
+						if (item.id === id) {
+							item.date = date;
+
+							return item;
+						}
+
+						return item;
+					})
+				}
+			})
+		}
+	}
+
+	/**
+	 *
+	 * @returns {function(*): *}
+	 */
+	renderTask() {
+		return item => {
+			return (
+				<Task
+					key={item.id}
+					item={item}
+					add={this.addTask()}
+					remove={this.removeTask()}
+					updateTitle={this.updateTaskTitle()}
+					updateDate={this.updateTaskDate()}
+				/>
+			);
+		}
 	}
 
 	/**
@@ -246,6 +300,7 @@ class index extends React.Component {
 	 */
 	render() {
 		const { blocks, evaluated, evaluator, finalizer } = data;
+		const {tasks} = this.state;
 
 		return (
 			<Wrapper>
@@ -260,7 +315,11 @@ class index extends React.Component {
 					renderBlock={this.renderBlock()}
 				/>
 
-				<Tasks />
+				<Tasks
+					tasks={tasks}
+					renderTask={this.renderTask()}
+					addTask={this.addTask()}
+				/>
 			</Wrapper>
 		);
 	}
