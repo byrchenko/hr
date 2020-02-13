@@ -15,6 +15,14 @@ import {
 } from "./constants";
 import Item from "./Item";
 import { setBlockFilter, setCompetenceFilter } from "../_actions/settings";
+import { openPopup } from "../_actions";
+import {
+	ADD_BLOCK_POPUP,
+	ADD_COMPETENCY_POPUP,
+	ADD_POSITION_POPUP, EDIT_BLOCK_POPUP,
+	EDIT_COMPETENCY_POPUP,
+	EDIT_POSITION_POPUP,
+} from "../Popuper/popups";
 
 /**
  *
@@ -25,11 +33,14 @@ class AssessmentSettings extends React.Component {
 	 * Competence item in list
 	 */
 	renderCompetence() {
+		const {editCompetency} = this.props;
+
 		return item => {
 			return (
 				<Item
+					key={item.id}
 					item={item}
-					edit={() => null}
+					edit={editCompetency}
 					remove={() => null}
 				/>
 			)
@@ -40,13 +51,14 @@ class AssessmentSettings extends React.Component {
 	 * Block item in list
 	 */
 	renderBlock(filter) {
-		const {filterCompetence} = this.props;
+		const {filterCompetence, editBlock} = this.props;
 
 		return item => {
 			return (
 				<Item
+					key={item.id}
 					item={item}
-					edit={() => null}
+					edit={editBlock}
 					remove={() => null}
 					select={filterCompetence}
 					filter={filter}
@@ -59,13 +71,14 @@ class AssessmentSettings extends React.Component {
 	 * Position item in list
 	 */
 	renderPosition(filter) {
-		const {filterBlock} = this.props;
+		const {filterBlock, editPosition} = this.props;
 
 		return item => {
 			return (
 				<Item
+					key={item.id}
 					item={item}
-					edit={() => null}
+					edit={editPosition}
 					remove={() => null}
 					select={filterBlock}
 					filter={filter}
@@ -86,7 +99,10 @@ class AssessmentSettings extends React.Component {
 			blocksFilter,
 			competencesFilter,
 			filterAllCompetences,
-			filterAllBlocks
+			filterAllBlocks,
+			addCompetency,
+			addPosition,
+			addBlock
 		} = this.props;
 
 		return (
@@ -97,6 +113,7 @@ class AssessmentSettings extends React.Component {
 					renderItem={this.renderPosition(blocksFilter)}
 					selectAll={filterAllBlocks}
 					filter={blocksFilter}
+					addItem={addPosition}
 				/>
 
 				<Section
@@ -105,12 +122,14 @@ class AssessmentSettings extends React.Component {
 					renderItem={this.renderBlock(competencesFilter)}
 					selectAll={filterAllCompetences}
 					filter={competencesFilter}
+					addItem={addBlock}
 				/>
 
 				<Section
 					type={COMPETENCE_TYPE}
 					list={competences}
 					renderItem={this.renderCompetence()}
+					addItem={addCompetency}
 				/>
 			</div>
 		);
@@ -130,6 +149,12 @@ AssessmentSettings.propTypes = {
 	filterAllBlocks: PropTypes.func,
 	filterBlock: PropTypes.func,
 	filterCompetence: PropTypes.func,
+	addCompetency: PropTypes.func,
+	editCompetency: PropTypes.func,
+	addPosition: PropTypes.func,
+	editPosition: PropTypes.func,
+	addBlock: PropTypes.func,
+	editBlock: PropTypes.func,
 };
 
 /**
@@ -162,6 +187,12 @@ const mapDispatch = dispatch => {
 		filterAllCompetences: () => dispatch(setCompetenceFilter('all')),
 		filterBlock: position => dispatch(setBlockFilter(position)),
 		filterCompetence: block => dispatch(setCompetenceFilter(block)),
+		addCompetency: () => dispatch(openPopup(ADD_COMPETENCY_POPUP)),
+		editCompetency: item => dispatch(openPopup(EDIT_COMPETENCY_POPUP, item)),
+		addPosition: () => dispatch(openPopup(ADD_POSITION_POPUP)),
+		editPosition: item => dispatch(openPopup(EDIT_POSITION_POPUP, item)),
+		addBlock: () => dispatch(openPopup(ADD_BLOCK_POPUP)),
+		editBlock: item => dispatch(openPopup(EDIT_BLOCK_POPUP, item)),
 	}
 };
 

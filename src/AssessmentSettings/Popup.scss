@@ -1,0 +1,43 @@
+.index {
+
+}
+
+.group {
+  margin: 0 0 10px;
+
+  &:last-of-type {
+    margin-bottom: 23px;
+  }
+}
+
+.label {
+  font-size: 11px;
+  line-height: 17px;
+  color: #545454;
+  margin-bottom: 8px;
+}
+
+.label,
+.input,
+.text {
+  display: block;
+}
+
+.text {
+  resize: none;
+}
+
+.input,
+.text {
+  width: 100%;
+  padding: 9px 13px;
+  font-size: 13px;
+  line-height: 20px;
+  border: 1px solid #E2E2E2;
+  border-radius: 2px;
+  outline: none;
+
+  &::placeholder {
+    color: #C4C4C4;
+  }
+}

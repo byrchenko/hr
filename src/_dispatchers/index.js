@@ -274,3 +274,17 @@ export const selectAssessmentAnswers = state => {
 export const selectAssessmentHrEvaluated = state => {
 	return evaluated;
 };
+
+/**
+ *
+ * @param state
+ */
+export const getPopupParams = state => {
+	const {
+		popups: {
+			data
+		}
+	} = state;
+
+	return data
+};

@@ -19,6 +19,8 @@ export const initialState = {
 	loading: false,
 	error: false,
 	sync: false,
+	popupData: null,
+	popupLoading: false
 };
 
 const handler = {
@@ -100,6 +102,8 @@ const handler = {
 			competencesFilter: payload
 		})
 	},
+
+
 
 	/**
 	 *

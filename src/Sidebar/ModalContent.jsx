@@ -7,8 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "../_svg/triangle_down.svg";
 import { connect } from "react-redux";
 import { setNewPosition } from "../_actions";
+import ModalButtons from "../ModalButtons";
 
-const ModalContent = ({ setNewPosition, error }) => {
+const ModalContent = ({ setNewPosition, error, handleSubmit, type }) => {
 	const listRef = React.useRef();
 
 	const [selected, setSelected] = React.useState(null);
@@ -91,6 +92,10 @@ const ModalContent = ({ setNewPosition, error }) => {
 		return selected.title;
 	}
 
+	/**
+	 *
+	 * @returns {*}
+	 */
 	function renderError() {
 		if (error) {
 			return (
@@ -124,6 +129,11 @@ const ModalContent = ({ setNewPosition, error }) => {
 				{renderList()}
 			</div>
 
+			<ModalButtons
+				submit={handleSubmit}
+				type={type}
+			/>
+
 			{renderError()}
 		</div>
 	);
@@ -131,6 +141,8 @@ const ModalContent = ({ setNewPosition, error }) => {
 
 ModalContent.propTypes = {
 	setNewPosition: PropTypes.func,
+	handleSubmit: PropTypes.func,
+	type: PropTypes.string,
 	error: PropTypes.bool,
 };
 

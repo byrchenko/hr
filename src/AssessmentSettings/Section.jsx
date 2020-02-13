@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Section.scss";
+import Plus from "../_svg/plus.svg";
 
 import {
 	BLOCK_TYPE,
 	COMPETENCE_TYPE,
 	POSITION_TYPE,
 } from "./constants";
-
-import Plus from "../_svg/plus.svg";
 
 /**
  * Config for different types

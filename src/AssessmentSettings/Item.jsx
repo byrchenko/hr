@@ -52,7 +52,10 @@ class Item extends React.Component {
 			isTooltip: false
 		});
 
-		document.removeEventListener("click", this._closeWhenClickedOutside);
+		document.removeEventListener(
+			"click",
+			this._closeWhenClickedOutside
+		);
 	}
 
 	/**
@@ -66,7 +69,10 @@ class Item extends React.Component {
 				isTooltip: true
 			});
 
-			document.addEventListener("click", this._closeWhenClickedOutside);
+			document.addEventListener(
+				"click",
+				this._closeWhenClickedOutside
+			);
 		}
 	}
 
@@ -76,7 +82,10 @@ class Item extends React.Component {
 	closeTooltip() {
 		return e => {
 			e.stopPropagation();
-			document.removeEventListener("click", this._closeWhenClickedOutside);
+			document.removeEventListener(
+				"click",
+				this._closeWhenClickedOutside
+			);
 
 			this.setState({
 				isTooltip: false
@@ -89,7 +98,7 @@ class Item extends React.Component {
 	 * @returns {*}
 	 */
 	renderTooltip() {
-		const { edit, remove } = this.props;
+		const { edit, remove, item } = this.props;
 		const {isTooltip} = this.state;
 
 		if (!isTooltip) {
@@ -114,7 +123,7 @@ class Item extends React.Component {
 				<ul className={css.list}>
 					<li
 						className={css.item}
-						onClick={edit}
+						onClick={() => edit(item)}
 					>
 						{"Редактировать"}
 					</li>

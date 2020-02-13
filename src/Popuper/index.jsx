@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
 	dataPopup,
-	employeeDataPopup,
+	employeeDataPopup, getPopupParams,
 	isLoadingPopup,
 	positionDataPopup,
 	shownPopup,
@@ -12,15 +12,22 @@ import { Modal } from "../Modal";
 import {
 	CHANGE_POSITION_POPUP,
 	ADD_COMPETENCY_POPUP,
+	EDIT_COMPETENCY_POPUP,
+	EDIT_POSITION_POPUP,
+	ADD_POSITION_POPUP,
+	EDIT_BLOCK_POPUP,
+	ADD_BLOCK_POPUP,
 } from "./popups";
 import text from "./locale/ru";
 import ApiInterface from "../_service/ApiInterface";
 import ModalContent from "../Sidebar/ModalContent";
+import SettingsPopup from "../AssessmentSettings/Popup";
 
 /**
  *
  */
 class Popuper extends React.Component {
+
 	/**
 	 *
 	 */
@@ -35,10 +42,12 @@ class Popuper extends React.Component {
 			<Modal
 				type={CHANGE_POSITION_POPUP}
 				title={text.changePositionTitle}
-				onSubmit={changeEmployeePosition}
 				loading={loading}
 			>
-				<ModalContent />
+				<ModalContent
+					handleSubmit={changeEmployeePosition}
+					type={CHANGE_POSITION_POPUP}
+				/>
 			</Modal>
 		);
 	}
@@ -53,7 +62,132 @@ class Popuper extends React.Component {
 			return null;
 		}
 
-		return <Modal>{"some content here"}</Modal>;
+		return (
+			<Modal
+				type={ADD_COMPETENCY_POPUP}
+				title={"Добавить компетенцию"}
+			>
+				<SettingsPopup
+					type={ADD_COMPETENCY_POPUP}
+				/>
+			</Modal>
+		);
+	}
+
+	/**
+	 *
+	 */
+	editCompetencyPopup() {
+		const { show, params } = this.props;
+
+		console.log(params)
+
+		if (show !== EDIT_COMPETENCY_POPUP) {
+			return null;
+		}
+
+		return (
+			<Modal
+				type={EDIT_COMPETENCY_POPUP}
+				title={"Редактировать компетенцию"}
+			>
+				<SettingsPopup
+					type={EDIT_COMPETENCY_POPUP}
+					params={params}
+				/>
+			</Modal>
+		);
+	}
+
+	/**
+	 *
+	 */
+	addPositionPopup() {
+		const { show } = this.props;
+
+		if (show !== ADD_POSITION_POPUP) {
+			return null;
+		}
+
+		return (
+			<Modal
+				type={ADD_POSITION_POPUP}
+				title={"Добавить должность"}
+			>
+				<SettingsPopup
+					type={ADD_POSITION_POPUP}
+				/>
+			</Modal>
+		);
+	}
+
+	/**
+	 *
+	 */
+	editPositionPopup() {
+		const { show, params } = this.props;
+
+		if (show !== EDIT_POSITION_POPUP) {
+			return null;
+		}
+
+		return (
+			<Modal
+				type={EDIT_POSITION_POPUP}
+				title={"Редактировать должность"}
+			>
+				<SettingsPopup
+					type={EDIT_POSITION_POPUP}
+					params={params}
+				/>
+			</Modal>
+		);
+	}
+
+
+	/**
+	 *
+	 */
+	addBlockPopup() {
+		const { show } = this.props;
+
+		if (show !== ADD_BLOCK_POPUP) {
+			return null;
+		}
+
+		return (
+			<Modal
+				type={ADD_BLOCK_POPUP}
+				title={"Добавить блок"}
+			>
+				<SettingsPopup
+					type={ADD_BLOCK_POPUP}
+				/>
+			</Modal>
+		);
+	}
+
+	/**
+	 *
+	 */
+	editBlockPopup() {
+		const { show, params } = this.props;
+
+		if (show !== EDIT_BLOCK_POPUP) {
+			return null;
+		}
+
+		return (
+			<Modal
+				type={EDIT_BLOCK_POPUP}
+				title={"Редактировать блок"}
+			>
+				<SettingsPopup
+					type={EDIT_BLOCK_POPUP}
+					params={params}
+				/>
+			</Modal>
+		);
 	}
 
 	/**
@@ -62,7 +196,13 @@ class Popuper extends React.Component {
 	 */
 	render() {
 		return (
-			this.changePositionPopup() || this.addCompetencyPopup()
+			this.changePositionPopup() ||
+			this.addCompetencyPopup() ||
+			this.editCompetencyPopup() ||
+			this.addPositionPopup() ||
+			this.editPositionPopup() ||
+			this.addBlockPopup() ||
+			this.editBlockPopup()
 		);
 	}
 }
@@ -75,6 +215,7 @@ Popuper.propTypes = {
 	loading: PropTypes.bool,
 	show: PropTypes.string,
 	changeEmployeePosition: PropTypes.func,
+	params: PropTypes.func,
 };
 
 /**
@@ -87,6 +228,7 @@ const mapState = state => {
 		loading: isLoadingPopup(state),
 		employee: employeeDataPopup(state),
 		position: positionDataPopup(state),
+		params: getPopupParams(state)
 	};
 };
 
@@ -112,13 +254,14 @@ const mapDispatch = dispatch => {
  * @returns {{}}
  */
 const mergeProps = (stateProps, dispatchProps) => {
-	const { employee, show, loading, position } = stateProps;
+	const { employee, show, loading, position, params } = stateProps;
 	const { changePosition } = dispatchProps;
 
 	return {
 		changeEmployeePosition: changePosition(employee, position),
 		show,
 		loading,
+		params
 	};
 };
 
