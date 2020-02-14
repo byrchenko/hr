@@ -47,7 +47,7 @@ describe("Assessment settings", () => {
 		/**
 		 *
 		 */
-		it("should change blocks filter to postions id", () => {
+		it("should change blocks filter to positions id", () => {
 
 		});
 

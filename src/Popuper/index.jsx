@@ -80,8 +80,6 @@ class Popuper extends React.Component {
 	editCompetencyPopup() {
 		const { show, params } = this.props;
 
-		console.log(params)
-
 		if (show !== EDIT_COMPETENCY_POPUP) {
 			return null;
 		}
@@ -215,7 +213,7 @@ Popuper.propTypes = {
 	loading: PropTypes.bool,
 	show: PropTypes.string,
 	changeEmployeePosition: PropTypes.func,
-	params: PropTypes.func,
+	params: PropTypes.object,
 };
 
 /**

@@ -58,8 +58,8 @@ class Section extends React.Component {
 		const { selectAll, filter } = this.props;
 
 		if (
-			selectAll === null ||
-			selectAll === undefined
+			selectAll === null
+			|| selectAll === undefined
 		) {
 			return null;
 		}
@@ -79,7 +79,10 @@ class Section extends React.Component {
 	 */
 	render() {
 		const { type, addItem } = this.props;
-		const { title, class: wrapperClass } = types[type];
+		const {
+			title,
+			class: wrapperClass
+		} = types[type];
 
 		return (
 			<div className={wrapperClass}>

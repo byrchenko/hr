@@ -16,8 +16,8 @@ class Item extends React.Component {
 			isTooltip: false,
 		};
 
-		 this.tooltip = React.createRef();
-		this._closeWhenClickedOutside = this._closeWhenClickedOutside.bind(this)
+		this.tooltip = React.createRef();
+		this._closeWhenClickedOutside = this._closeWhenClickedOutside.bind(this);
 	}
 
 	/**
@@ -45,16 +45,16 @@ class Item extends React.Component {
 	 */
 	_closeWhenClickedOutside(e) {
 		if (this.tooltip.current.contains(e.target)) {
-			return null
+			return null;
 		}
 
 		this.setState({
-			isTooltip: false
+			isTooltip: false,
 		});
 
 		document.removeEventListener(
 			"click",
-			this._closeWhenClickedOutside
+			this._closeWhenClickedOutside,
 		);
 	}
 
@@ -66,14 +66,14 @@ class Item extends React.Component {
 			e.stopPropagation();
 
 			this.setState({
-				isTooltip: true
+				isTooltip: true,
 			});
 
 			document.addEventListener(
 				"click",
-				this._closeWhenClickedOutside
+				this._closeWhenClickedOutside,
 			);
-		}
+		};
 	}
 
 	/**
@@ -82,15 +82,16 @@ class Item extends React.Component {
 	closeTooltip() {
 		return e => {
 			e.stopPropagation();
+
 			document.removeEventListener(
 				"click",
-				this._closeWhenClickedOutside
+				this._closeWhenClickedOutside,
 			);
 
 			this.setState({
-				isTooltip: false
-			})
-		}
+				isTooltip: false,
+			});
+		};
 	}
 
 	/**
@@ -99,10 +100,10 @@ class Item extends React.Component {
 	 */
 	renderTooltip() {
 		const { edit, remove, item } = this.props;
-		const {isTooltip} = this.state;
+		const { isTooltip } = this.state;
 
 		if (!isTooltip) {
-			return null
+			return null;
 		}
 
 		return (
@@ -123,14 +124,20 @@ class Item extends React.Component {
 				<ul className={css.list}>
 					<li
 						className={css.item}
-						onClick={() => edit(item)}
+						onClick={e => {
+							e.stopPropagation();
+							edit(item);
+						}}
 					>
 						{"Редактировать"}
 					</li>
 
 					<li
 						className={css.item}
-						onClick={remove}
+						onClick={e => {
+							e.stopPropagation();
+							remove(item.id);
+						}}
 					>
 						{"Удалить"}
 					</li>
@@ -157,7 +164,10 @@ class Item extends React.Component {
 		return (
 			<div
 				className={wrapperClass}
-				onClick={() => select(item.id)}
+				onClick={select
+					? () => select(item.id)
+					: null
+				}
 			>
 				<div className={css.title}>
 					{item.title}

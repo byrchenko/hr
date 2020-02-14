@@ -3,6 +3,14 @@ import PropTypes from "prop-types";
 import css from "./index.scss";
 import { connect } from "react-redux";
 import Section from "./Section";
+import Item from "./Item";
+import { openPopup } from "../_actions";
+
+import {
+	setBlockFilter,
+	setCompetenceFilter
+} from "../_actions/settings";
+
 import {
 	getFilteredCompetences,
 	getFilteredBlocks
@@ -13,9 +21,7 @@ import {
 	COMPETENCE_TYPE,
 	POSITION_TYPE
 } from "./constants";
-import Item from "./Item";
-import { setBlockFilter, setCompetenceFilter } from "../_actions/settings";
-import { openPopup } from "../_actions";
+
 import {
 	ADD_BLOCK_POPUP,
 	ADD_COMPETENCY_POPUP,

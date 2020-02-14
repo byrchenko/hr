@@ -2,9 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import css from "./Popup.scss";
 import ModalButtons from "../ModalButtons";
-import { ADD_POSITION_POPUP, EDIT_BLOCK_POPUP, EDIT_COMPETENCY_POPUP, EDIT_POSITION_POPUP } from "../Popuper/popups";
+import { getDefaultData, labels } from "./config";
+
+import {
+	ADD_POSITION_POPUP,
+	EDIT_POSITION_POPUP,
+} from "../Popuper/popups";
 
 /**
+ * Description input in Popup
  *
  * @param type
  * @param description
@@ -12,12 +18,18 @@ import { ADD_POSITION_POPUP, EDIT_BLOCK_POPUP, EDIT_COMPETENCY_POPUP, EDIT_POSIT
  * @returns {null|*}
  * @constructor
  */
-function Description({type, description, setDescription}) {
+function Description(
+	{
+		type,
+		description,
+		setDescription,
+	},
+) {
 	if (
 		type === ADD_POSITION_POPUP ||
 		type === EDIT_POSITION_POPUP
 	) {
-		return null
+		return null;
 	}
 
 	return (
@@ -26,7 +38,7 @@ function Description({type, description, setDescription}) {
 				className={css.label}
 				htmlFor="description"
 			>
-				Label 2
+				{labels[type].description}
 			</label>
 
 			<textarea
@@ -38,8 +50,17 @@ function Description({type, description, setDescription}) {
 				onChange={e => setDescription(e.target.value)}
 			/>
 		</div>
-	)
+	);
 }
+
+/**
+ *
+ */
+Description.propTypes = {
+	type: PropTypes.string,
+	description: PropTypes.string,
+	setDescription: PropTypes.func,
+};
 
 /**
  *
@@ -48,26 +69,14 @@ function Description({type, description, setDescription}) {
  * @returns {*}
  * @constructor
  */
-const Popup = ({type, params}) => {
-	let defaultTitle = '';
-	let defaultDescription = '';
+const Popup = ({ type, params }) => {
+	const defaultData = getDefaultData(type, params);
 
-	switch (type) {
-		case EDIT_POSITION_POPUP:
-			defaultTitle = params.title;
-			break;
-		case EDIT_BLOCK_POPUP:
-			defaultTitle = params.title;
-			defaultDescription = params.description;
-			break;
-		case EDIT_COMPETENCY_POPUP:
-			defaultTitle = params.title;
-			defaultDescription = params.description;
-			break;
-	}
-
-	const [title, setTitle] = React.useState(defaultTitle);
-	const [description, setDescription] = React.useState(defaultDescription);
+	const [title, setTitle] = React.useState(defaultData.title);
+	const [
+		description,
+		setDescription
+	] = React.useState(defaultData.description);
 
 	return (
 		<div className={css.index}>
@@ -76,7 +85,7 @@ const Popup = ({type, params}) => {
 					className={css.label}
 					htmlFor="title"
 				>
-					Label
+					{labels[type].title}
 				</label>
 
 				<input
@@ -109,7 +118,7 @@ const Popup = ({type, params}) => {
 Popup.propTypes = {
 	handleSubmit: PropTypes.func,
 	type: PropTypes.string,
-	params: PropTypes.object
+	params: PropTypes.object,
 };
 
 export default Popup;
