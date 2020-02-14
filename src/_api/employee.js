@@ -11,8 +11,8 @@ export const employee = {
 
 export const supervisor = {
 	id: 1,
-	name: "John",
-	last_name: "Doe",
+	name: "Lisa",
+	last_name: "Ball",
 	image: 'https://static01.nyt.com/images/2019/11/17/books/review/17Salam/Salam1-articleLarge.jpg?quality=75&auto=webp&disable=upscale',
 	role: "supervisor",
 	department: 'Veloplaneta',
@@ -22,8 +22,8 @@ export const supervisor = {
 
 export const hr = {
 	id: 2,
-	name: "John",
-	last_name: "Doe",
+	name: "Sanya",
+	last_name: "Kyrpych",
 	image: 'https://static01.nyt.com/images/2019/11/17/books/review/17Salam/Salam1-articleLarge.jpg?quality=75&auto=webp&disable=upscale',
 	role: "hr",
 	department: 'Veloplaneta',
