@@ -1,0 +1,16 @@
+.index {
+    display: contents;
+}
+
+.cell {
+    padding: 12px 15px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #333;
+    border-bottom: 1px solid #c4c4c4;
+    text-align: right;
+
+    &:first-child {
+        text-align: left;
+    }
+}

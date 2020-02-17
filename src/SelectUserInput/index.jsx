@@ -18,16 +18,7 @@ class SelectUserInput extends React.Component {
 		super(props);
 
 		this.state = {
-			selected: [
-				{
-					id: 1,
-					name: "vasya pupkin",
-				},
-				{
-					id: 2,
-					name: "vasya pupkin",
-				},
-			],
+			selected: null,
 			filter: null,
 			isSearching: false,
 		};
@@ -118,6 +109,8 @@ class SelectUserInput extends React.Component {
 	 * Remove user from selected
 	 */
 	removeSelected() {
+		const {forwardState} = this.props;
+
 		return id => {
 			this.setState(prevState => {
 				const { selected } = prevState;
@@ -125,6 +118,8 @@ class SelectUserInput extends React.Component {
 				if (!Array.isArray(selected)) {
 					return null;
 				}
+
+				forwardState(selected.filter(el => el.id !== id));
 
 				return {
 					selected: selected.filter(el => el.id !== id),
@@ -143,6 +138,7 @@ class SelectUserInput extends React.Component {
 					key={item.id}
 					remove={this.removeSelected()}
 					name={item.name}
+					lastname={item.last_name}
 					id={item.id}
 				/>
 			);
@@ -190,17 +186,23 @@ class SelectUserInput extends React.Component {
 	 * Select user
 	 */
 	selectUser() {
+		const {forwardState} = this.props;
+
 		return user => {
 			this.setState(prevState => {
 				const { selected } = prevState;
 
 				if (!selected) {
+					forwardState([user]);
+
 					return {
 						selected: [user],
 					};
 				}
 
 				selected.push(user);
+
+				forwardState(selected);
 
 				return {
 					selected,
@@ -266,6 +268,11 @@ class SelectUserInput extends React.Component {
  */
 SelectUserInput.propTypes = {
 	list: PropTypes.array,
+	forwardState: PropTypes.func
+};
+
+SelectUserInput.defaultProps = {
+	forwardState: () => null
 };
 
 export default SelectUserInput;

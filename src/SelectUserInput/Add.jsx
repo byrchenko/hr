@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Add.scss";
+import Plus from "../_svg/plus.svg";
 
 const Add = ({ startSearch },
 ) => {
@@ -9,7 +10,13 @@ const Add = ({ startSearch },
 			className={css.index}
 			onClick={startSearch}
 		>
-			{"+ Добавить оценивающего"}
+			<Plus
+				height={8}
+				width={8}
+				className={css.plus}
+			/>
+
+			{"Добавить оценивающего"}
 		</div>
 	);
 };

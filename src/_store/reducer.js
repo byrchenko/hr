@@ -7,6 +7,7 @@ import popups from "../_reducers/popups";
 import assessmentQuestions from "../_reducers/assessmentQuestions";
 import assessmentHr from "../_reducers/assessmentHr";
 import settings from "../_reducers/settings";
+import assessmentProcess from "../_reducers/process";
 
 /**
  *
@@ -21,7 +22,8 @@ export default history =>
 		popups,
 		assessmentQuestions,
 		assessmentHr,
-		settings
+		settings,
+		assessmentProcess
 	});
 
 /**

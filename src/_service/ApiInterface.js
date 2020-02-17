@@ -1,5 +1,5 @@
 import ApiInterfaceAbstract from "./ApiInterfaceAbstract";
-import store from "../_store";
+
 import {
 	assessmentNextStep,
 	assessmentPrevStep,
@@ -9,17 +9,14 @@ import {
 	fetchDataSuccess,
 	resetReducer,
 	setPopupComplete,
-	setPopupLoading,
+	setPopupLoading, setUserId,
 } from "../_actions";
 import {
 	ASSESSMENT_QUESTIONS_ENTITY,
 	ASSESSMENT_TABLE_ENTITY,
-	CHANGE_POSITION_ENTITY,
+	CHANGE_POSITION_ENTITY, DIVISIONS_ENTITY, EMPLOYEE_ENTITY, EMPLOYEES_ENTITY,
 } from "../_store/entities";
-import {
-	SET_POPUP_COMPLETE,
-	SET_POPUP_LOADING,
-} from "../_store/types";
+
 import assessmentQuestions from "../_api/assessmentQuestions";
 
 class ApiInterface extends ApiInterfaceAbstract {
@@ -28,13 +25,50 @@ class ApiInterface extends ApiInterfaceAbstract {
 	 *
 	 * @param dispatch
 	 */
-	constructor(dispatch) {
+	constructor() {
 		super();
 
-		this.dispatch = dispatch;
+		this.userId = null;
 		this.API_URL =
 			"https://portal.veloplaneta.com.ua/hr/api/" ||
 			process.env.API_URL;
+	}
+
+	/**
+	 *
+	 */
+	getCurrentUserId(dispatch) {
+		const cookie = document.cookie.match("(^|;) ?" + "userId" + "=([^;]*)(;|$)");
+
+		dispatch(setUserId(cookie ? cookie[2] : null));
+
+		return cookie ? cookie[2] : null;
+	}
+
+	/**
+	 *
+	 * @param dispatch
+	 */
+	fetchCurrentUser(dispatch) {
+		const userId = this.getCurrentUserId(dispatch);
+
+		dispatch(fetchDataLoading(EMPLOYEE_ENTITY));
+
+		this._sendGet(this.API_URL + "employees/" + userId)
+			.then(result => result.json())
+			.then(json => dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, json)))
+			.catch(() => dispatch(fetchDataError(EMPLOYEE_ENTITY)));
+
+		return this;
+	}
+
+	fetchCompanyStructure(dispatch, id) {
+		dispatch(fetchDataLoading(DIVISIONS_ENTITY));
+
+		this._sendGet(this.API_URL + "employees/" + id + '/company')
+			.then(result => result.json())
+			.then(json => dispatch(fetchDataSuccess(DIVISIONS_ENTITY, json)))
+			.catch(() => dispatch(fetchDataError(DIVISIONS_ENTITY)));
 	}
 
 	/**
@@ -128,7 +162,7 @@ function mockFetch(result) {
 	});
 }
 
-const instance = new ApiInterface(store.dispatch);
+const instance = new ApiInterface();
 
 Object.freeze(instance);
 

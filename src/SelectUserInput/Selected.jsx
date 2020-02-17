@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import css from "./Selected.scss";
 
-const Selected = ({name, remove, id}) => {
+const Selected = ({name, lastname, remove, id}) => {
 	return (
 		<div className={css.index}>
 			<span className={css.name}>
-				{name}
+				{name + ' ' + lastname}
 			</span>
 
 			<div
@@ -24,6 +24,7 @@ const Selected = ({name, remove, id}) => {
  */
 Selected.propTypes = {
 	name: PropTypes.string,
+	lastname: PropTypes.string,
 	remove: PropTypes.func,
 	id: PropTypes.number
 };

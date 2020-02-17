@@ -18,16 +18,27 @@ import {
 	SET_NEW_POSITION_POPUP,
 	SET_NEW_USER_POSITION,
 	SET_POPUP_COMPLETE,
-	SET_POPUP_LOADING,
+	SET_POPUP_LOADING, SET_USER_ID,
 } from "../_store/types";
 import { CHANGE_POSITION_ENTITY } from "../_store/entities";
+
+/**
+ *
+ * @param id
+ * @returns {{payload: *, type: string}}
+ */
+export const setUserId = id => {
+	return {
+		type: SET_USER_ID,
+		payload: id
+	}
+};
 
 /**
  *
  * @returns {{name: *, type: *}}
  * @param entity
  */
-
 export const fetchDataLoading = entity => {
 	return {
 		type: FETCH_LOADING,

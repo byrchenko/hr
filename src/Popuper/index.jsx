@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import css from "./index.scss";
 import { connect } from "react-redux";
 import {
 	dataPopup,
@@ -16,12 +17,15 @@ import {
 	EDIT_POSITION_POPUP,
 	ADD_POSITION_POPUP,
 	EDIT_BLOCK_POPUP,
-	ADD_BLOCK_POPUP,
+	ADD_BLOCK_POPUP, NEW_TASK_POPUP,
 } from "./popups";
 import text from "./locale/ru";
 import ApiInterface from "../_service/ApiInterface";
 import ModalContent from "../Sidebar/ModalContent";
 import SettingsPopup from "../AssessmentSettings/Popup";
+import Task from "./Task";
+import { closePopup } from "../_actions";
+
 
 /**
  *
@@ -190,6 +194,23 @@ class Popuper extends React.Component {
 
 	/**
 	 *
+	 */
+	newTaskPopup() {
+		const { show, params, closePopup } = this.props;
+
+		if (show !== NEW_TASK_POPUP) {
+			return null;
+		}
+
+		return (
+			<Task
+				closePopup={() => closePopup(NEW_TASK_POPUP)}
+			/>
+		);
+	}
+
+	/**
+	 *
 	 * @returns {*}
 	 */
 	render() {
@@ -200,7 +221,8 @@ class Popuper extends React.Component {
 			this.addPositionPopup() ||
 			this.editPositionPopup() ||
 			this.addBlockPopup() ||
-			this.editBlockPopup()
+			this.editBlockPopup() ||
+			this.newTaskPopup()
 		);
 	}
 }
@@ -213,6 +235,7 @@ Popuper.propTypes = {
 	loading: PropTypes.bool,
 	show: PropTypes.string,
 	changeEmployeePosition: PropTypes.func,
+	closePopup: PropTypes.func,
 	params: PropTypes.object,
 };
 
@@ -226,7 +249,7 @@ const mapState = state => {
 		loading: isLoadingPopup(state),
 		employee: employeeDataPopup(state),
 		position: positionDataPopup(state),
-		params: getPopupParams(state)
+		params: getPopupParams(state),
 	};
 };
 
@@ -242,6 +265,7 @@ const mapDispatch = dispatch => {
 				employee,
 				position,
 			),
+		closePopup: type => dispatch(closePopup(type))
 	};
 };
 
@@ -253,13 +277,14 @@ const mapDispatch = dispatch => {
  */
 const mergeProps = (stateProps, dispatchProps) => {
 	const { employee, show, loading, position, params } = stateProps;
-	const { changePosition } = dispatchProps;
+	const { changePosition, closePopup } = dispatchProps;
 
 	return {
 		changeEmployeePosition: changePosition(employee, position),
 		show,
 		loading,
-		params
+		params,
+		closePopup
 	};
 };
 

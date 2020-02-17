@@ -1,3 +1,22 @@
 .index {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+}
 
+.header {
+  display: contents;
+}
+
+.cell {
+  padding: 12px 15px;
+  font-size: 11px;
+  line-height: 17px;
+  color: #898989;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.empty {
+  font-size: 16px;
+  padding: 20px;
+  text-align: center;
 }

@@ -7,13 +7,12 @@ import {
 import {
 	FETCH_ERROR,
 	FETCH_LOADING,
-	FETCH_SUCCESS, SET_USER_ID,
+	FETCH_SUCCESS,
 } from "../_store/types";
 
-import { EMPLOYEE_ENTITY } from "../_store/entities";
+import { PROCESS_ENTITY } from "../_store/entities";
 
 export const initialState = {
-	id: null,
 	data: null,
 	loading: false,
 	error: false,
@@ -31,7 +30,7 @@ const handler = {
 	[FETCH_SUCCESS]: (state, action) => {
 		const { entity, data } = action;
 
-		if (entity === EMPLOYEE_ENTITY) {
+		if (entity === PROCESS_ENTITY) {
 			return fetchSuccessHandler(state, data);
 		}
 
@@ -48,7 +47,7 @@ const handler = {
 	[FETCH_LOADING]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === EMPLOYEE_ENTITY) {
+		if (entity === PROCESS_ENTITY) {
 			return fetchLoadingHandler(state);
 		}
 
@@ -65,25 +64,11 @@ const handler = {
 	[FETCH_ERROR]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === EMPLOYEE_ENTITY) {
+		if (entity === PROCESS_ENTITY) {
 			return fetchErrorHandler(state);
 		}
 
 		return state;
-	},
-
-	/**
-	 *
-	 * @param state
-	 * @param action
-	 * @returns {any}
-	 */
-	[SET_USER_ID]: (state, action) => {
-		const {payload} = action;
-
-		return Object.assign({}, state, {
-			id: payload
-		})
 	},
 
 	/**

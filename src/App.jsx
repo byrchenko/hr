@@ -1,43 +1,41 @@
 import React from "react";
 import { Provider } from "react-redux";
 import Router from "./_router";
-import createStore, { history } from "./_store";
+import store, { history } from "./_store";
 import "./_sass/global.scss";
-import {
-	assessmentSetEmployee,
-	assessmentStart,
-	fetchDataError,
-	fetchDataLoading,
-	fetchDataSuccess,
-} from "./_actions";
-import {
-	ASSESSMENT_QUESTIONS_ENTITY, ASSESSMENT_SETTINGS_ENTITY,
-	ASSESSMENT_TABLE_ENTITY,
-	DIVISIONS_ENTITY,
-	EMPLOYEE_ENTITY,
-} from "./_store/entities";
-import { employee, hr, supervisor } from "./_api/employee";
-import divisions from "./_api/divisions";
-import assessmentEmployeesList from "./_api/assessmentEmployeesList";
-import block from "./_api/assessmentQuestions";
-import settings from "./_api/settings";
+import ApiInterface from "./_service/ApiInterface";
 
-const store = createStore({});
-
+/**
+ *
+ */
 class App extends React.Component {
 	/**
 	 *
 	 */
 	componentDidMount() {
-		store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
-		store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
-		store.dispatch(
-			fetchDataSuccess(
-				ASSESSMENT_TABLE_ENTITY,
-				assessmentEmployeesList,
-			),
-		);
-		store.dispatch(fetchDataSuccess(ASSESSMENT_SETTINGS_ENTITY, settings));
+		const {dispatch} = store;
+		const {
+			employee: {
+				id
+			}
+		} = store.getState();
+
+		console.log(id)
+
+		ApiInterface
+			.fetchCurrentUser(dispatch)
+			.fetchCompanyStructure(dispatch, store.getState().employee.id)
+
+		// store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
+		// store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
+		// store.dispatch(
+		// 	fetchDataSuccess(
+		// 		ASSESSMENT_TABLE_ENTITY,
+		// 		assessmentEmployeesList,
+		// 	),
+		// );
+		// store.dispatch(fetchDataSuccess(ASSESSMENT_SETTINGS_ENTITY, settings));
+		// store.dispatch(fetchDataSuccess(PROCESS_ENTITY, processData));
 		// store.dispatch(assessmentStart(hr));
 		// store.dispatch(
 		// 	fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, block),

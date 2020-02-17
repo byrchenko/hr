@@ -3,8 +3,14 @@
 .index {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 54px;
   padding: 0 7px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .title {
@@ -22,4 +28,26 @@
   font-size: 14px;
   line-height: 22px;
   color: #fff;
+}
+
+.addTask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 2px;
+  background-color: #E30613;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: background-color .15s ease-out;
+
+  &:hover {
+    background-color: darken(#E30613, 10%);
+  }
+}
+
+.plus {
+  margin-right: 7px;
 }

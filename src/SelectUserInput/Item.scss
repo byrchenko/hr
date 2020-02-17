@@ -1,8 +1,27 @@
 .index {
+  display: flex;
+  align-items: center;
   padding: 10px;
   cursor: pointer;
   
   &:hover {
     background-color: #eee;
   }
+}
+
+.picture {
+  margin-right: 10px;
+
+  img {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+  }
+}
+
+.name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
 }

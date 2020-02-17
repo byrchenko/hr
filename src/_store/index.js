@@ -6,10 +6,9 @@ import reducers from "./reducer";
 
 export const history = createBrowserHistory();
 
-export default initialState =>
-	createStore(
+export default createStore(
 		reducers(history),
-		initialState,
+		{},
 		composeWithDevTools(
 			applyMiddleware(routerMiddleware(history)),
 		),

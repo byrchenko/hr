@@ -2,4 +2,21 @@
   display: flex;
   align-items: center;
   margin: 0 5px 5px 0;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #E30613;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.plus {
+  margin-right: 8px;
+
+  path {
+    fill: #E30613;
+  }
 }

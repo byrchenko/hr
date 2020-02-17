@@ -80,17 +80,17 @@ const User = ({ changeSide, employee }) => {
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.division}</h5>
-				<h3 className={css.descr}>{department}</h3>
+				<h3 className={css.descr}>{department ? department : 'Нет данных'}</h3>
 			</div>
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.position}</h5>
-				<h3 className={css.descr}>{position}</h3>
+				<h3 className={css.descr}>{position ? position : 'Нет данных'}</h3>
 			</div>
 
 			<div className={css.info}>
 				<h5 className={css.title}>{text.lastAssessment}</h5>
-				<h3 className={css.descr}>{last_assessment_date}</h3>
+				<h3 className={css.descr}>{last_assessment_date ? last_assessment_date : 'Нет данных'}</h3>
 			</div>
 		</div>
 	);
