@@ -6,31 +6,49 @@ const config = {
 	hr: "Рекрутер",
 	employee: "Сотрудник",
 	supervisor: "Руководитель",
+	null: 'Пользователь'
 };
 
 const Users = ({ evaluator, evaluated, finalizer }) => {
+
 	/**
 	 *
 	 * @returns {*}
 	 */
 	const renderUser = user => {
+		if (!user) {
+			return (
+				<div className={css.empty}>No user info</div>
+			)
+		}
+
 		const { name, last_name, image, position, role } = user;
 
 		const fullName = `${name} ${last_name}`;
 
 		return (
 			<div className={css.user}>
-				<h3 className={css.title}>{config[role]}</h3>
+				<h3 className={css.title}>
+					{config[role]}
+				</h3>
 
 				<div className={css.item}>
 					<div className={css.picture}>
-						<img src={image} alt={fullName} />
+						<img
+							src={image}
+							alt={fullName}
+							onError={() => console.log('Error with image', image)}
+						/>
 					</div>
 
 					<div className={css.info}>
-						<div className={css.name}>{fullName}</div>
+						<div className={css.name}>
+							{fullName}
+						</div>
 
-						<div className={css.position}>{position}</div>
+						<div className={css.position}>
+							{position}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -56,7 +74,5 @@ Users.propTypes = {
 	evaluated: PropTypes.object,
 	finalizer: PropTypes.object,
 };
-
-Users.defaultProps = {};
 
 export default Users;

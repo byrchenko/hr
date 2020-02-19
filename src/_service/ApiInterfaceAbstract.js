@@ -28,10 +28,14 @@ class ApiInterfaceAbstract {
 	 * @returns {*}
 	 * @private
 	 */
-	_createPutOptions() {
+	_createPutOptions(data) {
 		return {
 			method: "PUT",
 			credentials: "include",
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
 		};
 	}
 
@@ -128,12 +132,13 @@ class ApiInterfaceAbstract {
 	/**
 	 * Sending PUT request
 	 *
-	 * @param url
 	 * @returns {Promise<Response>}
 	 * @private
+	 * @param url
+	 * @param data
 	 */
-	_sendPut(url) {
-		const options = this._createPutOptions();
+	_sendPut(url, data) {
+		const options = this._createPutOptions(data);
 
 		return fetch(url, options);
 	}

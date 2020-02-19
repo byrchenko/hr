@@ -10,7 +10,7 @@ class Blocks extends React.Component {
 	renderBlocks() {
 		const { list, renderBlock } = this.props;
 
-		if (list === null || list === undefined) {
+		if (!Array.isArray(list)) {
 			return null;
 		}
 

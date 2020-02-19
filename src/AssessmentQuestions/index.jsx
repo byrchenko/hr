@@ -8,7 +8,7 @@ import {
 	selectAssessmentAnswers,
 	selectAssessmentData,
 	selectAssessmentEmployee,
-	selectAssessmentError,
+	selectAssessmentError, selectAssessmentId,
 	selectAssessmentIsLastStep,
 	selectAssessmentLoading,
 	selectAssessmentStep,
@@ -31,20 +31,6 @@ import {
  *
  */
 class AssessmentQuestions extends React.Component {
-	/**
-	 *
-	 */
-	renderLoading() {
-		const { loading } = this.props;
-
-		if (loading) {
-			return (
-				<div className={css.loading}>
-					<Preloader width={64} height={64} />
-				</div>
-			);
-		}
-	}
 
 	/**
 	 *
@@ -119,27 +105,40 @@ class AssessmentQuestions extends React.Component {
 			goPrev,
 			goNext,
 			errors,
+			pushAnswers,
+			answers,
+			assessment,
+			loading
 		} = this.props;
+
+		if (loading) {
+			return (
+				<Preloader />
+			)
+		}
 
 		return (
 			<div className={css.index}>
-				<Header />
+				<Header/>
 
 				<div className={css.content}>
-					<Employee employee={employee} />
+					<Employee employee={employee}/>
 
-					<List data={block} errors={errors} />
+					<List data={block} errors={errors}/>
 
-					{step > 1 && <Previous goPrev={goPrev} />}
+					{step > 1 && <Previous goPrev={goPrev}/>}
 
 					<Next
 						isLastStep={isLast}
-						goNext={goNext}
+						pushAnswers={() => pushAnswers(
+							assessment,
+							answers,
+							isLast,
+							() => goNext(assessment, employee, step),
+						)}
 						validate={this.isValidForm()}
 					/>
 				</div>
-
-				{this.renderLoading()}
 
 				{this.renderError()}
 			</div>
@@ -160,9 +159,11 @@ AssessmentQuestions.propTypes = {
 	goNext: PropTypes.func,
 	addErrors: PropTypes.func,
 	clearErrors: PropTypes.func,
+	pushAnswers: PropTypes.func,
 	loading: PropTypes.bool,
 	error: PropTypes.bool,
 	errors: PropTypes.object,
+	assessment: PropTypes.number,
 };
 
 /**
@@ -180,6 +181,7 @@ const mapState = state => {
 		loading: selectAssessmentLoading(state),
 		error: selectAssessmentError(state),
 		errors: selectAssessmentValidationErrors(state),
+		assessment: selectAssessmentId(state),
 	};
 };
 
@@ -191,7 +193,28 @@ const mapState = state => {
 const mapDispatch = dispatch => {
 	return {
 		goPrev: () => ApiInterface.assessmentGoPrev(dispatch),
-		goNext: () => ApiInterface.assessmentGoNext(dispatch),
+		goNext: (
+			assessment,
+			user,
+			step,
+		) => ApiInterface.assessmentGoNext(
+			dispatch,
+			assessment,
+			user,
+			step,
+		),
+		pushAnswers: (
+			assessment,
+			questions,
+			isLast,
+			goNext,
+		) => ApiInterface.assessmentPushAnswer(
+			dispatch,
+			assessment,
+			questions,
+			isLast,
+			goNext,
+		),
 		addErrors: (id, type) =>
 			dispatch(addValidationErrors(id, type)),
 		clearErrors: () => dispatch(clearValidationErrors()),

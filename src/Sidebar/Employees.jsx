@@ -5,15 +5,23 @@ import { connect } from "react-redux";
 import Item from "./Item";
 import { divisions } from "../_dispatchers";
 import text from "./locale/ru";
+import Preloader from "../Preloader";
 
 /**
  *
  * @param list
+ * @param loading
  * @returns {*}
  * @constructor
  */
-const Employees = ({ list }) => {
+const Employees = ({ list, loading }) => {
 	const [expanded, setExpanded] = React.useState(0);
+
+	if (loading) {
+		return (
+			<Preloader />
+		)
+	}
 
 	/**
 	 *
@@ -41,8 +49,8 @@ const Employees = ({ list }) => {
 	 * @param list
 	 */
 	const renderList = list => {
-		if (list === null || list === undefined) {
-			return <div className={css.empty}>No items found</div>;
+		if (!Array.isArray(list)) {
+			return <div className={css.empty}>Nothing found..</div>;
 		}
 
 		return list.map((item, index) =>
@@ -66,6 +74,7 @@ const Employees = ({ list }) => {
 
 Employees.propTypes = {
 	list: PropTypes.array,
+	loading: PropTypes.bool,
 };
 
 Employees.defaultProps = {
@@ -78,8 +87,15 @@ Employees.defaultProps = {
  * @returns {null|{list: *}}
  */
 const mapState = state => {
+	const {
+		divisions: {
+			loading
+		}
+	} = state;
+
 	return {
 		list: divisions(state),
+		loading
 	};
 };
 

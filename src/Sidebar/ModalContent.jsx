@@ -2,18 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import css from "./ModalContent.scss";
 import text from "./locale/ru";
-import list from "../_api/positions";
-import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "../_svg/triangle_down.svg";
 import { connect } from "react-redux";
 import { setNewPosition } from "../_actions";
 import ModalButtons from "../ModalButtons";
+import ApiInterface from "../_service/ApiInterface";
 
-const ModalContent = ({ setNewPosition, error, handleSubmit, type }) => {
+/**
+ *
+ * @param setNewPosition
+ * @param error
+ * @param handleSubmit
+ * @param type
+ * @returns {*}
+ * @constructor
+ */
+const ModalContent = ({ setNewPosition, error, handleSubmit, type, data, fetchPositions }) => {
 	const listRef = React.useRef();
 
 	const [selected, setSelected] = React.useState(null);
 	const [isOpened, setIsOpened] = React.useState(false);
+
+	React.useEffect(() => {
+		fetchPositions()
+	}, []);
+
+	if (!data) {
+		return null;
+	}
 
 	/**
 	 *
@@ -70,13 +86,9 @@ const ModalContent = ({ setNewPosition, error, handleSubmit, type }) => {
 			return null;
 		}
 
-		if (list === null || list === undefined) {
-			return null;
-		}
-
 		return (
 			<ul ref={listRef} className={css.list}>
-				{list.map(renderItem)}
+				{data.map(renderItem)}
 			</ul>
 		);
 	}
@@ -86,7 +98,7 @@ const ModalContent = ({ setNewPosition, error, handleSubmit, type }) => {
 	 */
 	function renderSelectedItem() {
 		if (selected === null) {
-			return list[0].title;
+			return data[0].title;
 		}
 
 		return selected.title;
@@ -146,6 +158,20 @@ ModalContent.propTypes = {
 	error: PropTypes.bool,
 };
 
+const mapState = state => {
+	const {
+		positions: {
+			data,
+			loading
+		}
+	} = state;
+
+	return {
+		data,
+		loading
+	}
+};
+
 /**
  *
  * @param dispatch
@@ -155,7 +181,8 @@ const mapDispatch = dispatch => {
 	return {
 		setNewPosition: position =>
 			dispatch(setNewPosition(position)),
+		fetchPositions: () => dispatch(ApiInterface.fetchPositions())
 	};
 };
 
-export default connect(null, mapDispatch)(ModalContent);
+export default connect(mapState, mapDispatch)(ModalContent);

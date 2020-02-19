@@ -259,6 +259,19 @@ export const selectAssessmentValidationErrors = state => {
  * @param state
  * @returns {*}
  */
+export const selectAssessmentId = state => {
+	const {
+		assessmentQuestions: { assessment },
+	} = state;
+
+	return assessment;
+};
+
+/**
+ *
+ * @param state
+ * @returns {*}
+ */
 export const selectAssessmentAnswers = state => {
 	const {
 		assessmentQuestions: { answers },

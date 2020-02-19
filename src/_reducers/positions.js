@@ -5,22 +5,18 @@ import {
 } from "../_store/reducer";
 
 import {
-	ASSESSMENT_HR_START,
 	FETCH_ERROR,
 	FETCH_LOADING,
 	FETCH_SUCCESS,
 } from "../_store/types";
 
-import { ASSESSMENT_HR_DATA_ENTITY } from "../_store/entities";
+import { POSITIONS_ENTITY } from "../_store/entities";
 
 export const initialState = {
 	data: null,
 	loading: false,
 	error: false,
 	sync: false,
-	isActive: false,
-	assessmentId: null,
-	assessmentUser: null
 };
 
 const handler = {
@@ -34,7 +30,7 @@ const handler = {
 	[FETCH_SUCCESS]: (state, action) => {
 		const { entity, data } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === POSITIONS_ENTITY) {
 			return fetchSuccessHandler(state, data);
 		}
 
@@ -51,7 +47,7 @@ const handler = {
 	[FETCH_LOADING]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === POSITIONS_ENTITY) {
 			return fetchLoadingHandler(state);
 		}
 
@@ -68,30 +64,11 @@ const handler = {
 	[FETCH_ERROR]: (state, action) => {
 		const { entity } = action;
 
-		if (entity === ASSESSMENT_HR_DATA_ENTITY) {
+		if (entity === POSITIONS_ENTITY) {
 			return fetchErrorHandler(state);
 		}
 
 		return state;
-	},
-
-	/**
-	 *
-	 * @param state
-	 * @param action
-	 * @returns {any}
-	 */
-	[ASSESSMENT_HR_START]: (state, action) => {
-		const {payload: {
-			assessment,
-			user
-		}} = action;
-
-		return Object.assign({}, state, {
-			isActive: true,
-			assessmentId: assessment,
-			assessmentUser: user
-		});
 	},
 
 	/**

@@ -8,6 +8,7 @@ import assessmentQuestions from "../_reducers/assessmentQuestions";
 import assessmentHr from "../_reducers/assessmentHr";
 import settings from "../_reducers/settings";
 import assessmentProcess from "../_reducers/process";
+import positions from "../_reducers/positions";
 
 /**
  *
@@ -23,7 +24,8 @@ export default history =>
 		assessmentQuestions,
 		assessmentHr,
 		settings,
-		assessmentProcess
+		assessmentProcess,
+		positions
 	});
 
 /**

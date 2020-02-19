@@ -4,13 +4,13 @@ import css from "./Next.scss";
 import text from "./locale/ru";
 import Arrow from "../_svg/next.svg";
 
-const Next = ({ isLastStep, goNext, validate }) => {
+const Next = ({ isLastStep, validate, pushAnswers }) => {
 	if (isLastStep) {
 		return (
 			<button
 				type="button"
 				className={css.index}
-				onClick={validate}
+				onClick={() => validate(pushAnswers)}
 			>
 				{text.nextLast}
 			</button>
@@ -21,11 +21,15 @@ const Next = ({ isLastStep, goNext, validate }) => {
 		<button
 			type="button"
 			className={css.index}
-			onClick={() => validate(goNext)}
+			onClick={() => validate(pushAnswers)}
 		>
 			{text.next}
 
-			<Arrow width={7} height={11} className={css.icon} />
+			<Arrow
+				width={7}
+				height={11}
+				className={css.icon}
+			/>
 		</button>
 	);
 };
@@ -35,8 +39,8 @@ const Next = ({ isLastStep, goNext, validate }) => {
  */
 Next.propTypes = {
 	isLastStep: PropTypes.bool,
-	goNext: PropTypes.func,
 	validate: PropTypes.func,
+	pushAnswers: PropTypes.func,
 };
 
 export default Next;

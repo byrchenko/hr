@@ -35,14 +35,14 @@ class Question extends React.Component {
 	renderComments() {
 		const {
 			renderComment,
-			item: { hr, employee, supervisor },
+			item: { evaluator, evaluating, finalizer },
 		} = this.props;
 
 		return (
 			<div className={css.list}>
-				{this.renderComment(employee)}
+				{this.renderComment(evaluating)}
 
-				{this.renderComment(supervisor)}
+				{this.renderComment(evaluator)}
 
 				{this.renderComment(renderComment)}
 			</div>
@@ -86,14 +86,14 @@ class Question extends React.Component {
 		const {
 			renderMarks,
 			item,
-			item: { hr, employee, supervisor },
+			item: { evaluator, evaluating, finalizer },
 		} = this.props;
 
 		return (
 			<div className={css.list}>
-				{this.renderMark(employee)}
+				{this.renderMark(evaluating)}
 
-				{this.renderMark(supervisor)}
+				{this.renderMark(evaluator)}
 
 				{this.renderMark(renderMarks(item))}
 			</div>

@@ -41,7 +41,7 @@ const getCompetences = state => {
 		return null
 	}
 
-	return state.settings.data.competences;
+	return state.settings.data.competencies;
 };
 
 /**
@@ -66,16 +66,20 @@ export const getFilteredBlocks = createSelector(
 export const getFilteredCompetences = createSelector(
 	[getCompetencesFilter, getCompetences, getFilteredBlocks],
 	(filter, competences, visibleBlocks) => {
+		if(!competences) {
+			return null
+		}
+
 		if (filter === 'all') {
 			return competences.filter(item => {
 				return visibleBlocks.find(el => {
-					return item.block === el.id
+					return item.competenceBlock === el.id
 				})
 			})
 		}
 
 		return competences.filter(item => {
-			return item.block === filter
+			return item.competenceBlock === filter
 		})
 	}
 );

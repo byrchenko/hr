@@ -1,6 +1,8 @@
 import ApiInterfaceAbstract from "./ApiInterfaceAbstract";
+import assessmentQuestions from "../_api/assessmentQuestions";
 
 import {
+	assessmentFinish,
 	assessmentNextStep,
 	assessmentPrevStep,
 	assessmentStart,
@@ -11,14 +13,20 @@ import {
 	setPopupComplete,
 	setPopupLoading, setUserId,
 } from "../_actions";
+
 import {
-	ASSESSMENT_QUESTIONS_ENTITY,
+	ASSESSMENT_HR_DATA_ENTITY,
+	ASSESSMENT_QUESTIONS_ENTITY, ASSESSMENT_SETTINGS_ENTITY,
 	ASSESSMENT_TABLE_ENTITY,
-	CHANGE_POSITION_ENTITY, DIVISIONS_ENTITY, EMPLOYEE_ENTITY, EMPLOYEES_ENTITY,
+	CHANGE_POSITION_ENTITY,
+	DIVISIONS_ENTITY,
+	EMPLOYEE_ENTITY,
+	EMPLOYEES_ENTITY, POSITIONS_ENTITY,
 } from "../_store/entities";
 
-import assessmentQuestions from "../_api/assessmentQuestions";
-
+/**
+ * Api interface
+ */
 class ApiInterface extends ApiInterfaceAbstract {
 	/**
 	 * Constructor
@@ -62,6 +70,38 @@ class ApiInterface extends ApiInterfaceAbstract {
 		return this;
 	}
 
+	addPosition(dispatch, title) {
+		this._sendPut(this.API_URL + "positions/" + 64332, {
+			title: "Skalar"
+		})
+			.then(result => result.json())
+			.then(json => console.log(json))
+			.catch(err => console.log(err));
+
+		return this;
+	}
+
+	/**
+	 *
+	 * @param dispatch
+	 * @param userId
+	 */
+	fetchAssessmentList(dispatch, userId) {
+		dispatch(fetchDataLoading(ASSESSMENT_TABLE_ENTITY));
+
+		this._sendGet(this.API_URL +  "employees/" + userId + '/assessments')
+			.then(result => result.json())
+			.then(json => dispatch(fetchDataSuccess(ASSESSMENT_TABLE_ENTITY, json)))
+			.catch(() => dispatch(fetchDataError(ASSESSMENT_TABLE_ENTITY)));
+
+		return this;
+	}
+
+	/**
+	 *
+	 * @param dispatch
+	 * @param id
+	 */
 	fetchCompanyStructure(dispatch, id) {
 		dispatch(fetchDataLoading(DIVISIONS_ENTITY));
 
@@ -78,25 +118,46 @@ class ApiInterface extends ApiInterfaceAbstract {
 	 * @param position
 	 */
 	changeUserPosition(dispatch, employee, position) {
+		function getUserId() {
+			const cookie = document.cookie.match("(^|;) ?" + "userId" + "=([^;]*)(;|$)");
+
+			return cookie ? cookie[2] : null;
+		}
+
 		return () => {
 			dispatch(setPopupLoading());
 
-			// fetch()
-			// 	.then(result => result.json())
-			// 	.then(json => {
-			// 		this.dispatch(
-			// 			fetchDataSuccess(CHANGE_POSITION_ENTITY, json),
-			// 		);
-			// 		this.dispatch(resetReducer(CHANGE_POSITION_ENTITY));
-			// 	})
-			// 	.catch(() =>
-			// 		this.dispatch(fetchDataError(CHANGE_POSITION_ENTITY)),
-			// 	);
-
-			setTimeout(() => {
-				dispatch(setPopupComplete());
-			}, 3000);
+			this._sendPut(this.API_URL + "employees/" + employee, {
+				positionId: position,
+			})
+				.then(result => result.json())
+				.then(() => {
+					dispatch(setPopupComplete());
+					this.fetchCompanyStructure(dispatch, getUserId())
+				})
+				.catch(() => dispatch(setPopupComplete()));
 		};
+	}
+
+	/**
+	 *
+	 * @param dispatch
+	 * @param assessment
+	 * @param questions
+	 * @param isLast
+	 * @param goNext
+	 * @returns {Promise<Response>}
+	 */
+	assessmentPushAnswer(dispatch, assessment, questions, isLast, goNext) {
+		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
+
+		return this._sendPut(this.API_URL + 'assessments/questions/' + assessment, {
+			questions
+		})
+			.then(result => result.json())
+			.then(json => console.log(json))
+			.then(() => isLast ? dispatch(assessmentFinish()) : goNext())
+			.catch(() => dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY)));
 	}
 
 	/**
@@ -119,33 +180,91 @@ class ApiInterface extends ApiInterfaceAbstract {
 	 *
 	 * @returns {function(...[*]=)}
 	 */
-	assessmentGoNext(dispatch) {
+	assessmentGoNext(dispatch, assessment, user, step) {
+		console.log(1111)
 		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 
-		mockFetch(assessmentQuestions).then(result => {
-			dispatch(assessmentNextStep());
-
-			dispatch(
-				fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, result),
-			);
-		});
+		this._sendGet(this.API_URL + 'assessments/questions/' + assessment, {
+			employeeId: user.id,
+			step: step + 1
+		})
+			.then(result => result.json())
+			.then(json => {
+				dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, json));
+			})
+			.catch(() => dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY)));
 	}
 
 	/**
 	 *
 	 * @param dispatch
+	 * @param assessment
 	 * @param user
 	 */
-	assessmentStart(dispatch, user) {
-		dispatch(fetchDataLoading(ASSESSMENT_TABLE_ENTITY));
+	assessmentStart(dispatch, assessment, user) {
+		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 
-		mockFetch(assessmentQuestions).then(result => {
-			dispatch(
-				fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, result),
-			);
+		this._sendGet(this.API_URL + 'assessments/questions/' + assessment, {
+			employeeId: user.id
+		})
+			.then(result => result.json())
+			.then(json => {
+				dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, json));
+				dispatch(assessmentStart(user, assessment));
+			})
+			.catch(() => dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY)));
+	}
 
-			dispatch(assessmentStart(user));
-		});
+	/**
+	 *
+	 * @param dispatch
+	 */
+	fetchSettings(dispatch) {
+		dispatch(fetchDataLoading(ASSESSMENT_SETTINGS_ENTITY));
+
+		this._sendGet(this.API_URL + 'settings')
+			.then(result => result.json())
+			.then(json => {
+				dispatch(fetchDataSuccess(ASSESSMENT_SETTINGS_ENTITY, json));
+			})
+			.catch(() => dispatch(fetchDataError(ASSESSMENT_SETTINGS_ENTITY)));
+	}
+
+	/**
+	 *
+	 */
+	fetchPositions() {
+		return dispatch => {
+			dispatch(fetchDataLoading(POSITIONS_ENTITY));
+
+			this._sendGet(this.API_URL + 'positions')
+				.then(result => result.json())
+				.then(json => {
+					dispatch(fetchDataSuccess(POSITIONS_ENTITY, json));
+				})
+				.catch(() => dispatch(fetchDataError(POSITIONS_ENTITY)));
+		}
+	}
+
+	/**
+	 *
+	 * @param assessmentId
+	 * @param userId
+	 * @returns {function(...[*]=)}
+	 */
+	fetchHrAnswers(assessmentId, userId) {
+		return dispatch => {
+			dispatch(fetchDataLoading(ASSESSMENT_HR_DATA_ENTITY));
+
+			this._sendGet(this.API_URL + 'assessments/questions/' + assessmentId + '/hr', {
+				employeeId: userId
+			})
+				.then(result => result.json())
+				.then(json => {
+					dispatch(fetchDataSuccess(ASSESSMENT_HR_DATA_ENTITY, json));
+				})
+				.catch(() => dispatch(fetchDataError(ASSESSMENT_HR_DATA_ENTITY)));
+		}
 	}
 }
 

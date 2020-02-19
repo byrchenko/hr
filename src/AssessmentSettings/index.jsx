@@ -5,21 +5,22 @@ import { connect } from "react-redux";
 import Section from "./Section";
 import Item from "./Item";
 import { openPopup } from "../_actions";
+import ApiInterface from "../_service/ApiInterface";
 
 import {
 	setBlockFilter,
-	setCompetenceFilter
+	setCompetenceFilter,
 } from "../_actions/settings";
 
 import {
 	getFilteredCompetences,
-	getFilteredBlocks
+	getFilteredBlocks,
 } from "../_selectors/settings";
 
 import {
 	BLOCK_TYPE,
 	COMPETENCE_TYPE,
-	POSITION_TYPE
+	POSITION_TYPE,
 } from "./constants";
 
 import {
@@ -29,17 +30,24 @@ import {
 	EDIT_COMPETENCY_POPUP,
 	EDIT_POSITION_POPUP,
 } from "../Popuper/popups";
+import Preloader from "../Preloader";
 
 /**
  *
  */
 class AssessmentSettings extends React.Component {
 
+	componentDidMount() {
+		const {fetchSettings} = this.props;
+
+		fetchSettings();
+	}
+
 	/**
 	 * Competence item in list
 	 */
 	renderCompetence() {
-		const {editCompetency} = this.props;
+		const { editCompetency } = this.props;
 
 		return item => {
 			return (
@@ -49,15 +57,15 @@ class AssessmentSettings extends React.Component {
 					edit={editCompetency}
 					remove={() => null}
 				/>
-			)
-		}
+			);
+		};
 	}
 
 	/**
 	 * Block item in list
 	 */
 	renderBlock(filter) {
-		const {filterCompetence, editBlock} = this.props;
+		const { filterCompetence, editBlock } = this.props;
 
 		return item => {
 			return (
@@ -69,15 +77,15 @@ class AssessmentSettings extends React.Component {
 					select={filterCompetence}
 					filter={filter}
 				/>
-			)
-		}
+			);
+		};
 	}
 
 	/**
 	 * Position item in list
 	 */
 	renderPosition(filter) {
-		const {filterBlock, editPosition} = this.props;
+		const { filterBlock, editPosition } = this.props;
 
 		return item => {
 			return (
@@ -89,8 +97,8 @@ class AssessmentSettings extends React.Component {
 					select={filterBlock}
 					filter={filter}
 				/>
-			)
-		}
+			);
+		};
 	}
 
 	/**
@@ -108,8 +116,15 @@ class AssessmentSettings extends React.Component {
 			filterAllBlocks,
 			addCompetency,
 			addPosition,
-			addBlock
+			addBlock,
+			loading
 		} = this.props;
+
+		if (loading) {
+			return (
+				<Preloader />
+			)
+		}
 
 		return (
 			<div className={css.index}>
@@ -161,6 +176,7 @@ AssessmentSettings.propTypes = {
 	editPosition: PropTypes.func,
 	addBlock: PropTypes.func,
 	editBlock: PropTypes.func,
+	loading: PropTypes.bool,
 };
 
 /**
@@ -170,9 +186,10 @@ const mapState = state => {
 	const {
 		settings: {
 			data,
+			loading,
 			blocksFilter,
-			competencesFilter
-		}
+			competencesFilter,
+		},
 	} = state;
 
 	return {
@@ -180,8 +197,9 @@ const mapState = state => {
 		competences: getFilteredCompetences(state),
 		positions: data ? data.positions : null,
 		blocksFilter,
-		competencesFilter
-	}
+		competencesFilter,
+		loading
+	};
 };
 
 /**
@@ -189,8 +207,8 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		filterAllBlocks: () => dispatch(setBlockFilter('all')),
-		filterAllCompetences: () => dispatch(setCompetenceFilter('all')),
+		filterAllBlocks: () => dispatch(setBlockFilter("all")),
+		filterAllCompetences: () => dispatch(setCompetenceFilter("all")),
 		filterBlock: position => dispatch(setBlockFilter(position)),
 		filterCompetence: block => dispatch(setCompetenceFilter(block)),
 		addCompetency: () => dispatch(openPopup(ADD_COMPETENCY_POPUP)),
@@ -199,7 +217,8 @@ const mapDispatch = dispatch => {
 		editPosition: item => dispatch(openPopup(EDIT_POSITION_POPUP, item)),
 		addBlock: () => dispatch(openPopup(ADD_BLOCK_POPUP)),
 		editBlock: item => dispatch(openPopup(EDIT_BLOCK_POPUP, item)),
-	}
+		fetchSettings: () => ApiInterface.fetchSettings(dispatch),
+	};
 };
 
 export default connect(mapState, mapDispatch)(AssessmentSettings);

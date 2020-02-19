@@ -23,6 +23,7 @@ import { ASSESSMENT_QUESTIONS_ENTITY } from "../_store/entities";
 
 export const initialState = {
 	employee: null,
+	assessment: null,
 	isStarted: false,
 	answers: null,
 	step: 1,
@@ -91,11 +92,17 @@ const handler = {
 	 * @returns {any}
 	 */
 	[ASSESSMENT_START]: (state, action) => {
-		const { payload } = action;
+		const {
+			payload: {
+				employee,
+				assessment,
+			},
+		} = action;
 
 		return Object.assign({}, state, {
 			isStarted: true,
-			employee: payload,
+			employee,
+			assessment,
 		});
 	},
 

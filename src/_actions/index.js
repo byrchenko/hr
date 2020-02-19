@@ -1,11 +1,9 @@
 import {
-	ADD_VALIDATION_ERROR,
 	ADD_VALIDATION_ERRORS,
 	ASSESSMENT_ADD_ANSWER,
-	ASSESSMENT_FINISH,
+	ASSESSMENT_FINISH, ASSESSMENT_HR_START,
 	ASSESSMENT_NEXT_STEP,
 	ASSESSMENT_PREV_STEP,
-	ASSESSMENT_SET_EMPLOYEE,
 	ASSESSMENT_START,
 	CLEAR_VALIDATION_ERRORS,
 	CLOSE_POPUP,
@@ -14,13 +12,10 @@ import {
 	FETCH_SUCCESS,
 	OPEN_POPUP,
 	RESET_REDUCER,
-	SET_CHANGE_POSITION_USER,
 	SET_NEW_POSITION_POPUP,
-	SET_NEW_USER_POSITION,
 	SET_POPUP_COMPLETE,
 	SET_POPUP_LOADING, SET_USER_ID,
 } from "../_store/types";
-import { CHANGE_POSITION_ENTITY } from "../_store/entities";
 
 /**
  *
@@ -172,10 +167,13 @@ export const assessmentFinish = () => {
 /**
  *
  */
-export const assessmentStart = employee => {
+export const assessmentStart = (employee, assessment) => {
 	return {
 		type: ASSESSMENT_START,
-		payload: employee,
+		payload: {
+			employee,
+			assessment
+		},
 	};
 };
 
@@ -208,4 +206,18 @@ export const clearValidationErrors = () => {
 	return {
 		type: CLEAR_VALIDATION_ERRORS,
 	};
+};
+
+/**
+ *
+ * @returns {{type: string}}
+ */
+export const assessmentHrStart = (assessmentId, assessmentUser) => {
+	return {
+		type: ASSESSMENT_HR_START,
+		payload: {
+			assessment: assessmentId,
+			user: assessmentUser
+		}
+	}
 };

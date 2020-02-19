@@ -9,6 +9,14 @@ class Questions extends React.Component {
 	renderQuestions() {
 		const { list, renderQuestion } = this.props;
 
+		if (!Array.isArray(list)) {
+			return (
+				<div className={css.empty}>
+					No questions
+				</div>
+			)
+		}
+
 		return list.map(renderQuestion);
 	}
 

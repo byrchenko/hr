@@ -13,18 +13,20 @@ class App extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		const {dispatch} = store;
-		const {
-			employee: {
-				id
-			}
-		} = store.getState();
-
-		console.log(id)
+		const { dispatch } = store;
 
 		ApiInterface
 			.fetchCurrentUser(dispatch)
-			.fetchCompanyStructure(dispatch, store.getState().employee.id)
+			.fetchCompanyStructure(
+				dispatch,
+				store
+					.getState()
+					.employee
+					.id,
+			);
+
+
+		ApiInterface.addPosition(dispatch)
 
 		// store.dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, hr));
 		// store.dispatch(fetchDataSuccess(DIVISIONS_ENTITY, divisions));
@@ -49,7 +51,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<Router history={history} />
+				<Router history={history}/>
 			</Provider>
 		);
 	}

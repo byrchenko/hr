@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import css from "./index.scss";
 import Users from "./Users";
 import Wrapper from "./Wrapper";
-import data from "../_api/assessmentHr";
 import Blocks from "./Blocks";
 import Block from "./Block";
 import Question from "./Question";
@@ -14,8 +13,14 @@ import text from "../AssessmentQuestions/locale/ru";
 import Tasks from "./Tasks";
 import uniqid from "uniqid";
 import Task from "./Task";
+import { connect } from "react-redux";
+import ApiInterface from "../_service/ApiInterface";
+import Preloader from "../Preloader";
 
-class index extends React.Component {
+/**
+ *
+ */
+class AssessmentHr extends React.Component {
 	/**
 	 *
 	 * @param props
@@ -28,6 +33,15 @@ class index extends React.Component {
 			answers: {},
 			tasks: null,
 		};
+	}
+
+	/**
+	 *
+	 */
+	componentDidMount() {
+		const { fetchData, userId, assessmentId } = this.props;
+
+		fetchData(assessmentId, userId);
 	}
 
 	/**
@@ -50,20 +64,20 @@ class index extends React.Component {
 	addTask() {
 		return () => {
 			this.setState(prevState => {
-				const {tasks} = prevState;
+				const { tasks } = prevState;
 
 				const task = this._createEmptyTask();
 
 				if (tasks === null) {
 					return {
-						tasks: [task]
-					}
+						tasks: [task],
+					};
 				}
 
 				tasks.push(task);
 
-				return {tasks};
-			})
+				return { tasks };
+			});
 		};
 	}
 
@@ -99,10 +113,10 @@ class index extends React.Component {
 						}
 
 						return item;
-					})
-				}
-			})
-		}
+					}),
+				};
+			});
+		};
 	}
 
 	/**
@@ -121,10 +135,10 @@ class index extends React.Component {
 						}
 
 						return item;
-					})
-				}
-			})
-		}
+					}),
+				};
+			});
+		};
 	}
 
 	/**
@@ -143,7 +157,7 @@ class index extends React.Component {
 					updateDate={this.updateTaskDate()}
 				/>
 			);
-		}
+		};
 	}
 
 	/**
@@ -299,13 +313,37 @@ class index extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const { blocks, evaluated, evaluator, finalizer } = data;
-		const {tasks} = this.state;
+		const {
+			data,
+			loading,
+			error
+		} = this.props;
+
+		if (error) {
+			return (
+				<div className={css.error}>Error occurred!</div>
+			)
+		}
+
+		if (loading) {
+			return (
+				<Preloader />
+			)
+		}
+
+		if (!data) {
+			return (
+				<div className={css.empty}>Nothing found</div>
+			)
+		}
+
+		const { blocks, evaluating, evaluator, finalizer } = data;
+		const { tasks } = this.state;
 
 		return (
 			<Wrapper>
 				<Users
-					evaluated={evaluated}
+					evaluated={evaluating}
 					evaluator={evaluator}
 					finalizer={finalizer}
 				/>
@@ -325,4 +363,54 @@ class index extends React.Component {
 	}
 }
 
-export default index;
+/**
+ *
+ */
+AssessmentHr.propTypes = {
+	data: PropTypes.object,
+	loading: PropTypes.bool,
+	error: PropTypes.bool,
+	fetchData: PropTypes.func,
+	pushTasks: PropTypes.func,
+	endAssessment: PropTypes.func,
+};
+
+/**
+ *
+ * @param state
+ * @returns {{}}
+ */
+const mapState = state => {
+	const {
+		assessmentHr: {
+			data,
+			assessmentId,
+			assessmentUser,
+			loading,
+			error,
+		}
+	} = state;
+
+	return {
+		data,
+		loading,
+		error,
+		userId: assessmentUser,
+		assessmentId
+	};
+};
+
+/**
+ *
+ * @param dispatch
+ * @returns {{}}
+ */
+const mapDispatch = dispatch => {
+	return {
+		fetchData: (assessmentId, userId) => dispatch(ApiInterface.fetchHrAnswers(assessmentId, userId)),
+		pushTasks: () => null,
+		endAssessment: () => null,
+	};
+};
+
+export default connect(mapState, mapDispatch)(AssessmentHr);

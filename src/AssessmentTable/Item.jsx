@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import css from "./Item.scss";
 import UserTitle from "./UserTitle";
 import Status from "./Status";
-import {
-	HR_PERMISSION,
-	SUPERVISOR_PERMISSION,
-} from "../_store/roles";
 
-const Item = ({ item, employee, supervisor, hr }) => {
+/**
+ *
+ * @param item
+ * @returns {*}
+ * @constructor
+ */
+const Item = ({ item }) => {
 	const {
 		employee: {
 			image,
@@ -17,9 +19,12 @@ const Item = ({ item, employee, supervisor, hr }) => {
 			position,
 			last_assessment_date: date,
 		},
-		employee_checked,
-		supervisor_checked,
-		hr_checked,
+		status: {
+			evaluating,
+			evaluator,
+			recruiter
+		},
+		role
 	} = item;
 
 	return (
@@ -41,17 +46,19 @@ const Item = ({ item, employee, supervisor, hr }) => {
 			</div>
 
 			<Status
+				assessment={item}
+				role={role}
 				user={item.employee}
-				employee={employee_checked}
-				supervisor={supervisor_checked}
-				hr={hr_checked}
+				employee={evaluating}
+				supervisor={evaluator}
+				hr={recruiter}
 			/>
 		</>
 	);
 };
 
-Item.propTypes = {};
-
-Item.defaultProps = {};
+Item.propTypes = {
+	item: PropTypes.object
+};
 
 export default Item;

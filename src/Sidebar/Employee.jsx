@@ -26,7 +26,7 @@ export const Employee = ({ item, openPopup, role }) => {
 		position,
 	} = item;
 
-	const fullName = `${name} ${last_name}`;
+	const fullName = (name ? name : "") + (last_name ? " " + last_name : "");
 
 	return (
 		<div
@@ -39,15 +39,15 @@ export const Employee = ({ item, openPopup, role }) => {
 				{fullName}
 
 				<span className={css.date}>
-					({last_assessment_date})
+					({last_assessment_date ? last_assessment_date : 'Нет данных'})
 				</span>
 			</div>
 
 			<div className={css.position}>
-				{position}
+				{position ? position : 'Нет данных'}
 
 				<PermissionController allowed={[HR_PERMISSION]}>
-					<Edit className={css.edit} height={7} width={7} />
+					<Edit className={css.edit} height={7} width={7}/>
 				</PermissionController>
 			</div>
 		</div>

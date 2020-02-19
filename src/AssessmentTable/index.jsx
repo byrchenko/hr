@@ -7,22 +7,17 @@ import { ASSESSMENT_TABLE_ENTITY } from "../_store/entities";
 import css from "./index.scss";
 import User from "../_svg/big_user.svg";
 import Preloader from "../_svg/preloader.svg";
+import ApiInterface from "../_service/ApiInterface";
 
 class AssessmentTable extends React.Component {
+
 	/**
 	 *
-	 * @returns {*}
 	 */
-	renderLoading() {
-		const { loading } = this.props;
+	componentDidMount() {
+		const { fetchList, userId } = this.props;
 
-		if (loading) {
-			return (
-				<div className={css.loading}>
-					<Preloader width={64} height={64} />
-				</div>
-			);
-		}
+		fetchList(userId);
 	}
 
 	/**
@@ -31,6 +26,14 @@ class AssessmentTable extends React.Component {
 	 */
 	render() {
 		const { data, error, loading } = this.props;
+
+		if (loading) {
+			return (
+				<div className={css.loading}>
+					<Preloader width={64} height={64}/>
+				</div>
+			);
+		}
 
 		if (error) {
 			return (
@@ -43,7 +46,7 @@ class AssessmentTable extends React.Component {
 		if (data === null || data === undefined) {
 			return (
 				<div className={css.empty}>
-					<User width={65} height={87} />
+					<User width={85} height={87}/>
 
 					<h3 className={css.text}>
 						Сотрудники ожидающие проверки отсутствуют
@@ -54,9 +57,7 @@ class AssessmentTable extends React.Component {
 
 		return (
 			<>
-				{this.renderLoading()}
-
-				<List list={data} />
+				<List list={data}/>
 			</>
 		);
 	}
@@ -69,13 +70,21 @@ class AssessmentTable extends React.Component {
  */
 const mapState = state => {
 	const {
-		assessmentEmployees: { data, error, loading },
+		assessmentEmployees: {
+			data,
+			error,
+			loading,
+		},
+		employee: {
+			id,
+		},
 	} = state;
 
 	return {
 		data,
 		error,
 		loading,
+		userId: id,
 	};
 };
 
@@ -85,7 +94,7 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		//
+		fetchList: id => ApiInterface.fetchAssessmentList(dispatch, id),
 	};
 };
 
