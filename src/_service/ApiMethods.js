@@ -1,4 +1,4 @@
-import ApiInterfaceAbstract from "./ApiInterfaceAbstract";
+import ApiInterfaceAbstract, { _sendGet } from "./RequestFactory";
 import assessmentQuestions from "../_api/assessmentQuestions";
 
 import {
@@ -62,7 +62,7 @@ class ApiInterface extends ApiInterfaceAbstract {
 
 		dispatch(fetchDataLoading(EMPLOYEE_ENTITY));
 
-		this._sendGet(this.API_URL + "employees/" + userId)
+		_sendGet(this.API_URL + "employees/" + userId)
 			.then(result => result.json())
 			.then(json => dispatch(fetchDataSuccess(EMPLOYEE_ENTITY, json)))
 			.catch(() => dispatch(fetchDataError(EMPLOYEE_ENTITY)));
@@ -181,7 +181,6 @@ class ApiInterface extends ApiInterfaceAbstract {
 	 * @returns {function(...[*]=)}
 	 */
 	assessmentGoNext(dispatch, assessment, user, step) {
-		console.log(1111)
 		dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 
 		this._sendGet(this.API_URL + 'assessments/questions/' + assessment, {
