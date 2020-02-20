@@ -6,7 +6,8 @@ import Triangle from "../_svg/triangle_down.svg";
 import { connect } from "react-redux";
 import { setNewPosition } from "../_actions";
 import ModalButtons from "../ModalButtons";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
+import { loadPositions } from "../_actions/positions";
 
 /**
  *
@@ -181,7 +182,7 @@ const mapDispatch = dispatch => {
 	return {
 		setNewPosition: position =>
 			dispatch(setNewPosition(position)),
-		fetchPositions: () => dispatch(ApiInterface.fetchPositions())
+		fetchPositions: () => dispatch(loadPositions())
 	};
 };
 

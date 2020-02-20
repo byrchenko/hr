@@ -7,7 +7,8 @@ import { ASSESSMENT_TABLE_ENTITY } from "../_store/entities";
 import css from "./index.scss";
 import User from "../_svg/big_user.svg";
 import Preloader from "../_svg/preloader.svg";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
+import { fetchAssessments } from "../_actions/assessmentTable";
 
 class AssessmentTable extends React.Component {
 
@@ -94,7 +95,7 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		fetchList: id => ApiInterface.fetchAssessmentList(dispatch, id),
+		fetchList: () => dispatch(fetchAssessments()),
 	};
 };
 

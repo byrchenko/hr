@@ -1,5 +1,5 @@
-import ApiInterface from "./ApiInterfaceAbstract";
-import API from "./ApiInterface";
+import ApiInterface from "./RequestFactory";
+import API from "./ApiMethods";
 
 const { API_URL } = API;
 

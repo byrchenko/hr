@@ -18,7 +18,7 @@ import {
 import { connect } from "react-redux";
 import Previous from "./Previous";
 import Next from "./Next";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
 import Preloader from "../_svg/preloader.svg";
 import { INVALID_COMMENT, INVALID_MARK } from "./constants";
 import {

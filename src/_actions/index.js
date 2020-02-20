@@ -25,8 +25,8 @@ import {
 export const setUserId = id => {
 	return {
 		type: SET_USER_ID,
-		payload: id
-	}
+		payload: id,
+	};
 };
 
 /**
@@ -158,7 +158,7 @@ export const assessmentPrevStep = () => {
 /**
  *
  */
-export const assessmentFinish = () => {
+export const closeAssessment = () => {
 	return {
 		type: ASSESSMENT_FINISH,
 	};
@@ -172,7 +172,7 @@ export const assessmentStart = (employee, assessment) => {
 		type: ASSESSMENT_START,
 		payload: {
 			employee,
-			assessment
+			assessment,
 		},
 	};
 };
@@ -217,7 +217,22 @@ export const assessmentHrStart = (assessmentId, assessmentUser) => {
 		type: ASSESSMENT_HR_START,
 		payload: {
 			assessment: assessmentId,
-			user: assessmentUser
-		}
-	}
+			user: assessmentUser,
+		},
+	};
+};
+
+/**
+ *
+ */
+export const getCurrentUserId = () => {
+	return dispatch => {
+		const cookie = document.cookie.match("(^|;) ?" + "userId" + "=([^;]*)(;|$)");
+
+		dispatch(setUserId(
+			cookie
+				? cookie[2]
+				: null,
+		));
+	};
 };

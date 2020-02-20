@@ -5,7 +5,7 @@
  * @returns {*}
  * @private
  */
-export function _createPostOptions(body) {
+export function createPostOptions(body) {
 	if (body instanceof FormData) {
 		return {
 			method: "POST",
@@ -26,7 +26,7 @@ export function _createPostOptions(body) {
  * @returns {*}
  * @private
  */
-export function _createPutOptions(data) {
+export function createPutOptions(data) {
 	return {
 		method: "PUT",
 		credentials: "include",
@@ -43,7 +43,7 @@ export function _createPutOptions(data) {
  * @returns {*}
  * @private
  */
-export function _createDeleteOptions() {
+export function createDeleteOptions() {
 	return {
 		method: "DELETE",
 		credentials: "include",
@@ -56,7 +56,7 @@ export function _createDeleteOptions() {
  * @returns {*}
  * @private
  */
-export function _createGetOptions() {
+export function createGetOptions() {
 	return {
 		method: "GET",
 		credentials: "include",
@@ -70,7 +70,7 @@ export function _createGetOptions() {
  * @returns {null|FormData}
  * @private
  */
-export function _createBody(data) {
+export function createBody(data) {
 	if (!Object.keys(data).length) {
 		throw new Error("Data is empty!");
 	}
@@ -99,7 +99,7 @@ export function _createBody(data) {
  * @param params
  * @private
  */
-export function _createUrlWIthQueryParams(baseUrl, params) {
+export function createUrlWithQueryParams(baseUrl, params) {
 	if (typeof params !== "object") {
 		throw new Error("Invalid params type!");
 	}
@@ -119,10 +119,10 @@ export function _createUrlWIthQueryParams(baseUrl, params) {
  * @returns {Promise<Response>}
  * @private
  */
-export function _sendPost(url, data) {
-	const body = this._createBody(data);
+export function sendPost(url, data) {
+	const body = createBody(data);
 
-	const options = this._createPostOptions(body);
+	const options = createPostOptions(body);
 
 	return fetch(url, options);
 }
@@ -135,8 +135,8 @@ export function _sendPost(url, data) {
  * @param url
  * @param data
  */
-export function _sendPut(url, data) {
-	const options = this._createPutOptions(data);
+export function sendPut(url, data) {
+	const options = createPutOptions(data);
 
 	return fetch(url, options);
 }
@@ -148,8 +148,8 @@ export function _sendPut(url, data) {
  * @returns {Promise<Response>}
  * @private
  */
-export function _sendDelete(url) {
-	const options = this._createDeleteOptions();
+export function sendDelete(url) {
+	const options = createDeleteOptions();
 
 	return fetch(url, options);
 }
@@ -162,10 +162,10 @@ export function _sendDelete(url) {
  * @returns {Promise<Response>}
  * @private
  */
-export function _sendGet(baseUrl, params = {}) {
-	const url = this._createUrlWIthQueryParams(baseUrl, params);
+export function sendGet(baseUrl, params = {}) {
+	const url = createUrlWithQueryParams(baseUrl, params);
 
-	const options = this._createGetOptions();
+	const options = createGetOptions();
 
 	return fetch(url, options);
 }

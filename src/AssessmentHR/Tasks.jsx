@@ -39,8 +39,6 @@ class Tasks extends React.Component {
 				>
 					+ Добавить задачу
 				</div>
-
-				<div className={css.button}>Завершить оценивание</div>
 			</div>
 		)
 	}

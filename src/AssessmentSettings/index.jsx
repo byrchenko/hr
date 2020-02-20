@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 import Section from "./Section";
 import Item from "./Item";
 import { openPopup } from "../_actions";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
 
 import {
+	loadSetting,
 	setBlockFilter,
 	setCompetenceFilter,
 } from "../_actions/settings";
@@ -217,7 +218,7 @@ const mapDispatch = dispatch => {
 		editPosition: item => dispatch(openPopup(EDIT_POSITION_POPUP, item)),
 		addBlock: () => dispatch(openPopup(ADD_BLOCK_POPUP)),
 		editBlock: item => dispatch(openPopup(EDIT_BLOCK_POPUP, item)),
-		fetchSettings: () => ApiInterface.fetchSettings(dispatch),
+		fetchSettings: () => dispatch(loadSetting()),
 	};
 };
 

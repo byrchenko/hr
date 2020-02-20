@@ -17,3 +17,14 @@
 .invalid {
   box-shadow: 0 0 10px rgba(255, 0, 0, .35);
 }
+
+.button {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background-color: #E30613;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+}

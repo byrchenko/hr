@@ -20,11 +20,12 @@ import {
 	ADD_BLOCK_POPUP, NEW_TASK_POPUP,
 } from "./popups";
 import text from "./locale/ru";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
 import ModalContent from "../Sidebar/ModalContent";
 import SettingsPopup from "../AssessmentSettings/Popup";
 import Task from "./Task";
 import { closePopup } from "../_actions";
+import { changePosition } from "../_actions/popups";
 
 
 /**
@@ -260,12 +261,11 @@ const mapState = state => {
 const mapDispatch = dispatch => {
 	return {
 		changePosition: (employee, position) =>
-			ApiInterface.changeUserPosition(
-				dispatch,
+			dispatch(changePosition(
 				employee,
 				position,
-			),
-		closePopup: type => dispatch(closePopup(type))
+			)),
+		closePopup: type => dispatch(closePopup(type)),
 	};
 };
 
@@ -280,11 +280,11 @@ const mergeProps = (stateProps, dispatchProps) => {
 	const { changePosition, closePopup } = dispatchProps;
 
 	return {
-		changeEmployeePosition: changePosition(employee, position),
+		changeEmployeePosition: () => changePosition(employee, position),
 		show,
 		loading,
 		params,
-		closePopup
+		closePopup,
 	};
 };
 

@@ -7,6 +7,7 @@ import User from "./User";
 import Employees from "./Employees";
 import PermissionController from "../_permissions/Controller";
 import css from "./index.scss";
+import { fetchDivisions } from "../_actions/divisions";
 
 import {
 	HR_PERMISSION,
@@ -27,6 +28,15 @@ export class Sidebar extends React.Component {
 		this.state = {
 			side: SHOW_USER,
 		};
+	}
+
+	/**
+	 *
+	 */
+	componentDidMount() {
+		const {fetchDivisions} = this.props;
+
+		fetchDivisions();
 	}
 
 	/**
@@ -72,6 +82,8 @@ export class Sidebar extends React.Component {
  */
 Sidebar.propTypes = {
 	role: PropTypes.string,
+	fetchUser: PropTypes.func,
+	fetchDivisions: PropTypes.func,
 };
 
 /**
@@ -85,4 +97,15 @@ const mapState = state => {
 	};
 };
 
-export default connect(mapState)(Sidebar);
+/**
+ *
+ * @param dispatch
+ * @returns {{fetchUser: (function(): *), fetchDivisions: (function(): *)}}
+ */
+const mapDispatch = dispatch => {
+	return {
+		fetchDivisions: () => dispatch(fetchDivisions())
+	}
+};
+
+export default connect(mapState, mapDispatch)(Sidebar);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Status.scss";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
 
 import {
 	EMPLOYEE_PERMISSION,

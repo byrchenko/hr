@@ -14,8 +14,9 @@ import Tasks from "./Tasks";
 import uniqid from "uniqid";
 import Task from "./Task";
 import { connect } from "react-redux";
-import ApiInterface from "../_service/ApiInterface";
+import ApiInterface from "../_service/ApiMethods";
 import Preloader from "../Preloader";
+import { loadAnswers } from "../_actions/assessmentHr";
 
 /**
  *
@@ -30,7 +31,7 @@ class AssessmentHr extends React.Component {
 
 		this.state = {
 
-			answers: {},
+			answers: null,
 			tasks: null,
 		};
 	}
@@ -170,12 +171,44 @@ class AssessmentHr extends React.Component {
 			this.setState(prevState => {
 				const { answers } = prevState;
 
-				answers[id] = Object.assign({}, answers[id], {
-					mark,
+				if (!answers) {
+					return {
+						answers: [{
+							id,
+							comment: null,
+							mark: mark,
+						}],
+					};
+				}
+
+				let isAnswer = false;
+
+				const newAnswers = answers.map(item => {
+					if (item.id === id) {
+						isAnswer = true;
+
+						item.mark = mark;
+
+						return item;
+					}
+
+					return item;
 				});
 
+				if (!isAnswer) {
+					newAnswers.push({
+						id,
+						comment: null,
+						mark: mark,
+					});
+
+					return {
+						answers: newAnswers,
+					};
+				}
+
 				return {
-					answers,
+					answers: newAnswers,
 				};
 			});
 		};
@@ -187,7 +220,7 @@ class AssessmentHr extends React.Component {
 	renderMark(id) {
 		const { answers } = this.state;
 
-		const answer = answers[id];
+		const answer = answers ? answers.find(item => item.id === id) : null;
 
 		return mark => {
 			return (
@@ -227,12 +260,44 @@ class AssessmentHr extends React.Component {
 			this.setState(prevState => {
 				const { answers } = prevState;
 
-				answers[id] = Object.assign({}, answers[id], {
-					comment: value,
+				if (!answers) {
+					return {
+						answers: [{
+							id,
+							comment: value,
+							mark: null,
+						}],
+					};
+				}
+
+				let isAnswer = false;
+
+				const newAnswers = answers.map(item => {
+					if (item.id === id) {
+						isAnswer = true;
+
+						item.comment = value;
+
+						return item;
+					}
+
+					return item;
 				});
 
+				if (!isAnswer) {
+					newAnswers.push({
+						id,
+						comment: value,
+						mark: null,
+					});
+
+					return {
+						answers: newAnswers,
+					};
+				}
+
 				return {
-					answers,
+					answers: newAnswers,
 				};
 			});
 		};
@@ -245,7 +310,7 @@ class AssessmentHr extends React.Component {
 	renderComment(id) {
 		const { answers } = this.state;
 
-		const answer = answers[id];
+		const answer = answers ? answers.find(item => item.id === id) : null;
 
 		return () => {
 			return (
@@ -254,7 +319,7 @@ class AssessmentHr extends React.Component {
 					rows="4"
 					placeholder={text.comment}
 					onChange={this.setComment(id)}
-					value={answer ? answer.comment : ""}
+					value={answer ? answer.comment || "" : ""}
 				/>
 			);
 		};
@@ -316,25 +381,25 @@ class AssessmentHr extends React.Component {
 		const {
 			data,
 			loading,
-			error
+			error,
 		} = this.props;
 
 		if (error) {
 			return (
 				<div className={css.error}>Error occurred!</div>
-			)
+			);
 		}
 
 		if (loading) {
 			return (
-				<Preloader />
-			)
+				<Preloader/>
+			);
 		}
 
 		if (!data) {
 			return (
 				<div className={css.empty}>Nothing found</div>
-			)
+			);
 		}
 
 		const { blocks, evaluating, evaluator, finalizer } = data;
@@ -358,6 +423,8 @@ class AssessmentHr extends React.Component {
 					renderTask={this.renderTask()}
 					addTask={this.addTask()}
 				/>
+
+				<div className={css.button}>Завершить оценивание</div>
 			</Wrapper>
 		);
 	}
@@ -388,7 +455,7 @@ const mapState = state => {
 			assessmentUser,
 			loading,
 			error,
-		}
+		},
 	} = state;
 
 	return {
@@ -396,7 +463,7 @@ const mapState = state => {
 		loading,
 		error,
 		userId: assessmentUser,
-		assessmentId
+		assessmentId,
 	};
 };
 
@@ -407,7 +474,7 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		fetchData: (assessmentId, userId) => dispatch(ApiInterface.fetchHrAnswers(assessmentId, userId)),
+		fetchData: () => dispatch(loadAnswers()),
 		pushTasks: () => null,
 		endAssessment: () => null,
 	};
