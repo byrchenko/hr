@@ -28,6 +28,7 @@
     "gsap": "file:gsap.tgz",
     "html-webpack-plugin": "^4.0.0-beta.8",
     "mini-css-extract-plugin": "^0.8.2",
+    "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.10.1",

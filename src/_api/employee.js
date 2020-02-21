@@ -21,7 +21,7 @@ export const supervisor = {
 };
 
 export const hr = {
-	id: 2,
+	id: 1000,
 	name: "Sanya",
 	last_name: "Kyrpych",
 	image: 'https://static01.nyt.com/images/2019/11/17/books/review/17Salam/Salam1-articleLarge.jpg?quality=75&auto=webp&disable=upscale',

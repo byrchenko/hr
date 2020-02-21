@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import css from "./Add.scss";
 import Plus from "../_svg/plus.svg";
 
-const Add = ({ startSearch },
-) => {
+const Add = ({ startSearch }) => {
 	return (
 		<div
 			className={css.index}

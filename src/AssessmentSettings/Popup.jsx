@@ -69,7 +69,7 @@ Description.propTypes = {
  * @returns {*}
  * @constructor
  */
-const Popup = ({ type, params }) => {
+const Popup = ({ type, params, submit }) => {
 	const defaultData = getDefaultData(type, params);
 
 	const [title, setTitle] = React.useState(defaultData.title);
@@ -105,7 +105,7 @@ const Popup = ({ type, params }) => {
 			/>
 
 			<ModalButtons
-				submit={() => null}
+				submit={submit(title, description)}
 				type={type}
 			/>
 		</div>

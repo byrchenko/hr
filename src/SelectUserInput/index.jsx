@@ -23,6 +23,8 @@ class SelectUserInput extends React.Component {
 			isSearching: false,
 		};
 
+		this.max = this.props.max;
+
 		this.list = React.createRef();
 		this.input = React.createRef();
 		this._isSearchClick = this._isSearchClick.bind(this);
@@ -86,22 +88,28 @@ class SelectUserInput extends React.Component {
 	 * Display "add" button or searching input
 	 */
 	renderAdd() {
-		const { isSearching, filter } = this.state;
-
 		return () => {
-			if (!isSearching) {
+			const { isSearching, filter, selected } = this.state;
+
+			if (!this.max || !selected) {
+				if (!isSearching) {
+					return (
+						<Add startSearch={this.startSearch()}/>
+					);
+				}
+
 				return (
-					<Add startSearch={this.startSearch()}/>
+					<Search
+						refNode={this.input}
+						value={filter}
+						changeFilter={this.changeFilter()}
+					/>
 				);
 			}
 
-			return (
-				<Search
-					refNode={this.input}
-					value={filter}
-					changeFilter={this.changeFilter()}
-				/>
-			);
+			if (selected.length === this.max) {
+				return null;
+			}
 		};
 	}
 
@@ -109,7 +117,7 @@ class SelectUserInput extends React.Component {
 	 * Remove user from selected
 	 */
 	removeSelected() {
-		const {forwardState} = this.props;
+		const { forwardState } = this.props;
 
 		return id => {
 			this.setState(prevState => {
@@ -186,7 +194,7 @@ class SelectUserInput extends React.Component {
 	 * Select user
 	 */
 	selectUser() {
-		const {forwardState} = this.props;
+		const { forwardState } = this.props;
 
 		return user => {
 			this.setState(prevState => {
@@ -268,11 +276,11 @@ class SelectUserInput extends React.Component {
  */
 SelectUserInput.propTypes = {
 	list: PropTypes.array,
-	forwardState: PropTypes.func
+	forwardState: PropTypes.func,
 };
 
 SelectUserInput.defaultProps = {
-	forwardState: () => null
+	forwardState: () => null,
 };
 
 export default SelectUserInput;

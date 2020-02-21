@@ -4,8 +4,15 @@ import css from "./index.scss";
 import { connect } from "react-redux";
 import Item from "./Item";
 import Preloader from "../Preloader";
+import { fetchAssessmentProcessData } from "../_actions/assessmentProcess";
 
 class AssessmentProcess extends React.Component {
+
+	componentDidMount() {
+		const {fetchData} = this.props;
+
+		fetchData();
+	}
 
 	renderItem(item) {
 		return (
@@ -117,7 +124,7 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-
+		fetchData: () => dispatch(fetchAssessmentProcessData())
 	}
 };
 

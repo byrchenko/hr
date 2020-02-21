@@ -6,6 +6,9 @@ import SelectUserInput from "../SelectUserInput";
 import DatePicker from "react-datepicker/es";
 import { employee, hr, supervisor } from "../_api/employee";
 import Calendar from "../_svg/calendar.svg";
+import { connect } from "react-redux";
+import { createAssessment } from "../_actions/assessmentProcess";
+import moment from "moment";
 
 class Task extends React.Component {
 
@@ -20,8 +23,8 @@ class Task extends React.Component {
 			title: null,
 			evaluator: null,
 			evaluating: null,
-			endDate: new Date()
-		}
+			endDate: new Date(),
+		};
 	}
 
 	/**
@@ -30,9 +33,9 @@ class Task extends React.Component {
 	setTitle() {
 		return e => {
 			this.setState({
-				title: e.target.value
-			})
-		}
+				title: e.target.value,
+			});
+		};
 	}
 
 	/**
@@ -40,10 +43,11 @@ class Task extends React.Component {
 	 */
 	setEndDate() {
 		return date => {
+			console.log(JSON.stringify(date))
 			this.setState({
-				endDate: date
-			})
-		}
+				endDate: date,
+			});
+		};
 	}
 
 	/**
@@ -52,9 +56,9 @@ class Task extends React.Component {
 	setEvaluator() {
 		return evaluator => {
 			this.setState({
-				evaluator
-			})
-		}
+				evaluator: evaluator ? evaluator[0].id : null,
+			});
+		};
 	}
 
 	/**
@@ -63,9 +67,11 @@ class Task extends React.Component {
 	setEvaluating() {
 		return evaluating => {
 			this.setState({
-				evaluating
-			})
-		}
+				evaluating: Array.isArray(evaluating)
+					? evaluating.map(item => item.id)
+					: null
+			});
+		};
 	}
 
 	/**
@@ -73,8 +79,14 @@ class Task extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const { closePopup } = this.props;
-		const { endDate } = this.state;
+		const { closePopup, sendData } = this.props;
+
+		const {
+			endDate,
+			title,
+			evaluating,
+			evaluator,
+		} = this.state;
 
 		return (
 			<div className={css.index}>
@@ -99,6 +111,7 @@ class Task extends React.Component {
 								<SelectUserInput
 									list={[employee, supervisor, hr]}
 									forwardState={this.setEvaluator()}
+									max={1}
 								/>
 							</div>
 						</div>
@@ -146,13 +159,22 @@ class Task extends React.Component {
 					</div>
 
 					<div className={css.buttons}>
-						<div className={css.submit}>
+						<div
+							className={css.submit}
+							onClick={sendData(
+								title,
+								moment().format('DD.MM.YYYY'),
+								moment(endDate).format('DD.MM.YYYY'),
+								evaluating,
+								evaluator,
+							)}
+						>
 							Запустить оценивание
 						</div>
 
-						<div className={css.new}>
-							Запустить оценивание и создать новое
-						</div>
+						{/*<div className={css.new}>*/}
+						{/*	Запустить оценивание и создать новое*/}
+						{/*</div>*/}
 
 						<div
 							className={css.cancel}
@@ -167,4 +189,26 @@ class Task extends React.Component {
 	}
 }
 
-export default Task;
+/**
+ *
+ * @param dispatch
+ */
+const mapDispatch = dispatch => {
+	return {
+		sendData: (
+			title,
+			startDate,
+			endDate,
+			employees,
+			evaluatorId,
+		) => () => dispatch(createAssessment(
+			title,
+			startDate,
+			endDate,
+			employees,
+			evaluatorId,
+		)),
+	};
+};
+
+export default connect(null, mapDispatch)(Task);
