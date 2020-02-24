@@ -26,6 +26,13 @@ import SettingsPopup from "../AssessmentSettings/Popup";
 import Task from "./Task";
 import { closePopup } from "../_actions";
 import { changePosition } from "../_actions/popups";
+import {
+	settingsAddBlock,
+	settingsAddCompetence,
+	settingsAddPosition,
+	settingsDeletePosition, settingsEditBlock, settingsEditCompetence,
+	settingsEditPosition,
+} from "../_actions/settings";
 
 
 /**
@@ -61,7 +68,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	addCompetencyPopup() {
-		const { show } = this.props;
+		const { show, addCompetence, params } = this.props;
 
 		if (show !== ADD_COMPETENCY_POPUP) {
 			return null;
@@ -74,6 +81,7 @@ class Popuper extends React.Component {
 			>
 				<SettingsPopup
 					type={ADD_COMPETENCY_POPUP}
+					submit={addCompetence(params.blockId)}
 				/>
 			</Modal>
 		);
@@ -83,7 +91,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	editCompetencyPopup() {
-		const { show, params } = this.props;
+		const { show, params, editCompetence } = this.props;
 
 		if (show !== EDIT_COMPETENCY_POPUP) {
 			return null;
@@ -97,6 +105,7 @@ class Popuper extends React.Component {
 				<SettingsPopup
 					type={EDIT_COMPETENCY_POPUP}
 					params={params}
+					submit={editCompetence(params.id)}
 				/>
 			</Modal>
 		);
@@ -106,7 +115,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	addPositionPopup() {
-		const { show } = this.props;
+		const { show, addPosition } = this.props;
 
 		if (show !== ADD_POSITION_POPUP) {
 			return null;
@@ -119,6 +128,7 @@ class Popuper extends React.Component {
 			>
 				<SettingsPopup
 					type={ADD_POSITION_POPUP}
+					submit={addPosition}
 				/>
 			</Modal>
 		);
@@ -128,7 +138,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	editPositionPopup() {
-		const { show, params } = this.props;
+		const { show, params, editPosition } = this.props;
 
 		if (show !== EDIT_POSITION_POPUP) {
 			return null;
@@ -142,6 +152,7 @@ class Popuper extends React.Component {
 				<SettingsPopup
 					type={EDIT_POSITION_POPUP}
 					params={params}
+					submit={editPosition(params.id)}
 				/>
 			</Modal>
 		);
@@ -152,7 +163,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	addBlockPopup() {
-		const { show } = this.props;
+		const { show, addBlock, params } = this.props;
 
 		if (show !== ADD_BLOCK_POPUP) {
 			return null;
@@ -165,6 +176,7 @@ class Popuper extends React.Component {
 			>
 				<SettingsPopup
 					type={ADD_BLOCK_POPUP}
+					submit={addBlock(params.positionId)}
 				/>
 			</Modal>
 		);
@@ -174,7 +186,7 @@ class Popuper extends React.Component {
 	 *
 	 */
 	editBlockPopup() {
-		const { show, params } = this.props;
+		const { show, params, editBlock } = this.props;
 
 		if (show !== EDIT_BLOCK_POPUP) {
 			return null;
@@ -188,6 +200,7 @@ class Popuper extends React.Component {
 				<SettingsPopup
 					type={EDIT_BLOCK_POPUP}
 					params={params}
+					submit={editBlock(params.id)}
 				/>
 			</Modal>
 		);
@@ -266,6 +279,12 @@ const mapDispatch = dispatch => {
 				position,
 			)),
 		closePopup: type => dispatch(closePopup(type)),
+		addPosition: title => () => dispatch(settingsAddPosition(title)),
+		editPosition: id => title => () => dispatch(settingsEditPosition(id, title)),
+		addBlock: positionId => (title, description) => () => dispatch(settingsAddBlock(title, description, positionId)),
+		editBlock: id => (title, description) => () => dispatch(settingsEditBlock(id, title, description)),
+		addCompetence: blockId => (title, description) => () => dispatch(settingsAddCompetence(title, description, blockId)),
+		editCompetence: id => (title, description) => () => dispatch(settingsEditCompetence(id, title, description)),
 	};
 };
 
@@ -277,7 +296,17 @@ const mapDispatch = dispatch => {
  */
 const mergeProps = (stateProps, dispatchProps) => {
 	const { employee, show, loading, position, params } = stateProps;
-	const { changePosition, closePopup } = dispatchProps;
+	const {
+		changePosition,
+		closePopup,
+		addPosition,
+		editPosition,
+		addBlock,
+		editBlock,
+		addCompetence,
+		editCompetence,
+
+	} = dispatchProps;
 
 	return {
 		changeEmployeePosition: () => changePosition(employee, position),
@@ -285,6 +314,12 @@ const mergeProps = (stateProps, dispatchProps) => {
 		loading,
 		params,
 		closePopup,
+		addPosition,
+		editPosition,
+		addBlock,
+		editBlock,
+		addCompetence,
+		editCompetence,
 	};
 };
 

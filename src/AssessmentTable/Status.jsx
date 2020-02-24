@@ -21,6 +21,7 @@ import Complete from "../_svg/complete.svg";
 import Wait from "../_svg/wait.svg";
 import { role } from "../_dispatchers";
 import { assessmentHrStart, assessmentStart } from "../_actions";
+import { startAssessment } from "../_actions/assessment";
 
 /**
  *
@@ -188,7 +189,7 @@ const Status = ({
 				{renderEvaluatorStatus(
 					supervisor,
 					role,
-					startAssessment
+					startAssessment()
 				)}
 			</div>
 
@@ -196,7 +197,7 @@ const Status = ({
 				{renderEvaluatingStatus(
 					employee,
 					role,
-					startAssessment
+					startAssessment(assessment.id, assessment.employee)
 				)}
 			</div>
 
@@ -216,11 +217,9 @@ const Status = ({
  *
  */
 const mapDispatch = (dispatch, props) => {
-	const { user, assessment } = props;
 
 	return {
-		startAssessment: () =>
-			ApiInterface.assessmentStart(dispatch, assessment, user),
+		startAssessment: (assessmentId, employeeId) => () => dispatch(startAssessment(employeeId, assessmentId)),
 		startAssessmentHr: (assessmentId, assessmentUser) => () => dispatch(assessmentHrStart(assessmentId, assessmentUser)),
 	};
 };

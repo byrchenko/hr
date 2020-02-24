@@ -10,7 +10,7 @@ import ApiInterface from "../_service/ApiMethods";
 import {
 	loadSetting,
 	setBlockFilter,
-	setCompetenceFilter,
+	setCompetenceFilter, settingsDeleteBlock, settingsDeleteCompetence, settingsDeletePosition,
 } from "../_actions/settings";
 
 import {
@@ -48,7 +48,7 @@ class AssessmentSettings extends React.Component {
 	 * Competence item in list
 	 */
 	renderCompetence() {
-		const { editCompetency } = this.props;
+		const { editCompetency, removeCompetence } = this.props;
 
 		return item => {
 			return (
@@ -56,7 +56,7 @@ class AssessmentSettings extends React.Component {
 					key={item.id}
 					item={item}
 					edit={editCompetency}
-					remove={() => null}
+					remove={removeCompetence(item.id)}
 				/>
 			);
 		};
@@ -66,7 +66,7 @@ class AssessmentSettings extends React.Component {
 	 * Block item in list
 	 */
 	renderBlock(filter) {
-		const { filterCompetence, editBlock } = this.props;
+		const { filterCompetence, editBlock, removeBlock } = this.props;
 
 		return item => {
 			return (
@@ -74,7 +74,7 @@ class AssessmentSettings extends React.Component {
 					key={item.id}
 					item={item}
 					edit={editBlock}
-					remove={() => null}
+					remove={removeBlock(item.id)}
 					select={filterCompetence}
 					filter={filter}
 				/>
@@ -86,7 +86,7 @@ class AssessmentSettings extends React.Component {
 	 * Position item in list
 	 */
 	renderPosition(filter) {
-		const { filterBlock, editPosition } = this.props;
+		const { filterBlock, editPosition, removePosition } = this.props;
 
 		return item => {
 			return (
@@ -94,7 +94,7 @@ class AssessmentSettings extends React.Component {
 					key={item.id}
 					item={item}
 					edit={editPosition}
-					remove={() => null}
+					remove={removePosition(item.id)}
 					select={filterBlock}
 					filter={filter}
 				/>
@@ -144,14 +144,16 @@ class AssessmentSettings extends React.Component {
 					renderItem={this.renderBlock(competencesFilter)}
 					selectAll={filterAllCompetences}
 					filter={competencesFilter}
-					addItem={addBlock}
+					addItem={addBlock(blocksFilter)}
+					isButton={blocksFilter}
 				/>
 
 				<Section
 					type={COMPETENCE_TYPE}
 					list={competences}
 					renderItem={this.renderCompetence()}
-					addItem={addCompetency}
+					addItem={addCompetency(competencesFilter)}
+					isButton={competencesFilter}
 				/>
 			</div>
 		);
@@ -212,13 +214,16 @@ const mapDispatch = dispatch => {
 		filterAllCompetences: () => dispatch(setCompetenceFilter("all")),
 		filterBlock: position => dispatch(setBlockFilter(position)),
 		filterCompetence: block => dispatch(setCompetenceFilter(block)),
-		addCompetency: () => dispatch(openPopup(ADD_COMPETENCY_POPUP)),
+		addCompetency: item => () => dispatch(openPopup(ADD_COMPETENCY_POPUP, {blockId: item})),
 		editCompetency: item => dispatch(openPopup(EDIT_COMPETENCY_POPUP, item)),
 		addPosition: () => dispatch(openPopup(ADD_POSITION_POPUP)),
 		editPosition: item => dispatch(openPopup(EDIT_POSITION_POPUP, item)),
-		addBlock: () => dispatch(openPopup(ADD_BLOCK_POPUP)),
+		addBlock: item => () => dispatch(openPopup(ADD_BLOCK_POPUP, {positionId: item})),
 		editBlock: item => dispatch(openPopup(EDIT_BLOCK_POPUP, item)),
 		fetchSettings: () => dispatch(loadSetting()),
+		removePosition: id => () => dispatch(settingsDeletePosition(id)),
+		removeBlock: id => () => dispatch(settingsDeleteBlock(id)),
+		removeCompetence: id => () => dispatch(settingsDeleteCompetence(id)),
 	};
 };
 

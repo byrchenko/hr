@@ -21,13 +21,28 @@ describe("ApiMethods", () => {
 		 *
 		 */
 		it("should send tasks", done => {
-			sendTasks("Read documentation", "21.02.2020", 1, 1000)
-				.then(result => result.json())
-				.then(json => expect(json)
-					.toEqual({ code: 201, status: "TASK WAS ADDED" }))
-				.catch(err => console.log(err));
+			sendTasks([{
+				title: "asdas",
+				date: "",
+				executiveId: 1,
+				responsibleId: 1000,
+			}])
+				.then(result => result.text())
+				.then(json => {
+					console.log(json);
 
-			done();
+					// expect(json)
+					// 	.toEqual({ code: 201, status: "TASK WAS ADDED" })
+
+					done();
+				})
+				.catch(err => {
+					console.log(err);
+
+					done();
+				});
+
+
 		});
 	});
 
@@ -279,11 +294,11 @@ describe("ApiMethods", () => {
 						.toEqual("Sales division");
 
 					expect(parsed.startDate)
-						.toEqual('21.02.20');
+						.toEqual("21.02.20");
 
 
 					expect(parsed.endDate)
-						.toEqual('25.02.20');
+						.toEqual("25.02.20");
 
 
 					expect(parsed.employees)
@@ -312,26 +327,26 @@ describe("ApiMethods", () => {
 				"Changed assessment",
 				"22.02.2020",
 				"26.02.2020",
-				undefined,
-				1
+				[1000],
+				1,
 			)
 				.then(response => response.json())
 				.then(parsed => {
 
 					expect(parsed.title)
-						.toEqual('Changed assessment');
+						.toEqual("Changed assessment");
 
 
 					expect(parsed.startDate)
-						.toEqual('22.02.20');
+						.toEqual("22.02.20");
 
 
 					expect(parsed.endDate)
-						.toEqual('26.02.20');
+						.toEqual("26.02.20");
 
 
 					expect(parsed.employees)
-						.toEqual([2]);
+						.toEqual([1000]);
 
 
 					expect(parsed.evaluatorId)
@@ -343,7 +358,7 @@ describe("ApiMethods", () => {
 					console.log(err);
 
 					done();
-				})
+				});
 		});
 	});
 });

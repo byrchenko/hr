@@ -107,7 +107,6 @@ class AssessmentQuestions extends React.Component {
         const {
             assessment,
             answers,
-            position,
             block,
             employee,
             step,
@@ -147,7 +146,7 @@ class AssessmentQuestions extends React.Component {
 
                     <Next
                         isLastStep={isLast}
-                        goNext={next(assessment, answers, employee.id, position)}
+                        goNext={next(assessment, answers, employee.id, step)}
                         finishAssessment={finish(answers, assessment)}
                         validate={this.isValidForm()}
                     />
@@ -207,7 +206,7 @@ const mapDispatch = dispatch => {
             assessmentId,
             employeeId,
             position
-        ) => {
+        ) => () => {
             dispatch(prevStep(
                 assessmentId,
                 employeeId,
@@ -227,7 +226,7 @@ const mapDispatch = dispatch => {
             position
         )),
 
-        finish: (questions, assessmentId) => {
+        finish: (questions, assessmentId) => () => {
             dispatch(finishAssessment(questions, assessmentId))
         },
 

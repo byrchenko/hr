@@ -5,6 +5,7 @@ import {
 } from "../_store/reducer";
 
 import {
+	ASSESSMENT_HR_END,
 	ASSESSMENT_HR_START,
 	FETCH_ERROR,
 	FETCH_LOADING,
@@ -92,6 +93,15 @@ const handler = {
 			assessmentId: assessment,
 			assessmentUser: user
 		});
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @param action
+	 */
+	[ASSESSMENT_HR_END]: () => {
+		return Object.assign({}, initialState);
 	},
 
 	/**

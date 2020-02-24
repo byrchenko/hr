@@ -84,7 +84,7 @@ export function fetchQuestions(assessmentId, userId, step) {
 		+ assessmentId,
 		{
 			employeeId: userId,
-			step: step + 1,
+			step,
 		},
 	);
 }
@@ -122,18 +122,12 @@ export function fetchAnswers(assessmentId, userId) {
 
 /**
  *
- * @param title
- * @param date
- * @param executiveUserId
- * @param responsibleId
  * @returns {Promise<Response>}
+ * @param tasks
  */
-export function sendTasks(title, date, executiveUserId, responsibleId) {
+export function sendTasks(tasks) {
 	return sendPost(API_URL + "tasks", {
-		title,
-		date,
-		executiveUserId,
-		responsibleId,
+		tasks
 	});
 }
 

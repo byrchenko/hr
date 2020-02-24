@@ -136,7 +136,7 @@ class Item extends React.Component {
 						className={css.item}
 						onClick={e => {
 							e.stopPropagation();
-							remove(item.id);
+							remove();
 						}}
 					>
 						{"Удалить"}

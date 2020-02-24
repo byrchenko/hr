@@ -16,7 +16,7 @@ import Task from "./Task";
 import { connect } from "react-redux";
 import ApiInterface from "../_service/ApiMethods";
 import Preloader from "../Preloader";
-import { loadAnswers } from "../_actions/assessmentHr";
+import { finishHrAssessment, loadAnswers } from "../_actions/assessmentHr";
 
 /**
  *
@@ -51,10 +51,14 @@ class AssessmentHr extends React.Component {
 	 * @private
 	 */
 	_createEmptyTask() {
+		const {executiveId, userId} = this.props;
+
 		return {
 			id: uniqid(),
 			title: "",
 			date: new Date(),
+			executiveUserId: executiveId,
+			responsibleId: userId
 		};
 	}
 
@@ -138,7 +142,7 @@ class AssessmentHr extends React.Component {
 						return item;
 					}),
 				};
-			});
+			}, () => console.log(this.state));
 		};
 	}
 
@@ -382,6 +386,8 @@ class AssessmentHr extends React.Component {
 			data,
 			loading,
 			error,
+			pushTasks,
+			assessmentId
 		} = this.props;
 
 		if (error) {
@@ -403,7 +409,7 @@ class AssessmentHr extends React.Component {
 		}
 
 		const { blocks, evaluating, evaluator, finalizer } = data;
-		const { tasks } = this.state;
+		const { tasks, answers } = this.state;
 
 		return (
 			<Wrapper>
@@ -424,7 +430,12 @@ class AssessmentHr extends React.Component {
 					addTask={this.addTask()}
 				/>
 
-				<div className={css.button}>Завершить оценивание</div>
+				<div
+					className={css.button}
+					onClick={pushTasks(tasks, answers, assessmentId)}
+				>
+					Завершить оценивание
+				</div>
 			</Wrapper>
 		);
 	}
@@ -449,6 +460,9 @@ AssessmentHr.propTypes = {
  */
 const mapState = state => {
 	const {
+		employee: {
+			data: employeeData
+		},
 		assessmentHr: {
 			data,
 			assessmentId,
@@ -464,6 +478,7 @@ const mapState = state => {
 		error,
 		userId: assessmentUser,
 		assessmentId,
+		executiveId: employeeData ? employeeData.id : null
 	};
 };
 
@@ -475,7 +490,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
 	return {
 		fetchData: () => dispatch(loadAnswers()),
-		pushTasks: () => null,
+		pushTasks: (tasks, answers, assessmentId) => () => {
+			dispatch(finishHrAssessment(tasks, answers, assessmentId))
+		},
 		endAssessment: () => null,
 	};
 };

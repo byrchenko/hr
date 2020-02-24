@@ -1,5 +1,5 @@
 import {ASSESSMENT_QUESTIONS_ENTITY} from "../_store/entities";
-import {sendAnswers} from "../_service/ApiMethods";
+import { fetchQuestions, sendAnswers } from "../_service/ApiMethods";
 
 import {
     assessmentStart,
@@ -15,11 +15,11 @@ import {
  * @param assessmentId
  * @param employee
  */
-export const startAssessment = (assessmentId, employee) => {
+export const startAssessment = (employee, assessmentId) => {
     return dispatch => {
         dispatch(assessmentStart(employee, assessmentId));
 
-        dispatch(fetchQuestions(assessmentId, employee.id, 1))
+        dispatch(fetchAssessmentQuestions(assessmentId, employee.id, 1))
     }
 };
 
@@ -44,8 +44,8 @@ export const nextStep = (
             sendAnswers(assessmentId, questions),
             fetchQuestions(assessmentId, employeeId, position + 1)
         ])
-            .then(response => response.json())
-            .then(parsed => dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, parsed[1])))
+            .then(response => response[1].json())
+            .then(parsed => dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, parsed)))
             .catch(err => {
                 console.warn(err);
 
@@ -70,7 +70,7 @@ export const prevStep = (
     return dispatch => {
         dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 
-        fetchQuestions(assessmentId, employeeId, position - 1)
+        fetchAssessmentQuestions(assessmentId, employeeId, position - 1)
             .then(response => response.json())
             .then(parsed => {
                 dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, parsed))
@@ -95,7 +95,7 @@ export const finishAssessment = (questions, assessmentId) => {
 
         sendAnswers(assessmentId, questions)
             .then(response => {
-                response.status === 200
+                response.status === 201
                     ? dispatch(closeAssessment())
                     : dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY))
             })
@@ -110,7 +110,7 @@ export const finishAssessment = (questions, assessmentId) => {
  * @param userId
  * @param step
  */
-export const fetchQuestions = (assessmentId, userId, step) => {
+export const fetchAssessmentQuestions = (assessmentId, userId, step) => {
     return dispatch => {
         dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 

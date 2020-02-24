@@ -66,7 +66,7 @@ class Section extends React.Component {
 
 		return (
 			<button
-				className={filter === 'all' ? css.selected : css.all}
+				className={filter === "all" ? css.selected : css.all}
 				onClick={selectAll}
 			>
 				{"Все"}
@@ -75,13 +75,36 @@ class Section extends React.Component {
 	}
 
 	/**
+	 *
+	 */
+	renderAddButton() {
+		const { isButton, addItem } = this.props;
+
+		if (isButton === "all") {
+			return null;
+		}
+
+		return (
+			<button
+				className={css.add}
+				onClick={addItem}
+			>
+				<Plus
+					height={8}
+					width={8}
+				/>
+			</button>
+		)
+	}
+
+	/**
 	 * Components render
 	 */
 	render() {
-		const { type, addItem } = this.props;
+		const { type, addItem, isButton } = this.props;
 		const {
 			title,
-			class: wrapperClass
+			class: wrapperClass,
 		} = types[type];
 
 		return (
@@ -91,15 +114,7 @@ class Section extends React.Component {
 						{title}
 					</span>
 
-					<button
-						className={css.add}
-						onClick={addItem}
-					>
-						<Plus
-							height={8}
-							width={8}
-						/>
-					</button>
+					{this.renderAddButton()}
 				</div>
 
 				<div className={css.content}>
@@ -121,7 +136,7 @@ Section.propTypes = {
 	renderItem: PropTypes.func,
 	selectAll: PropTypes.func,
 	addItem: PropTypes.func,
-	filter: PropTypes.any
+	filter: PropTypes.any,
 };
 
 export default Section;
