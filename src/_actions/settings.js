@@ -169,7 +169,7 @@ export const settingsDeleteBlock = (id) => {
 	return dispatch => {
 		deleteBlock(id)
 			.then(response => {
-				response.status === 201
+				response.status === 200
 					? 	dispatch(loadSetting())
 					: console.warn("Unsuccessful deleting position!");
 			})
