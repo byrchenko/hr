@@ -189,7 +189,7 @@ const Status = ({
 				{renderEvaluatorStatus(
 					supervisor,
 					role,
-					startAssessment()
+					startAssessment(assessment.id, assessment.employee)
 				)}
 			</div>
 
@@ -205,7 +205,7 @@ const Status = ({
 				{renderRecruiterStatus(
 					hr,
 					role,
-					startAssessmentHr(assessment.id, assessment.employee.id),
+					startAssessmentHr(assessment.id, assessment.employee),
 					supervisor && employee
 				)}
 			</div>
