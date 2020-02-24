@@ -175,8 +175,6 @@ class SelectUserInput extends React.Component {
 		const { list } = this.props;
 		const { filter } = this.state;
 
-		console.log(list)
-
 		return () => {
 			if (!filter) {
 				return list;

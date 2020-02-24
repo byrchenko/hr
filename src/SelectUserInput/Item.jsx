@@ -10,9 +10,9 @@ const Item = ({selectUser, item}) => {
 			className={css.index}
 			onClick={() => selectUser(item)}
 		>
-			<div className={css.picture}>
-				<img src={item.image} alt={fullName} />
-			</div>
+			{/*<div className={css.picture}>*/}
+			{/*	<img src={item.image} alt={fullName} />*/}
+			{/*</div>*/}
 
 			<div className={css.name}>
 				{fullName}
