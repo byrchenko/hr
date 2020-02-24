@@ -9,6 +9,7 @@ import Calendar from "../_svg/calendar.svg";
 import { connect } from "react-redux";
 import { createAssessment } from "../_actions/assessmentProcess";
 import moment from "moment";
+import { selectUsers } from "../_selectors/employees";
 
 class Task extends React.Component {
 
@@ -79,13 +80,13 @@ class Task extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const { closePopup, sendData } = this.props;
+		const { closePopup, sendData, users } = this.props;
 
 		const {
 			endDate,
 			title,
 			evaluating,
-			evaluator,
+			evaluator
 		} = this.state;
 
 		return (
@@ -109,7 +110,7 @@ class Task extends React.Component {
 
 							<div className={css.input}>
 								<SelectUserInput
-									list={[employee, supervisor, hr]}
+									list={users}
 									forwardState={this.setEvaluator()}
 									max={1}
 								/>
@@ -140,7 +141,7 @@ class Task extends React.Component {
 
 							<div className={css.input}>
 								<SelectUserInput
-									list={[employee, supervisor, hr]}
+									list={users}
 									forwardState={this.setEvaluating()}
 								/>
 							</div>
@@ -191,6 +192,19 @@ class Task extends React.Component {
 
 /**
  *
+ * @param state
+ * @returns {{users: []}}
+ */
+const mapState = state => {
+	console.log(state);
+
+	return {
+		users: selectUsers(state)
+	}
+};
+
+/**
+ *
  * @param dispatch
  */
 const mapDispatch = dispatch => {
@@ -211,4 +225,4 @@ const mapDispatch = dispatch => {
 	};
 };
 
-export default connect(null, mapDispatch)(Task);
+export default connect(mapState, mapDispatch)(Task);

@@ -5,13 +5,16 @@ import { connect } from "react-redux";
 import Item from "./Item";
 import Preloader from "../Preloader";
 import { fetchAssessmentProcessData } from "../_actions/assessmentProcess";
+import { loadPositions } from "../_actions/positions";
+import { selectUsers } from "../_selectors/employees";
 
 class AssessmentProcess extends React.Component {
 
 	componentDidMount() {
-		const {fetchData} = this.props;
+		const {fetchData, fetchPositions} = this.props;
 
 		fetchData();
+		fetchPositions();
 	}
 
 	renderItem(item) {
@@ -115,7 +118,7 @@ const mapState = state => {
 	return {
 		list: Array.isArray(data) ? data : null,
 		error,
-		loading
+		loading,
 	}
 };
 
@@ -124,7 +127,8 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		fetchData: () => dispatch(fetchAssessmentProcessData())
+		fetchData: () => dispatch(fetchAssessmentProcessData()),
+		fetchPositions: () => dispatch(loadPositions())
 	}
 };
 
