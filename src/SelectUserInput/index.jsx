@@ -7,6 +7,7 @@ import Selected from "./Selected";
 import Item from "./Item";
 import Add from "./Add";
 import Search from "./Search";
+import uniqid from "uniqid";
 
 class SelectUserInput extends React.Component {
 
@@ -89,15 +90,20 @@ class SelectUserInput extends React.Component {
 	 */
 	renderAdd() {
 		return () => {
-			const { isSearching, filter, selected } = this.state;
+			const {
+				isSearching,
+				filter,
+				selected,
+			} = this.state;
 
-			if (!this.max || !selected) {
-				if (!isSearching) {
-					return (
-						<Add startSearch={this.startSearch()}/>
-					);
-				}
+			if (
+				selected
+				&& selected.length === this.max
+			) {
+				return null;
+			}
 
+			if (isSearching) {
 				return (
 					<Search
 						refNode={this.input}
@@ -107,9 +113,9 @@ class SelectUserInput extends React.Component {
 				);
 			}
 
-			if (selected.length === this.max) {
-				return null;
-			}
+			return (
+				<Add startSearch={this.startSearch()} />
+			);
 		};
 	}
 
@@ -226,7 +232,7 @@ class SelectUserInput extends React.Component {
 		return item => {
 			return (
 				<Item
-					key={item.id}
+					key={uniqid()}
 					selectUser={this.selectUser()}
 					item={item}
 				/>

@@ -190,10 +190,14 @@ export const selectAssessmentEmployee = state => {
  */
 export const selectAssessmentStep = state => {
 	const {
-		assessmentQuestions: { step },
+		assessmentQuestions: { data },
 	} = state;
 
-	return step;
+	if(!data) {
+		return 1
+	}
+
+	return Number(data.step);
 };
 
 /**

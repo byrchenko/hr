@@ -56,8 +56,10 @@ class Task extends React.Component {
 	 */
 	setEvaluator() {
 		return evaluator => {
+			console.log(evaluator);
+
 			this.setState({
-				evaluator: evaluator ? evaluator[0].id : null,
+				evaluator: evaluator && evaluator.length ? evaluator[0].id : null,
 			});
 		};
 	}

@@ -70,16 +70,7 @@ export const prevStep = (
     return dispatch => {
         dispatch(fetchDataLoading(ASSESSMENT_QUESTIONS_ENTITY));
 
-        fetchAssessmentQuestions(assessmentId, employeeId, position - 1)
-            .then(response => response.json())
-            .then(parsed => {
-                dispatch(fetchDataSuccess(ASSESSMENT_QUESTIONS_ENTITY, parsed))
-            })
-            .catch(err => {
-                console.warn(err);
-
-                dispatch(fetchDataError(ASSESSMENT_QUESTIONS_ENTITY))
-            })
+        dispatch(fetchAssessmentQuestions(assessmentId, employeeId, position - 1));
     }
 };
 

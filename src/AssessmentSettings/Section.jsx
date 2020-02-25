@@ -43,7 +43,7 @@ class Section extends React.Component {
 		if (!list) {
 			return (
 				<div className={css.empty}>
-					{"Nothing found.."}
+					{"No items"}
 				</div>
 			);
 		}

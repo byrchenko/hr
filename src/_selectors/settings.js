@@ -50,6 +50,10 @@ const getCompetences = state => {
 export const getFilteredBlocks = createSelector(
 	[getBlocksFilter, getBlocks],
 	(filter, blocks) => {
+		if(!blocks) {
+			return null
+		}
+		
 		if (filter === 'all') {
 			return blocks;
 		}
@@ -71,6 +75,10 @@ export const getFilteredCompetences = createSelector(
 		}
 
 		if (filter === 'all') {
+			if (!visibleBlocks) {
+				return null
+			}
+			
 			return competences.filter(item => {
 				return visibleBlocks.find(el => {
 					return item.competenceBlock === el.id

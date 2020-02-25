@@ -39,11 +39,11 @@ export const createAssessment = (
 			evaluatorId,
 		)
 			.then(response => {
-				response.json();
+				if (response.status === 201) {
+					dispatch(closePopup(NEW_TASK_POPUP));
 
-				response.status === 201 
-					? dispatch(closePopup(NEW_TASK_POPUP))
-					: null
+					dispatch(fetchAssessmentProcessData())
+				}
 			})
 			.catch(err => console.warn(err))
 	};

@@ -5,6 +5,10 @@
   color: #fff;
   border-radius: 3px;
   margin: 0 5px 5px 0;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .name {

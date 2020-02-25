@@ -209,7 +209,7 @@ export const settingsEditCompetence = (id, title, description) => {
 	return dispatch => {
 		editCompetence(id, title, description)
 			.then(response => {
-				response.status === 200
+				response.status === 201
 					? dispatch(closePopup(EDIT_COMPETENCY_POPUP))
 					: console.warn("Unsuccessful editing position!");
 

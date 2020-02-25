@@ -11,7 +11,7 @@ const Item = ({item}) => {
 			</div>
 
 			<div className={css.cell}>
-				{item.employeesCount}
+				{item.employees_count}
 			</div>
 
 			<div className={css.cell}>

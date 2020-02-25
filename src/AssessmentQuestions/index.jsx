@@ -140,7 +140,7 @@ class AssessmentQuestions extends React.Component {
                         <Previous goPrev={prev(
                             assessment,
                             employee.id,
-                            position
+                            step
                         )}/>
                     )}
 

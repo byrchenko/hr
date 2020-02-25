@@ -205,7 +205,7 @@ const Status = ({
 				{renderRecruiterStatus(
 					hr,
 					role,
-					startAssessmentHr(assessment.id, assessment.employee),
+					startAssessmentHr(assessment.id, assessment.employee.id),
 					supervisor && employee
 				)}
 			</div>

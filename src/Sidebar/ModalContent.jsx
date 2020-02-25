@@ -99,7 +99,7 @@ const ModalContent = ({ setNewPosition, error, handleSubmit, type, data, fetchPo
 	 */
 	function renderSelectedItem() {
 		if (selected === null) {
-			return data[0].title;
+			return "Не выбрано";
 		}
 
 		return selected.title;
