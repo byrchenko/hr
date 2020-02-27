@@ -127,7 +127,7 @@ export function fetchAnswers(assessmentId, userId) {
  */
 export function sendTasks(tasks) {
 	return sendPost(API_URL + "tasks", {
-		tasks
+		tasks,
 	});
 }
 
@@ -255,48 +255,23 @@ export const fetchAssessmentsProcess = () => {
 /**
  * Add new assessment
  */
-export const addAssessment = (
-	title,
-	startDate,
-	endDate,
-	employees,
-	evaluatorId,
-) => {
-	console.log(startDate, endDate)
-	return sendPost(`${API_URL}assessments`, {
-		title,
-		startDate,
-		endDate,
-		employees,
-		evaluatorId
-	});
+export const addAssessment = assessment => {
+	return sendPost(`${API_URL}assessments`, assessment);
 };
 
 /**
  * Edit assessment
  *
- * @param id
- * @param title
- * @param startDate
- * @param endDate
- * @param employees
- * @param evaluatorId
- * @returns {Promise<Response>}
+ * @param assessment
  */
-export const editAssessment = (
-	id,
-	title,
-	startDate,
-	endDate,
-	employees,
-	evaluatorId,
-) => {
-	return sendPut(`${API_URL}assessments/${id}`, {
-		title,
-		startDate,
-		endDate,
-		employees,
-		evaluatorId
-	});
+export const editAssessmentRequest = assessment => {
+	return sendPut(`${API_URL}assessments/${assessment.id}`, assessment);
 };
+
+/**
+ * Fetching all users list
+ */
+export function fetchEmployees() {
+	return sendGet(`${API_URL}employees`)
+}
 

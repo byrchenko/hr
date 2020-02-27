@@ -1,0 +1,46 @@
+.overlay {
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0, .4);
+  z-index: 1;
+}
+
+.modal {
+  position: relative;
+  width: calc(100% - 240px);
+  background-color: #eef2f4;
+  padding: 10px 30px 80px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-row-gap: 30px;
+  grid-column-gap: 15px;
+  align-items: center;
+  justify-content: start;
+}
+
+.inputDate {
+  width: 216px;
+  position: relative;
+}
+
+.date {
+  display: block;
+  width: 216px;
+  height: 42px;
+  border: 1px solid #c6cdd3;
+  padding: 0 15px;
+}
+
+.calendar {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+}

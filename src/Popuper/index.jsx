@@ -2,14 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import css from "./index.scss";
 import { connect } from "react-redux";
+import { Modal } from "../Modal";
+import text from "./locale/ru";
+import ModalContent from "../Sidebar/ModalContent";
+import SettingsPopup from "../AssessmentSettings/Popup";
+import CreateAssessmentPopup from "../CreateAssessmentPopup";
+import { closePopup } from "../_actions";
+import { changePosition } from "../_actions/popups";
+
 import {
-	dataPopup,
-	employeeDataPopup, getPopupParams,
+	employeeDataPopup,
+	getPopupParams,
 	isLoadingPopup,
 	positionDataPopup,
 	shownPopup,
 } from "../_dispatchers";
-import { Modal } from "../Modal";
+
 import {
 	CHANGE_POSITION_POPUP,
 	ADD_COMPETENCY_POPUP,
@@ -17,23 +25,18 @@ import {
 	EDIT_POSITION_POPUP,
 	ADD_POSITION_POPUP,
 	EDIT_BLOCK_POPUP,
-	ADD_BLOCK_POPUP, NEW_TASK_POPUP,
+	ADD_BLOCK_POPUP,
+	NEW_TASK_POPUP,
 } from "./popups";
-import text from "./locale/ru";
-import ApiInterface from "../_service/ApiMethods";
-import ModalContent from "../Sidebar/ModalContent";
-import SettingsPopup from "../AssessmentSettings/Popup";
-import Task from "./Task";
-import { closePopup } from "../_actions";
-import { changePosition } from "../_actions/popups";
+
 import {
 	settingsAddBlock,
 	settingsAddCompetence,
 	settingsAddPosition,
-	settingsDeletePosition, settingsEditBlock, settingsEditCompetence,
+	settingsEditBlock,
+	settingsEditCompetence,
 	settingsEditPosition,
 } from "../_actions/settings";
-
 
 /**
  *
@@ -44,7 +47,11 @@ class Popuper extends React.Component {
 	 *
 	 */
 	changePositionPopup() {
-		const { show, loading, changeEmployeePosition } = this.props;
+		const {
+			show,
+			loading,
+			changeEmployeePosition
+		} = this.props;
 
 		if (show !== CHANGE_POSITION_POPUP) {
 			return null;
@@ -68,7 +75,11 @@ class Popuper extends React.Component {
 	 *
 	 */
 	addCompetencyPopup() {
-		const { show, addCompetence, params } = this.props;
+		const {
+			show,
+			addCompetence,
+			params
+		} = this.props;
 
 		if (show !== ADD_COMPETENCY_POPUP) {
 			return null;
@@ -91,7 +102,11 @@ class Popuper extends React.Component {
 	 *
 	 */
 	editCompetencyPopup() {
-		const { show, params, editCompetence } = this.props;
+		const {
+			show,
+			params,
+			editCompetence
+		} = this.props;
 
 		if (show !== EDIT_COMPETENCY_POPUP) {
 			return null;
@@ -209,15 +224,15 @@ class Popuper extends React.Component {
 	/**
 	 *
 	 */
-	newTaskPopup() {
-		const { show, params, closePopup } = this.props;
+	newAssessment() {
+		const { show, closePopup } = this.props;
 
 		if (show !== NEW_TASK_POPUP) {
 			return null;
 		}
 
 		return (
-			<Task
+			<CreateAssessmentPopup
 				closePopup={() => closePopup(NEW_TASK_POPUP)}
 			/>
 		);
@@ -236,7 +251,7 @@ class Popuper extends React.Component {
 			this.editPositionPopup() ||
 			this.addBlockPopup() ||
 			this.editBlockPopup() ||
-			this.newTaskPopup()
+			this.newAssessment()
 		);
 	}
 }

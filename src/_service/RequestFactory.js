@@ -104,6 +104,10 @@ export function createBody(data) {
  * @private
  */
 export function createUrlWithQueryParams(baseUrl, params) {
+	if(params === undefined) {
+		return baseUrl;
+	}
+
 	if (typeof params !== "object") {
 		throw new Error("Invalid params type!");
 	}

@@ -9,6 +9,9 @@ import Add from "./Add";
 import Search from "./Search";
 import uniqid from "uniqid";
 
+/**
+ *
+ */
 class SelectUserInput extends React.Component {
 
 	/**
@@ -19,7 +22,7 @@ class SelectUserInput extends React.Component {
 		super(props);
 
 		this.state = {
-			selected: null,
+			selected: this.props.selected || null,
 			filter: null,
 			isSearching: false,
 		};

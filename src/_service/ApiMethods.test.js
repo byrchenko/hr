@@ -3,14 +3,43 @@ import {
 	addBlock,
 	addCompetence,
 	addPosition,
-	deleteBlock, deleteCompetence,
-	deletePosition, editAssessment,
-	editBlock, editCompetence,
-	editPosition, fetchAssessmentList, fetchAssessmentsProcess,
+	deleteBlock,
+	deleteCompetence,
+	deletePosition,
+	editAssessmentRequest,
+	editBlock,
+	editCompetence,
+	editPosition,
+	fetchAssessmentsProcess,
+	fetchEmployees,
 	sendTasks,
 } from "./ApiMethods";
 
 describe("ApiMethods", () => {
+
+	/**
+	 *
+	 */
+	describe("Employees", () => {
+
+		/**
+		 *
+		 */
+		// it("should fetch users", done => {
+		// 	fetchEmployees()
+		// 		.then(response => response.text())
+		// 		.then(parsed => {
+		// 			console.log(parsed);
+		//
+		// 			done();
+		// 		})
+		// 		.catch(err => {
+		// 			console.warn(err);
+		//
+		// 			done();
+		// 		})
+		// });
+	});
 
 	/**
 	 *
@@ -281,13 +310,13 @@ describe("ApiMethods", () => {
 		 *
 		 */
 		it("should add assessment", done => {
-			addAssessment(
-				"Sales division",
-				"21.02.2020",
-				"25.02.2020",
-				[1000],
-				1,
-			)
+			addAssessment({
+				title: "Sales division",
+				startDate: "21.02.2020",
+				endDate: "25.02.2020",
+				employees: [1000],
+				evaluatorId: 1,
+			})
 				.then(response => response.json())
 				.then(parsed => {
 					expect(parsed.title)
@@ -322,14 +351,14 @@ describe("ApiMethods", () => {
 		 *
 		 */
 		it("should edit assessment", done => {
-			editAssessment(
-				64639,
-				"Changed assessment",
-				"22.02.2020",
-				"26.02.2020",
-				[1000],
-				1,
-			)
+			editAssessmentRequest({
+				id: 64639,
+				title: "Changed assessment",
+				startDate: "22.02.2020",
+				endDate: "26.02.2020",
+				employees: [1000],
+				evaluatorId: 1,
+			})
 				.then(response => response.json())
 				.then(parsed => {
 

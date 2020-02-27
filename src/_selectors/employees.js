@@ -38,7 +38,7 @@ export const selectUsers = createSelector(
 
 		getUsers(company, combiner);
 
-		return [...new Set(combiner)];;
+		return [...new Set(combiner)];
 	}
 );
 

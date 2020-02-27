@@ -3,14 +3,27 @@
 }
 
 .cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: 12px 15px;
     font-size: 14px;
     line-height: 22px;
     color: #333;
     border-bottom: 1px solid #c4c4c4;
-    text-align: right;
 
     &:first-child {
-        text-align: left;
+        justify-content: flex-start;
+    }
+}
+
+.icon {
+    transition: transform .2s ease-out;
+    cursor: pointer;
+
+    &:hover {
+        $size: 1.2;
+
+        transform: scale3d($size, $size, $size);
     }
 }

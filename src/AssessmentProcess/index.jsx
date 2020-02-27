@@ -7,32 +7,37 @@ import Preloader from "../Preloader";
 import { fetchAssessmentProcessData } from "../_actions/assessmentProcess";
 import { loadPositions } from "../_actions/positions";
 import { selectUsers } from "../_selectors/employees";
+import { openPopup } from "../_actions";
+import { NEW_TASK_POPUP } from "../Popuper/popups";
 
 class AssessmentProcess extends React.Component {
 
 	componentDidMount() {
-		const {fetchData, fetchPositions} = this.props;
+		const { fetchData, fetchPositions } = this.props;
 
 		fetchData();
 		fetchPositions();
 	}
 
 	renderItem(item) {
+		const {openPopup} = this.props;
+
 		return (
 			<Item
 				key={item.id}
 				item={item}
+				edit={openPopup}
 			/>
-		)
+		);
 	}
 
 	/**
 	 *
 	 */
 	renderList() {
-		const {list} = this.props;
+		const { list } = this.props;
 
-		if(!list) {
+		if (!list) {
 			return null;
 		}
 
@@ -44,12 +49,16 @@ class AssessmentProcess extends React.Component {
 	 * @returns {*}
 	 */
 	render() {
-		const {list, loading, error} = this.props;
+		const {
+			list,
+			loading,
+			error,
+		} = this.props;
 
 		if (loading) {
 			return (
-				<Preloader />
-			)
+				<Preloader/>
+			);
 		}
 
 		if (error) {
@@ -57,15 +66,15 @@ class AssessmentProcess extends React.Component {
 				<div className={css.error}>
 					Error occurred! :(
 				</div>
-			)
+			);
 		}
 
-		if(!list || !list.length) {
+		if (!list || !list.length) {
 			return (
 				<div className={css.empty}>
 					Nothing found..
 				</div>
-			)
+			);
 		}
 
 		return (
@@ -86,6 +95,8 @@ class AssessmentProcess extends React.Component {
 					<div className={css.cell}>
 						Дата завершения
 					</div>
+
+					<div className={css.cell}/>
 				</div>
 
 				{this.renderList()}
@@ -111,15 +122,15 @@ const mapState = state => {
 		assessmentProcess: {
 			data,
 			error,
-			loading
-		}
+			loading,
+		},
 	} = state;
 
 	return {
 		list: Array.isArray(data) ? data : null,
 		error,
 		loading,
-	}
+	};
 };
 
 /**
@@ -128,8 +139,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
 	return {
 		fetchData: () => dispatch(fetchAssessmentProcessData()),
-		fetchPositions: () => dispatch(loadPositions())
-	}
+		fetchPositions: () => dispatch(loadPositions()),
+		openPopup: params => () => dispatch(openPopup(NEW_TASK_POPUP, params)),
+	};
 };
 
 export default connect(mapState, mapDispatch)(AssessmentProcess);

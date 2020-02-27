@@ -7,7 +7,7 @@ import {
 import {
 	FETCH_ERROR,
 	FETCH_LOADING,
-	FETCH_SUCCESS,
+	FETCH_SUCCESS, FETCH_USERS_SUCCESS,
 } from "../_store/types";
 
 import { PROCESS_ENTITY } from "../_store/entities";
@@ -17,6 +17,7 @@ export const initialState = {
 	loading: false,
 	error: false,
 	sync: false,
+	employees: null
 };
 
 const handler = {
@@ -69,6 +70,20 @@ const handler = {
 		}
 
 		return state;
+	},
+
+	/**
+	 *
+	 * @param state
+	 * @param action
+	 * @returns {any}
+	 */
+	[FETCH_USERS_SUCCESS]: (state, action) => {
+		const {payload} = action;
+
+		return Object.assign({}, state, {
+			employees: payload
+		})
 	},
 
 	/**
