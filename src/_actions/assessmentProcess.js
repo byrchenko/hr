@@ -56,8 +56,11 @@ export const createAssessment = assessment => {
 					dispatch(closePopup(NEW_TASK_POPUP));
 
 					dispatch(fetchAssessmentProcessData());
+				} else {
+					return response.json()
 				}
 			})
+			.then(parsed => console.warn(parsed))
 			.catch(err => console.warn(err));
 	};
 };

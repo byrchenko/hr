@@ -6,21 +6,34 @@ import Item from "./Item";
 import Preloader from "../Preloader";
 import { fetchAssessmentProcessData } from "../_actions/assessmentProcess";
 import { loadPositions } from "../_actions/positions";
-import { selectUsers } from "../_selectors/employees";
 import { openPopup } from "../_actions";
 import { NEW_TASK_POPUP } from "../Popuper/popups";
 
+/**
+ *
+ */
 class AssessmentProcess extends React.Component {
 
+	/**
+	 *
+	 */
 	componentDidMount() {
-		const { fetchData, fetchPositions } = this.props;
+		const {
+			fetchData,
+			fetchPositions,
+		} = this.props;
 
 		fetchData();
 		fetchPositions();
 	}
 
+	/**
+	 *
+	 * @param item
+	 * @returns {*}
+	 */
 	renderItem(item) {
-		const {openPopup} = this.props;
+		const { openPopup } = this.props;
 
 		return (
 			<Item
@@ -35,7 +48,7 @@ class AssessmentProcess extends React.Component {
 	 *
 	 */
 	renderList() {
-		const { list } = this.props;
+		const {list} = this.props;
 
 		if (!list) {
 			return null;

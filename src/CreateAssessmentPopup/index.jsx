@@ -131,8 +131,6 @@ class CreateAssessmentPopup extends React.Component {
 
 		const employees = evaluating.map(el => el.id);
 
-		console.log(endDate);
-
 		return {
 			id: params.id,
 			title,
@@ -156,7 +154,7 @@ class CreateAssessmentPopup extends React.Component {
 
 		return {
 			title,
-			startDate: dateToStringEpoch(new Date()),
+			startDate: dateToStringEpoch(new Date().getTime() / 1000),
 			endDate: dateToString(endDate),
 			employees: evaluating,
 			evaluatorId: evaluator,
@@ -173,6 +171,8 @@ class CreateAssessmentPopup extends React.Component {
 				editAssessment,
 				createAssessment,
 			} = this.props;
+
+			console.log(params);
 
 			if (params) {
 				editAssessment(this.getUpdatedAssessment());
@@ -330,7 +330,7 @@ const mapState = state => {
  */
 const mapDispatch = dispatch => {
 	return {
-		createAssessment: assessment => () => {
+		createAssessment: assessment => {
 			dispatch(createAssessment(assessment));
 		},
 		editAssessment: assessment => {
