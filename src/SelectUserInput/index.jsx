@@ -22,7 +22,7 @@ class SelectUserInput extends React.Component {
 		super(props);
 
 		this.state = {
-			selected: this.props.selected || null,
+			selected: props.selected || null,
 			filter: null,
 			isSearching: false,
 		};
@@ -136,6 +136,8 @@ class SelectUserInput extends React.Component {
 					return null;
 				}
 
+				console.log(selected.filter(el => el.id !== id));
+
 				forwardState(selected.filter(el => el.id !== id));
 
 				return {
@@ -168,6 +170,8 @@ class SelectUserInput extends React.Component {
 	renderSelectedList() {
 		return () => {
 			const { selected } = this.state;
+
+			console.log("render selected", selected);
 
 			if (!selected) {
 				return null;

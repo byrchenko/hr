@@ -18,7 +18,7 @@ import {
 
 import {
 	selectProcessHrUsers,
-	selectProcessUsers
+	selectProcessUsers,
 } from "../_selectors/process";
 
 /**
@@ -34,36 +34,13 @@ class CreateAssessmentPopup extends React.Component {
 		super(props);
 
 		this.state = {
-			title: null,
-			evaluator: null,
-			evaluating: null,
-			endDate: new Date(),
+			title: props.params ? props.params.title : null,
+			evaluator: props.params ? [props.params.evaluator] : null,
+			evaluating: props.params ? props.params.employees : null,
+			endDate: props.params ? new Date(props.params.endDate * 1000) : null,
 		};
 	}
 
-	/**
-	 *
-	 * @param state
-	 * @param props
-	 */
-	static getDerivedStateFromProps(props, state) {
-		const {params} = props;
-
-		if (!params) {
-			return null
-		}
-
-		return {
-			title: params.title,
-			evaluator: [params.evaluator],
-			evaluating: params.employees,
-			endDate: new Date(params.endDate * 1000)
-		}
-	}
-
-	/**
-	 *
-	 */
 	componentDidMount() {
 		this.props.fetchUsers();
 	}
@@ -108,6 +85,12 @@ class CreateAssessmentPopup extends React.Component {
 	 */
 	setEvaluating() {
 		return evaluating => {
+			console.log(evaluating);
+
+			console.log(Array.isArray(evaluating)
+				? evaluating.map(item => item.id)
+				: null);
+
 			this.setState({
 				evaluating: Array.isArray(evaluating)
 					? evaluating.map(item => item.id)
@@ -129,15 +112,13 @@ class CreateAssessmentPopup extends React.Component {
 			title,
 		} = this.state;
 
-		const employees = evaluating.map(el => el.id);
-
 		return {
 			id: params.id,
 			title,
 			startDate: dateToStringEpoch(params.startDate),
 			endDate: dateToString(endDate),
-			evaluatorId: evaluator[0].id,
-			employees,
+			evaluatorId: Array.isArray(evaluator) ? evaluator[0].id : evaluator,
+			employees: evaluating,
 		};
 	}
 
@@ -320,7 +301,7 @@ const mapState = state => {
 	return {
 		params: data,
 		users: selectProcessUsers(state),
-		hrUsers: selectProcessHrUsers(state)
+		hrUsers: selectProcessHrUsers(state),
 	};
 };
 
@@ -336,7 +317,7 @@ const mapDispatch = dispatch => {
 		editAssessment: assessment => {
 			dispatch(editAssessment(assessment));
 		},
-		fetchUsers: () => dispatch(fetchProcessUsers())
+		fetchUsers: () => dispatch(fetchProcessUsers()),
 	};
 };
 

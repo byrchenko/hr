@@ -15,7 +15,7 @@ const Add = ({ startSearch }) => {
 				className={css.plus}
 			/>
 
-			{"Добавить оценивающего"}
+			{"Добавить"}
 		</div>
 	);
 };
